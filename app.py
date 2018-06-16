@@ -6,4 +6,4 @@ def hello_world():
 	return 'Hello, World! This is the updated version of the application.'
 
 if __name__ == "__main__":
-    app.run()
+	app.run(host='0.0.0.0', debug = False)
