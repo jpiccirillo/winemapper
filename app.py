@@ -1,5 +1,15 @@
 from flask import Flask, session, render_template, request
-import os
+import os, urllib2, json
+# import datetime
+# import time
+# import pytz
+# import psycopg2
+# import re
+# import HTMLParser
+
+dbname = "winemapper"
+user = "postgres"
+password = "JFPicc`" # swap with whatever password you used
 
 app = Flask(__name__)
 
@@ -17,6 +27,7 @@ def logout():
 
 @app.route('/api/insert', methods=['POST', 'GET'])
 def insertUser():
+	print("Logged In: ", session.get('logged_in'))
 	if not session.get('logged_in'):
 		return render_template('login.html')
 
@@ -25,10 +36,20 @@ def insertUser():
 	values = args.values()
 	print(values)
 
+	# h = HTMLParser.HTMLParser()
+	conn_string = "dbname=%s user=%s password=%s" % (dbname, user, password)
+	db = psycopg2.connect(conn_string)
+	cur = db.cursor()
+	SQL = "INSERT INTO ListOfNames (first_name, last_name, age) VALUES (%s,%s,%i)"
+	insert_data = (values, "", 5)
+	try:
+	    cur.execute(SQL, insert_data)
+	    db.commit()
 
+	except Exception, e:
+		print insert_data
+		print e
 
-
-	
 	return "success"
 	# try:
 	# 	with sql.connect("data/test.db") as con:
