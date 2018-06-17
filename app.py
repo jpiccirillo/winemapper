@@ -1,11 +1,11 @@
 from flask import Flask, session, render_template, request
 import os, urllib2, json
-# import datetime
-# import time
-# import pytz
-# import psycopg2
-# import re
-# import HTMLParser
+import datetime
+import time
+import pytz
+import psycopg2
+import re
+import HTMLParser
 
 dbname = "winemapper"
 user = "postgres"
@@ -17,8 +17,8 @@ app = Flask(__name__)
 @app.route('/', methods=['POST', 'GET'])
 def home():
 	session['logged_in'] = True
-	# data = refreshData()
-	return render_template('home.html')
+	data = refreshData()
+	return render_template('home.html', entries = data)
 
 app.secret_key = os.urandom(12)
 
@@ -34,17 +34,13 @@ def insertUser():
 	if not session.get('logged_in'):
 		return render_template('login.html')
 
-	args = request.args
-	keys = args.keys()
-	values = args.values()
-	firstname = values[0]
-	lastname = values[1]
-	print(values)
+        firstname = request.args.get("firstname")
+	lastname = request.args.get("lastname")
 
 	db = psycopg2.connect(conn_string)
 	cur = db.cursor()
 	SQL = "INSERT INTO ListOfNames (first_name, last_name, age) VALUES (%s,%s,%s)"
-	insert_data = (values, "", 5)
+	insert_data = (firstname, lastname, 5)
 	try:
 	    cur.execute(SQL, insert_data)
 	    db.commit()
@@ -55,23 +51,29 @@ def insertUser():
 
 	return "success"
 
+#@app.route('api/refresh'):
 def refreshData():
 	try:
 		db = psycopg2.connect(conn_string)
 		cur = db.cursor()
-		SQL = "SELECT * FROM ListOfNames"
+		SQL = "SELECT * FROM ListOfNames ORDER BY id DESC"
 		cur.execute(SQL)
-		rows = cur.fetchall()
+		
+                data = []
+                rows = cur.fetchall()
 		print("The number of rows: ", cur.rowcount)
 		for row in rows:
-			print(row)
-		cur.close()
+			data.append(row)
+                        print(row)
+		print(data)
+                cur.close()
 	except (Exception, psycopg2.DatabaseError) as error:
 		print(error)
 
 	finally:
 		if db is not None:
 			db.close()
+        return data
 
 if __name__ == "__main__":
 	app.run(host='0.0.0.0', debug = True)

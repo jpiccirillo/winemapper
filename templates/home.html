@@ -23,7 +23,7 @@
         body {
             font-family: 'Ubuntu', sans-serif;
             font-weight: 300;
-        }
+	}       
 
         .btn-group {
             float: right;
@@ -50,7 +50,8 @@
     </style>
 </head>
 <script>
-    function insert() {
+
+function insert() {
         var firstname = $("#firstname").val(),
             lastname = $("#lastname").val()
         console.log("Name to insert: " + firstname + " " + lastname)
@@ -94,16 +95,16 @@
         <div class="row">
             <label for="example-text-input" class="col-2 col-form-label">Add to database: </label>
             <div class="col-3">
-                <input class="form-control" type="text" placeholder="(firstname)" id="#firstname">
+                <input class="form-control" type="text" placeholder="(firstname)" id="firstname">
             </div>
             <div class="col-3">
-                <input class="form-control" type="text" placeholder="(lastname)" id="#lastname">
+                <input class="form-control" type="text" placeholder="(lastname)" id="lastname">
             </div>
             <div class="col-2">
                 <button type="submit" class="btn btn-primary" style="float: right; margin: 0px; width: 100%" onClick="insert()">Insert</button>
             </div>
             <div class="col-2">
-                <button type="submit" class="btn btn-success" style="float: right; margin: 0px; width: 100%" onClick="insert()">SELECT * (refresh)</button>
+                <a href="/"><button type="submit" class="btn btn-success" style="float: right; margin: 0px; width: 100%">SELECT * (refresh)</button></a>
             </div>
         </div>
         <div>
@@ -120,10 +121,10 @@
                 <tbody>
                     {% for user in entries %}
                     <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
+                        <th scope="row">{{user[0]}}</th>
+                        <td>{{user[1]}}</td>
+                        <td>{{user[2]}}</td>
+                     	<td>{{user[3]}}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
