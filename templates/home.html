@@ -44,15 +44,19 @@
             padding-left: 0px;
             padding-right: 0px;
         }
+        .col-2 {
+            padding:5px;
+        }
     </style>
 </head>
 <script>
     function insert() {
-        var name = $("#submit").val();
-        console.log("Name to insert: " + name)
+        var firstname = $("#firstname").val(),
+            lastname = $("#lastname").val()
+        console.log("Name to insert: " + firstname + " " + lastname)
         $.ajax({
             type: 'GET',
-            url: "/api/insert?name=" + name,
+            url: "/api/insert?firstname=" + firstname + "&&lastname=" + lastname,
             success: function(response) {
                 console.log("Response from server: " + response);
             }
@@ -89,13 +93,41 @@
         </div>
         <div class="row">
             <label for="example-text-input" class="col-2 col-form-label">Add to database: </label>
-            <div class="col-8">
-                <input class="form-control" type="text" placeholder="Enter name..." id="submit">
+            <div class="col-3">
+                <input class="form-control" type="text" placeholder="(firstname)" id="#firstname">
+            </div>
+            <div class="col-3">
+                <input class="form-control" type="text" placeholder="(lastname)" id="#lastname">
             </div>
             <div class="col-2">
-                <button type="submit" class="btn btn-primary" style="float: right" onClick="insert()">Submit</button>
+                <button type="submit" class="btn btn-primary" style="float: right; margin: 0px; width: 100%" onClick="insert()">Insert</button>
             </div>
-
+            <div class="col-2">
+                <button type="submit" class="btn btn-success" style="float: right; margin: 0px; width: 100%" onClick="insert()">SELECT * (refresh)</button>
+            </div>
+        </div>
+        <div>
+            <br>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Age</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in entries %}
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 </body>
