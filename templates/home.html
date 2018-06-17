@@ -5,7 +5,8 @@
     <!-- This is the Home Page -->
     <title>Dashboard Page</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='bootstrap_litera.min.css') }}">
-        <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='bootstrap-grid.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='bootstrap-grid.css') }}">
                 <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='bootstrap.css') }}"> -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='default_style.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
@@ -13,6 +14,7 @@
         .title {
             color: var(--greydark)
         }
+
         section,
         .options {
             background-color: var(--light)
@@ -32,17 +34,31 @@
             padding-top: 2px;
             padding-bottom: 5px;
         }
+
         .container-flex {
             padding-left: 30px;
             padding-right: 30px;
         }
+
         .header {
             padding-left: 0px;
             padding-right: 0px;
         }
-
     </style>
 </head>
+<script>
+    function insert() {
+        var name = $("#submit").val();
+        console.log("Name to insert: " + name)
+        $.ajax({
+            type: 'GET',
+            url: "/api/insert?name=" + name,
+            success: function(response) {
+                console.log("Response from server: " + response);
+            }
+        });
+    }
+</script>
 
 <body style="background-color: white">
     <div class="container-flex">
@@ -51,26 +67,37 @@
               <button type="button" class="btn btn-secondary"><a href="/logout" style="color: white; text-decoration: none;"><small>Log Out</small></a>
             </div>
     </h2>
-</div>
-        <div class="container-flex">
-          <div class="row">
-        <div class="col-md-6">
-            <section class="bigtitle" style="border-top: 3px solid var(--navy1)">
-                <a href="/map" style="color: var(--darkblue); text-decoration: none;">
-                    <h2 class="bigtitle-title" style="background-color: var(--navy1)">Search Wines</h2>
-                    <p>Map of wine, soil and climate data paried with sommelier reviews to dig through.</p>
-                </a>
-            </section>
+    </div>
+    <div class="container-flex">
+        <div class="row">
+            <div class="col-md-6">
+                <section class="bigtitle" style="border-top: 3px solid var(--navy1)">
+                    <a href="/map" style="color: var(--darkblue); text-decoration: none;">
+                        <h2 class="bigtitle-title" style="background-color: var(--navy1)">Search Wines</h2>
+                        <p>Map of wine, soil and climate data paried with sommelier reviews to dig through.</p>
+                    </a>
+                </section>
+            </div>
+            <div class="col-md-6">
+                <section class="bigtitle" style="border-top: 3px solid var(--teal1)">
+                    <a href="/profile" style="color: var(--darkblue); text-decoration: none;">
+                        <h2 class="bigtitle-title" style="background-color: var(--teal1);">View Profile</h2>
+                        <p>Check out your address and past favorites.</p>
+                    </a>
+                </section>
+            </div>
         </div>
-        <div class="col-md-6">
-            <section class="bigtitle" style="border-top: 3px solid var(--teal1)">
-                <a href="/profile" style="color: var(--darkblue); text-decoration: none;">
-                    <h2 class="bigtitle-title" style="background-color: var(--teal1);">View Profile</h2>
-                    <p>Check out your address and past favorites.</p>
-                </a>
-            </section>
+        <div class="row">
+            <label for="example-text-input" class="col-2 col-form-label">Add to database: </label>
+            <div class="col-8">
+                <input class="form-control" type="text" placeholder="Enter name..." id="submit">
+            </div>
+            <div class="col-2">
+                <button type="submit" class="btn btn-primary" style="float: right" onClick="insert()">Submit</button>
+            </div>
+
         </div>
     </div>
-    <div>
 </body>
+
 </html>
