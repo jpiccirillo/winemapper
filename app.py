@@ -1,10 +1,18 @@
-#!env/bin/python
-from flask import Flask
+from flask import Flask, session, render_template
+import os
+
 app = Flask(__name__)
 
-@app.route('/')
-def hello_world():
-	return 'Hello, World! This is the updated version of the application.'
+@app.route('/', methods=['POST', 'GET'])
+def home():
+	return render_template('home.html')
+
+app.secret_key = os.urandom(12)
+
+@app.route('/logout')
+def logout():
+   session['logged_in'] = False
+   return render_template("logout.html")
 
 if __name__ == "__main__":
-	app.run(host='0.0.0.0', port="5000", debug = False)
+	app.run(host='0.0.0.0', debug = True)
