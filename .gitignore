@@ -1,4 +1,5 @@
-
 app.pyc
 __pycache__/
 winemapper_first.pem
+node_modules
+package-lock.json

@@ -9,10 +9,12 @@ import psycopg2
 import re
 import html.parser
 
-dbname = "testDB"
-user = "postgres"
-password = "postgres"
-conn_string = "dbname={} user={} password={}".format(dbname, user, password)
+dbname = "winemapper"
+user = "ec2_user"
+password = "<PASSWORD HERE>"
+host = "<ENDPOINT HERE>"
+port = "5432"
+conn_string = "host={} port={} dbname={} user={} password={}".format(host, port, dbname, user, password)
 
 app = Flask(__name__)
 
@@ -21,7 +23,7 @@ app = Flask(__name__)
 def home():
     session['logged_in'] = True
     data = refreshData()
-    return render_template('home.html', entries=data)
+    return render_template('index.html', entries=data)
 
 
 app.secret_key = os.urandom(12)
