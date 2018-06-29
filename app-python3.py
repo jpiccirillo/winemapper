@@ -11,29 +11,25 @@ import html.parser
 
 dbname = "winemapper"
 user = "ec2_user"
-password = "<PASSWORD HERE>"
-host = "<ENDPOINT HERE>"
+password = "winemapper"
+host = "winemapper.ctm2fbq02abz.us-east-2.rds.amazonaws.com"
 port = "5432"
 conn_string = "host={} port={} dbname={} user={} password={}".format(host, port, dbname, user, password)
 
 app = Flask(__name__)
 
-
 @app.route('/', methods=['POST', 'GET'])
 def home():
     session['logged_in'] = True
     data = refreshData()
-    return render_template('index.html', entries=data)
-
+    return render_template('browse.html', entries=json.dumps(data))
 
 app.secret_key = os.urandom(12)
-
 
 @app.route('/logout')
 def logout():
     session['logged_in'] = False
     return render_template("logout.html")
-
 
 @app.route('/api/insert', methods=['POST', 'GET'])
 def insertUser():
@@ -46,7 +42,7 @@ def insertUser():
 
     db = psycopg2.connect(conn_string)
     cur = db.cursor()
-    sql = "INSERT INTO ListOfNames (first_name, last_name, age) VALUES (%s,%s,%s)"
+    sql = "INSERT INTO public.\"ListOfNames\" (first_name, last_name, age) VALUES (%s,%s,%s)"
     insert_data = (firstname, lastname, 5)
     try:
         cur.execute(sql, insert_data)
@@ -58,7 +54,6 @@ def insertUser():
 
     return "success"
 
-
 # @app.route('api/refresh'):
 def refreshData():
     db = None
@@ -66,7 +61,7 @@ def refreshData():
     try:
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
-        sql = "SELECT * FROM ListOfNames ORDER BY id DESC"
+        sql = "SELECT * FROM public.\"popularWineries\" ORDER BY \"wineryID\" ASC"
         cur.execute(sql)
 
         rows = cur.fetchall()
