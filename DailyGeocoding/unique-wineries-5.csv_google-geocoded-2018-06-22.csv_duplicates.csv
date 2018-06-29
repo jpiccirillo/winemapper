@@ -1,0 +1,930 @@
+"Stellareese Winery, US",,
+"ChÃ¢teau Gauthier Winery, France","2290 S French Rd, Lake Leelanau, MI 49653, USA","[44.9484416, -85.7551398]"
+"Michael James Wines, US",,
+"Mattina Fiore Winery, US",,
+"Equilibrio Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Eufloria Winery, US",,
+"MorgadÃ­o Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Sonoma Smith Winery, US",,
+"Belharra Winery, US",,
+"Clos Chapon Winery, France",France,"[46.227638, 2.213749]"
+"Conde de Caralt Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Telteca Winery, Argentina",Argentina,"[-38.416097, -63.61667199999999]"
+"Abrazo Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Loredona Winery, US",,
+"Mike Ditka Winery, US",,
+"Firebrix Winery, US",,
+"ChÃ¢teau le Grand Paroissien Winery, France",France,"[46.227638, 2.213749]"
+"LoriÃ±on Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"ViÃ±a Salceda Winery, Spain","4590 Bell Rd, Auburn, CA 95602, USA","[38.9587996, -121.1340728]"
+"Nomadica Winery, US",,
+"ChÃ¢teau l'Eglise Saget Winery, France",France,"[46.227638, 2.213749]"
+"ChÃ¢teau PuyanchÃ© Winery, France","2290 S French Rd, Lake Leelanau, MI 49653, USA","[44.9484416, -85.7551398]"
+"Demimo Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"ChÃ¢teau Chamaille Winery, France","2290 S French Rd, Lake Leelanau, MI 49653, USA","[44.9484416, -85.7551398]"
+"ChÃ¢teau Doyac Winery, France","2290 S French Rd, Lake Leelanau, MI 49653, USA","[44.9484416, -85.7551398]"
+"ChÃ¢teau Fontis Winery, France","2290 S French Rd, Lake Leelanau, MI 49653, USA","[44.9484416, -85.7551398]"
+"ChÃ¢teau Les Trois Manoirs Winery, France",France,"[46.227638, 2.213749]"
+"Creta Olympias Winery, Greece","Κουνάβοι, Ηράκλειο, 70100, Kounavi 701 00, Greece","[35.233412, 25.18473]"
+"Jankara Winery, Italy",,
+"Terre di Fiori Winery, Italy",Italy,"[41.87194, 12.56738]"
+"Pierluigi Zampaglione Winery, Italy",Italy,"[41.87194, 12.56738]"
+"B. Lovely Winery, US",,
+"Dehesas y ViÃ±edos de NavamarÃ­n Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"MurÃ²la Winery, Italy",Italy,"[41.87194, 12.56738]"
+"ChÃ¢teau Lamourette Winery, France","2290 S French Rd, Lake Leelanau, MI 49653, USA","[44.9484416, -85.7551398]"
+"ChÃ¢teau Pailhas Winery, France","2290 S French Rd, Lake Leelanau, MI 49653, USA","[44.9484416, -85.7551398]"
+"Matthew Daniel Winery, US",,
+"Vini Italiani da Sogno Winery, Italy",Italy,"[41.87194, 12.56738]"
+"ChÃ¢teau de Pitray Winery, France",France,"[46.227638, 2.213749]"
+"Pierre Morin Winery, France",France,"[46.227638, 2.213749]"
+"Esperanza Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Gravel Bar Winery, US",,
+"ChÃ¢teau de l'Enclos Winery, France","20 Rue du Grand Moulinet, 33500 Pomerol, France","[44.9361346, -0.2234533]"
+"ChÃ¢teau Soudars Winery, France",France,"[46.227638, 2.213749]"
+"Roque ColÃ¡s Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"ChÃ¢teau Labadie Winery, France",France,"[46.227638, 2.213749]"
+"Milenrama Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Nightstar Winery, Germany",Germany,"[51.165691, 10.451526]"
+"Antonio Lopes Ribeiro Winery, Portugal",Portugal,"[39.39987199999999, -8.224454]"
+"MaidenStoen Winery, US",,
+"ChÃ¢teau la Roche Bazin Winery, France",France,"[46.227638, 2.213749]"
+"ChÃ¢teau Marsau Winery, France",France,"[46.227638, 2.213749]"
+"Domaine de la VillaudiÃ¨re Winery, France",France,"[46.227638, 2.213749]"
+"ChÃ¢teau Hosanna Winery, France","2290 S French Rd, Lake Leelanau, MI 49653, USA","[44.9484416, -85.7551398]"
+"Pago del Vostal Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Coup de Grace Winery, US",United States,"[37.09024, -95.712891]"
+"Xavier Flouret Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"La Pisara Winery, Italy","Los Angeles, CA, USA","[34.0522342, -118.2436849]"
+"Carmen Lopez Delgado Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Hilary Goldschmidt Winery, US","631 Healdsburg Ave, Healdsburg, CA 95448, USA","[38.617024, -122.87241]"
+"Stella Monsi Winery, US",,
+"ChÃ¢teau Tourteran Winery, France",France,"[46.227638, 2.213749]"
+"Gran Castillo Royal Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Adair Bachman Winery, US",,
+"Warre's Winery, Portugal",Portugal,"[39.39987199999999, -8.224454]"
+"Montaubret Winery, France",,
+"Costaval Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"ChÃ¢teau Brande-BergÃ¨re Winery, France",France,"[46.227638, 2.213749]"
+"Masked Rider Winery, US",,
+"Old Winery, Argentina",Argentina,"[-38.416097, -63.61667199999999]"
+"Le Drunk Rooster Winery, France",France,"[46.227638, 2.213749]"
+"Bollini Winery, Italy",Italy,"[41.87194, 12.56738]"
+"RichÃ© Winery, US",,
+"J. Keverson Winery, US","53 Front St, Healdsburg, CA 95448, USA","[38.6061047, -122.8620429]"
+"Silvae Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Rebusity Winery, US",,
+"Cataregia Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"ChÃ¢teau ArmandiÃ¨re Winery, France",France,"[46.227638, 2.213749]"
+"Woodstock Collection Winery, US",United States,"[37.09024, -95.712891]"
+"ChÃ¢teau Flotis Winery, France","2290 S French Rd, Lake Leelanau, MI 49653, USA","[44.9484416, -85.7551398]"
+"Fonte alla Selva Winery, Italy",Italy,"[41.87194, 12.56738]"
+"Johannes Kunz Winery, Germany",Germany,"[51.165691, 10.451526]"
+"ViÃ±a Decana Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"CorazÃ³n Verde Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Paul de Albas Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Luke Donald Winery, US",,
+"Domaine les CaprÃ©oles Winery, France",France,"[46.227638, 2.213749]"
+"Idilico Winery, US",,
+"Barrel Racer Winery, US",,
+"The Prisoner Winery, US",,
+"ChÃ¢teau Lynsolence Winery, France",France,"[46.227638, 2.213749]"
+"Galardi Winery, Italy",Italy,"[41.87194, 12.56738]"
+"Pannotia Vineyards, Argentina",Argentina,"[-38.416097, -63.61667199999999]"
+"Casal Novo Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Nebla Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Heaven's Cave Winery, US",,
+"Sassy Bitch Winery, Chile",Chile,"[-35.675147, -71.542969]"
+"Vega Murillo Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Mathis Winery, US",,
+"Tenute Niccolai Winery, Italy","Via Racciano, 10, 53037 San Gimignano SI, Italy","[43.4566106, 11.033863]"
+"ChÃ¢teau Fleur du Roc Winery, France",France,"[46.227638, 2.213749]"
+"Genio EspaÃ±ol Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Les Voleurs Winery, US","14020 W Hwy Bb, Rocheport, MO 65279, USA","[38.9711891, -92.54973849999999]"
+"Forefathers Winery, New Zealand",New Zealand,"[-40.900557, 174.885971]"
+"Rubus Winery, France",France,"[46.227638, 2.213749]"
+"Stave & Steel Winery, US",,
+"Blacklist Winery, US",,
+"Billhook Winery, US",United States,"[37.09024, -95.712891]"
+"Domaine de Boischampt Winery, France","1 Place de l'Église, 21700 Vosne-Romanée, France","[47.1617666, 4.9551114]"
+"Pandemonium Wines, US",,
+"MontgÃ³ Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"ChÃ¢teau les Ormes de Pez Winery, France",,
+"ChÃ¢teau Sergant Winery, France","2290 S French Rd, Lake Leelanau, MI 49653, USA","[44.9484416, -85.7551398]"
+"Maison DenuziÃ¨re Winery, France",France,"[46.227638, 2.213749]"
+"Alma Fria Winery, US",,
+"Kelley Fox Winery, US",,
+"Amathia Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Les Bourgeois Winery, US","14020 W Hwy Bb, Rocheport, MO 65279, USA","[38.9711891, -92.54973849999999]"
+"Familia Solana Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Carson Scott Winery, US",,
+"Oriel Winery, Italy",Italy,"[41.87194, 12.56738]"
+"Macindoe Winery, US",,
+"Ben Hogan Winery, US",,
+"Mathew Bruno Winery, US",,
+"Matthiasson Winery, US",,
+"Dolce Stefania Winery, Argentina",Argentina,"[-38.416097, -63.61667199999999]"
+"Valdelainos Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Pavlou-Kagas Winery, Greece",Greece,"[39.074208, 21.824312]"
+"Inocencio Winery, US",,
+"ChÃ¢teau le Joyeux Winery, France","1 Route de Fossés Longues, 33750 Beychac-et-Caillau, France","[44.8627286, -0.3546845]"
+"Tangley Oaks Winery, US",,
+"MÃ¼nzenrieder Winery, Austria",Austria,"[47.516231, 14.550072]"
+"Chateau de l'OiseliniÃ¨re Winery, France",France,"[46.227638, 2.213749]"
+"Enticer Winery, US",,
+"Restivo Winery, Argentina",Argentina,"[-38.416097, -63.61667199999999]"
+"ChÃ¢teau Maurac Winery, France","2290 S French Rd, Lake Leelanau, MI 49653, USA","[44.9484416, -85.7551398]"
+"ChÃ¢teau RÃ©mandine Winery, France",France,"[46.227638, 2.213749]"
+"Dead On Winery, US",,
+"ChÃ¢teau Jeanrousse Winery, France","2290 S French Rd, Lake Leelanau, MI 49653, USA","[44.9484416, -85.7551398]"
+"Brotte Winery, France","Avenue Saint-Pierre de Luxembourg, 84230 Châteauneuf-du-Pape, France","[44.054065, 4.834646]"
+"Luko Winery, US",,
+"HÃ©lÃ¨ne Garcin Winery, Argentina",Argentina,"[-38.416097, -63.61667199999999]"
+"Tenute di Vaira Winery, Italy","Strada Provinciale Bolgherese, 275, 57022 Bolgheri LI, Italy","[43.201021, 10.613429]"
+"Desire Winery, Germany",Germany,"[51.165691, 10.451526]"
+"ChÃ¢teau Au Grand Paris Winery, France","1 Cheval Blanc, 33330 Saint-Émilion, France","[44.9194869, -0.1896455]"
+"ChÃ¢teau Meillier Winery, France","2290 S French Rd, Lake Leelanau, MI 49653, USA","[44.9484416, -85.7551398]"
+"ChÃ¢teau Puy Rigaud Winery, France",France,"[46.227638, 2.213749]"
+"Cenyth Winery, US",,
+"ChÃ¢teau Miraval Winery, France","Miraval, 83570 Correns, France","[43.473178, 6.0368157]"
+"Juan de Juanes Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Trollop Winery, US",,
+"Schlagel Santo Winery, US",,
+"C. Cruz & Co Winery, Portugal",Portugal,"[39.39987199999999, -8.224454]"
+"ChÃ¢teau Broustet Winery, France",,
+"ChÃ¢teau la LouviÃ¨re Winery, France","Los Angeles, CA, USA","[34.0522342, -118.2436849]"
+"ChÃ¢teau Tronquoy-Lalande Winery, France","33180 Saint-Estèphe, France","[45.2543386, -0.7733325]"
+"Clos Badon-Thunevin Winery, France","6 Rue Guadet, 33330 Saint-Émilion, France","[44.895137, -0.155186]"
+"Camiana Winery, US",United States,"[37.09024, -95.712891]"
+"Anthropology Winery, Australia",Australia,"[-25.274398, 133.775136]"
+"Member's Mark Winery, Germany",Germany,"[51.165691, 10.451526]"
+"Patria Winery, Italy",Italy,"[41.87194, 12.56738]"
+"Sebeka Winery, South Africa","Uitkyk Street, Franschhoek Valley, Winelands, South Africa, 7690, South Africa","[-33.8964988, 19.1293144]"
+"ChÃ¢teau GriviÃ¨re Winery, France",France,"[46.227638, 2.213749]"
+"Maurice Martin Winery, France",France,"[46.227638, 2.213749]"
+"Twisted River Winery, Germany",Germany,"[51.165691, 10.451526]"
+"Cliffhanger Winery, Italy",Italy,"[41.87194, 12.56738]"
+"Michel Redde et Fils Winery, France","58150 Saint-Andelain, France","[47.3074287, 2.945202]"
+"Bieler PÃ¨re et Fils Winery, France",France,"[46.227638, 2.213749]"
+" Franscioni Vineyard Pinot Gris (Santa Lucia Highlands) Winery, US",United States,"[37.09024, -95.712891]"
+"La ChÃ¢sse Winery, France",France,"[46.227638, 2.213749]"
+"Confidence Winery, France","34 Avenue de la 5ème République, 33460 Cantenac, France","[45.029066, -0.6559389999999999]"
+"Pierre Henri Morel Winery, France",France,"[46.227638, 2.213749]"
+"Sea Monster Winery, US",,
+"Archival Winery, US","82420 US-93, Dayton, MT 59914, USA","[47.86385199999999, -114.285664]"
+"Pierre Merguey Winery, France","8145 W Sinclair St, West Baden Springs, IN 47469, USA","[38.56171, -86.611716]"
+"Duende Winery, US",,
+"Ioannis Hatzis Winery, Greece",Greece,"[39.074208, 21.824312]"
+"Idilicum Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Wild Rock Winery, New Zealand",New Zealand,"[-40.900557, 174.885971]"
+"Phebus Winery, Argentina",Argentina,"[-38.416097, -63.61667199999999]"
+"Vinilo Winery, Argentina",Argentina,"[-38.416097, -63.61667199999999]"
+"ChÃ¢teau Haut-Pezat Winery, France","103 Avenue de Cadaujac, 33850 Léognan, France","[44.7332821, -0.5809653]"
+"MirÃ¹ Winery, Italy",Italy,"[41.87194, 12.56738]"
+"Versant Vineyards, US",United States,"[37.09024, -95.712891]"
+"ChÃ¢teau Edmus Winery, France","2290 S French Rd, Lake Leelanau, MI 49653, USA","[44.9484416, -85.7551398]"
+"Deep Purple Winery, US","4275 Old US Hwy 45 S, Paducah, KY 42003, USA","[37.0123454, -88.6730415]"
+"ChÃ¢teau MÃ©zain Winery, France",France,"[46.227638, 2.213749]"
+"ChÃ¢teau Cagnas Winery, France","2290 S French Rd, Lake Leelanau, MI 49653, USA","[44.9484416, -85.7551398]"
+"Aidura Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Circadia Winery, US",United States,"[37.09024, -95.712891]"
+"Kuyam Winery, US",,
+"St. Lucas Winery, Argentina",Argentina,"[-38.416097, -63.61667199999999]"
+"ChÃ¢teau les Peyroulets Winery, France","1 Route de Fossés Longues, 33750 Beychac-et-Caillau, France","[44.8627286, -0.3546845]"
+"Dane Cellars Winery, US","12346 US-290, Fredericksburg, TX 78624, USA","[30.22167099999999, -98.693597]"
+"Gianni Tessari Winery, Italy","Via Prandi, 10, 37030 Roncà VR, Italy","[45.476701, 11.275013]"
+"Paolo CalÃ¬ Winery, Italy",Italy,"[41.87194, 12.56738]"
+"Space Cowboy Winery, US",United States,"[37.09024, -95.712891]"
+"Domaine Chancelle Winery, France",France,"[46.227638, 2.213749]"
+"JC Van Staden Winery, US",,
+"Delas FrÃ¨res Winery, France",France,"[46.227638, 2.213749]"
+"Stival Winery, Italy",Italy,"[41.87194, 12.56738]"
+"Monogamy Winery, US",,
+"Catherine Marshall Winery, South Africa",South Africa,"[-30.559482, 22.937506]"
+"Jellybean Wines, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Solar de la Vega Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"HÃ¶gl Winery, Austria",Austria,"[47.516231, 14.550072]"
+"Wegeler Winery, Germany",Germany,"[51.165691, 10.451526]"
+"ChÃ¢teau l'Archange Winery, France","2290 S French Rd, Lake Leelanau, MI 49653, USA","[44.9484416, -85.7551398]"
+"Von HÃ¶vel Winery, Germany",Germany,"[51.165691, 10.451526]"
+"Ãric & JÃ¶el Durand Winery, France",,
+"Marquis Philips Winery, Australia",Australia,"[-25.274398, 133.775136]"
+"Wineglass Cellars Winery, US","12346 US-290, Fredericksburg, TX 78624, USA","[30.22167099999999, -98.693597]"
+"Vitesse Winery, US",,
+"ChÃ¢teau Lagarosse Winery, France",France,"[46.227638, 2.213749]"
+"ChÃ¢teau Sainte Barbe Winery, France","Route du Burck, 33810 Ambès, France","[44.9873, -0.539891]"
+"Serca Winery, Argentina",Argentina,"[-38.416097, -63.61667199999999]"
+"Crane Family Winery, US",,
+"Proverbial Winery, US",,
+"ChÃ¢teau Hourbanon Winery, France","2290 S French Rd, Lake Leelanau, MI 49653, USA","[44.9484416, -85.7551398]"
+"ChÃ¢teau Peychaud Winery, France","2290 S French Rd, Lake Leelanau, MI 49653, USA","[44.9484416, -85.7551398]"
+"ChÃ¢teau La ClariÃ¨re Laithwaite Winery, France",France,"[46.227638, 2.213749]"
+"ChÃ¢teau Loumelat Winery, France",France,"[46.227638, 2.213749]"
+"ChÃ¢teau Tournelles Winery, France","2290 S French Rd, Lake Leelanau, MI 49653, USA","[44.9484416, -85.7551398]"
+"ChÃ¢teau Caville Winery, France","100 Rue Charlemagne Dr, Braselton, GA 30517, USA","[34.1017745, -83.8177127]"
+"DisznÃ³kÃ¶ Winery, Hungary",Hungary,"[47.162494, 19.5033041]"
+"DobogÃ³ Winery, Hungary",Hungary,"[47.162494, 19.5033041]"
+"Single Wheel Winery, US",,
+"Domaine Daniel Reverdy et Fils Winery, France",France,"[46.227638, 2.213749]"
+"Didier Dagueneau Winery, France",France,"[46.227638, 2.213749]"
+"Plowbuster Winery, US",,
+"Kriter Winery, France",France,"[46.227638, 2.213749]"
+"Capataz Winery, Argentina",Argentina,"[-38.416097, -63.61667199999999]"
+"GÃ©rard Brisson Winery, France","Georgia, USA","[32.1656221, -82.9000751]"
+"Cambiata Winery, US",United States,"[37.09024, -95.712891]"
+"ChÃ¢teau la Jorine Winery, France","2750 Route De La Cride, 13610 Le Puy-Sainte-Réparade, France","[43.63601999999999, 5.419403]"
+"ChÃ¢teau du Roc Winery, France","1605C Route de Toulouse, 31620 Fronton, France","[43.8252481, 1.3991315]"
+"Almira Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Bodega Trenza Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Domaine de la Loge Winery, France","1 Place de l'Église, 21700 Vosne-Romanée, France","[47.1617666, 4.9551114]"
+"Domaine Roger Champault Winery, France","18300 Crézancy-en-Sancerre, France","[47.303536, 2.7723875]"
+"ChÃ¢teau Fleur de Charme Winery, France",France,"[46.227638, 2.213749]"
+"ChÃ¢teau Grossombre de Saint-Joseph Winery, France",France,"[46.227638, 2.213749]"
+"Maison Hebrard Winery, France",France,"[46.227638, 2.213749]"
+"Glennhawk Winery, US",,
+"Nunum Winery, Argentina",Argentina,"[-38.416097, -63.61667199999999]"
+"Jim Palmer Winery, US",,
+"Arnaldo Rivera Winery, Italy",Italy,"[41.87194, 12.56738]"
+"ChÃ¢teau Laur Winery, France","2290 S French Rd, Lake Leelanau, MI 49653, USA","[44.9484416, -85.7551398]"
+"Clos La Soleya Winery, Spain","Los Angeles, CA, USA","[34.0522342, -118.2436849]"
+"Ms. Behave Winery, US",United States,"[37.09024, -95.712891]"
+"ChÃ¢teau la Clide Winery, France",France,"[46.227638, 2.213749]"
+"Henri Abele Winery, France",France,"[46.227638, 2.213749]"
+"ChÃ¢teau Tour Seran Winery, France","Château Tour Prignac, 33340 Prignac-en-Médoc, France","[45.326137, -0.913007]"
+"Cavalli Tenuta degli Dei Winery, Italy",Italy,"[41.87194, 12.56738]"
+"K. Furtado Winery, US",,
+"Sonim Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Wily Jack Winery, US",,
+"Sun Valley Winery, Chile","4830 Pioneer Rd, Hillsboro, MO 63050, USA","[38.2465592, -90.54018339999999]"
+"Arroba Winery, US",United States,"[37.09024, -95.712891]"
+"Dolmo Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"SeÃ±orÃ­o de RubiÃ³s Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Sobriquet Winery, US",United States,"[37.09024, -95.712891]"
+"Domaine de la Tour du Bief Winery, France","NE Timmons Ln, Dayton, OR 97114, USA","[45.2659032, -123.055501]"
+"Camlow Winery, US",,
+"Atalaya Winery, Spain","N-330, 97, 02640 Almansa, Albacete, Spain","[38.9062927, -1.0897942]"
+"Domaine de la TourlaudiÃ¨re Winery, France",France,"[46.227638, 2.213749]"
+"Jaboulet-Vercherre Winery, France",France,"[46.227638, 2.213749]"
+"ChÃ¢teau Moulin de Bel-Air Winery, France",France,"[46.227638, 2.213749]"
+"ChÃ¢teau Thuron Winery, France","100 Rue Charlemagne Dr, Braselton, GA 30517, USA","[34.1017745, -83.8177127]"
+"Noble Aconcagua Winery, Argentina","Aconcagua, Mendoza Province, Argentina","[-32.653179, -70.0108675]"
+"Barreto Winery, US",,
+"Guillaume Gros Winery, France",France,"[46.227638, 2.213749]"
+"Lisabella Winery, Italy",Italy,"[41.87194, 12.56738]"
+"Rivka Simone Winery, US",,
+"De Lozar Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Gan Eden Winery, US",,
+"Puccioni Winery, US",United States,"[37.09024, -95.712891]"
+"Bugay Winery, US",,
+"Jacques Bardelot Winery, France",France,"[46.227638, 2.213749]"
+"Flint & Steel Winery, US",United States,"[37.09024, -95.712891]"
+"Nemesio Winery, Argentina",Argentina,"[-38.416097, -63.61667199999999]"
+"AbadÃ­a de Tortoreos Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Thatched Hut Winery, New Zealand",New Zealand,"[-40.900557, 174.885971]"
+"Pierre Olivier Winery, France",France,"[46.227638, 2.213749]"
+"Tenute Costa Winery, Italy",Italy,"[41.87194, 12.56738]"
+"Guastaferro Winery, Italy",Italy,"[41.87194, 12.56738]"
+"Cypress Winery, New Zealand",New Zealand,"[-40.900557, 174.885971]"
+"Manu Propria Winery, US",,
+"Fuligni Winery, Italy","53024 Montalcino, Province of Siena, Italy","[43.0569085, 11.5056558]"
+"ChÃ¢teau la Prade Winery, France",France,"[46.227638, 2.213749]"
+"Solar de Castro Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Thomas Goss Winery, Australia",Australia,"[-25.274398, 133.775136]"
+"Donne Fittipaldi Winery, Italy",Italy,"[41.87194, 12.56738]"
+"Jack Nicklaus Wines, US",,
+"PiliÅ¾ota Winery, Croatia",Croatia,"[45.1, 15.2000001]"
+"Stuart Cellars Winery, US","6752 Washington St, Yountville, CA 94599, USA","[38.406152, -122.3664433]"
+"Copeland Creek Winery, US","2829 US-50, Beaufort, MO 63013, USA","[38.4322575, -91.1160261]"
+"ChÃ¢teau Haut-Cardinal Winery, France",France,"[46.227638, 2.213749]"
+"ChÃ¢teau Famaey Winery, France","2290 S French Rd, Lake Leelanau, MI 49653, USA","[44.9484416, -85.7551398]"
+"Le Vigne Winery, Italy","5115 Buena Vista Dr, Paso Robles, CA 93446, USA","[35.6743813, -120.6591659]"
+"Together Winery, US",United States,"[37.09024, -95.712891]"
+"ChÃ¢teau Haut Laulion Winery, France","103 Avenue de Cadaujac, 33850 Léognan, France","[44.7332821, -0.5809653]"
+"Despierta Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"ChÃ¢teau Lamothe Barrau Winery, France",France,"[46.227638, 2.213749]"
+"Eastburn Vineyards, US",United States,"[37.09024, -95.712891]"
+"Charles Lafitte Winery, France",France,"[46.227638, 2.213749]"
+"TÃ¶rley Winery, Hungary",Hungary,"[47.162494, 19.5033041]"
+"Silverwing Winery, Australia",Australia,"[-25.274398, 133.775136]"
+"Antonio Cesar Cavalli Winery, Argentina",Argentina,"[-38.416097, -63.61667199999999]"
+"ChÃ¢teau Ballan-Larquette Winery, France","Larquette, 33540 Saint-Laurent-du-Bois, France","[44.644655, -0.146883]"
+"ChÃ¢teau Lescalle Winery, France","2290 S French Rd, Lake Leelanau, MI 49653, USA","[44.9484416, -85.7551398]"
+"ChÃ¢teau Tayet Winery, France","2290 S French Rd, Lake Leelanau, MI 49653, USA","[44.9484416, -85.7551398]"
+"Push Me to the Floor Winery, South Africa",South Africa,"[-30.559482, 22.937506]"
+"ChÃ¢teau d'Ourbenac Winery, France","2290 S French Rd, Lake Leelanau, MI 49653, USA","[44.9484416, -85.7551398]"
+"Piccoli Winery, Italy",Italy,"[41.87194, 12.56738]"
+"Alice White Winery, Australia",Australia,"[-25.274398, 133.775136]"
+"D.H. Lescombes Winery, US","1325 De Baca Rd SE, Deming, NM 88030, USA","[32.259038, -107.6655864]"
+"Ghostwriter Winery, US",,
+"Cupcake Winery, Italy","Loc. Poggio, 9, Fraz. Portacomaro Stazione AT, Italy","[44.9785333, 8.2530682]"
+"ViÃ±edos Altamira Valley Winery, Argentina",Argentina,"[-38.416097, -63.61667199999999]"
+"Malesan Winery, France",France,"[46.227638, 2.213749]"
+"McDowell Winery, US","1732 US-281, St Paul, NE 68873, USA","[41.2810512, -98.4496532]"
+"Spencer Roloson Winery, US",,
+"Podere Prospero Winery, Italy",Italy,"[41.87194, 12.56738]"
+"ChÃ¢teau Crusquet Sabourin Winery, France",France,"[46.227638, 2.213749]"
+"ChÃ¢teau Cayla Winery, France","2290 S French Rd, Lake Leelanau, MI 49653, USA","[44.9484416, -85.7551398]"
+"ChÃ¢teau Fontesteau Winery, France","33250 Cissac-Médoc, France","[45.2071415, -0.8445153999999999]"
+"RincÃ³n de Guadalupe Winery, Mexico",,
+"Ataide da Costa Martins Seredo Winery, Portugal",Portugal,"[39.39987199999999, -8.224454]"
+"Enjingi Winery, Croatia",Croatia,"[45.1, 15.2000001]"
+"Random Wine Winery, US",United States,"[37.09024, -95.712891]"
+"Kirkland Signature Winery, Spain","Kirkland, WA, USA","[47.6768927, -122.2059833]"
+"Laura Zahtila Winery, US","2250 Lake County Hwy, Calistoga, CA 94515, USA","[38.59183, -122.577861]"
+"Rich & Creamy Winery, US","10352 E US Highway 290, Hye, TX 78635, United States","[30.242681, -98.57238199999999]"
+"Smart Cookie Winery, New Zealand",New Zealand,"[-40.900557, 174.885971]"
+"Prima CuvÃ©e Winery, Italy",Italy,"[41.87194, 12.56738]"
+"SabartÃ©s Winery, Spain","143 W Spain St, Sonoma, CA 95476, USA","[38.2937801, -122.459743]"
+"VÃ­a Winery, US","43285 Spinks Ferry Rd, Leesburg, VA 20176, USA","[39.200244, -77.4958217]"
+"Metaphora Winery, US",,
+"Monkey Tree Winery, Chile",Chile,"[-35.675147, -71.542969]"
+"Magic Door Winery, US",,
+"SIP Winery, US","2829 US-50, Beaufort, MO 63013, USA","[38.4322575, -91.1160261]"
+"Altos de SueÃ±o Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"ViÃ±a Pargua Winery, Chile",Chile,"[-35.675147, -71.542969]"
+"Oggi! Winery, Italy","Via Crocetta, 18, 53037 Ulignano SI, Italy","[43.5097224, 11.0814366]"
+"Alto 3 Winery, Argentina",Argentina,"[-38.416097, -63.61667199999999]"
+"Cantine Lenotti Winery, Italy","Via Santa Cristina, 1, 37011 Bardolino VR, Italy","[45.5441376, 10.7244831]"
+"Raylee Winery, US",,
+"Camille Paquet Winery, France",France,"[46.227638, 2.213749]"
+"Floodgate Winery, US","5610 Dry Creek Rd, Healdsburg, CA 95448, USA","[38.563979, -122.872963]"
+"ChÃ¢teau Rousset-Caillau Winery, France","1 Route de Fossés Longues, 33750 Beychac-et-Caillau, France","[44.8627286, -0.3546845]"
+"ChÃ¢teau La Claverie Winery, France",France,"[46.227638, 2.213749]"
+"ChÃ¢teau Haut Prieur Winery, France","103 Avenue de Cadaujac, 33850 Léognan, France","[44.7332821, -0.5809653]"
+"ChÃ¢teau de CÃ©nac Winery, France",France,"[46.227638, 2.213749]"
+"Ellanelle Winery, US",,
+"Corvallis Cellars Winery, US","Tyee Wine Cellars, 26335 Greenberry Rd, Corvallis, OR 97333, USA","[44.458417, -123.323498]"
+"Hermanos Lurton Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"PaÅaeli Winery, Turkey",,
+"ChÃ¢teau Cabredon Winery, France",France,"[46.227638, 2.213749]"
+"Clos d'Yvigne Winery, France",France,"[46.227638, 2.213749]"
+"FilÃ³n Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"ChÃ¢teau du Coudray MontpensierÂ  Winery, France","29 Rue Pierre et Marie Curie, 37500 Chinon, France","[47.1260388, 0.1686491]"
+"Dreaming Tree Winery, US",,
+"Marques de Moral Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"David Family Winery, US","4580 CA-12, Lodi, CA 95242, USA","[38.1157607, -121.3721358]"
+"ChÃ¢teau Bellerose Figeac Winery, France","Chateau de Figeac, 33330 Saint-Émilion, France","[44.912823, -0.1932589]"
+"Pircas Negras Winery, Argentina",Argentina,"[-38.416097, -63.61667199999999]"
+"Kagan Winery, US",,
+"ChÃ¢teau de SÃ©griÃ¨s Winery, France",France,"[46.227638, 2.213749]"
+"BÃ¼rgermeister Willi Schweinhardt Winery, Germany",Germany,"[51.165691, 10.451526]"
+"ChÃ¢teau la GraviÃ¨re Grand Poujeaux Winery, France","Los Angeles, CA, USA","[34.0522342, -118.2436849]"
+"Wheelhouse Winery, US","4275 Old US Hwy 45 S, Paducah, KY 42003, USA","[37.0123454, -88.6730415]"
+"Zahtila Winery, US","2250 Lake County Hwy, Calistoga, CA 94515, USA","[38.59183, -122.577861]"
+"Vintage Sun Winery, Argentina",Argentina,"[-38.416097, -63.61667199999999]"
+"Osborne Winery, Portugal",Portugal,"[39.39987199999999, -8.224454]"
+"Frisson Wines, US",,
+"Montepeloso Winery, Italy","5496 Black Sage Rd, Oliver, BC V0H 1T0, Canada","[49.1591436, -119.5377864]"
+"Michael Sullberg Winery, US",,
+"Rose & Son Winery, US",,
+"The Illegitimate Winery, US",,
+"Domaine de Ponteveze Winery, France",France,"[46.227638, 2.213749]"
+"Palazzone Winery, Italy","Via delle Cantine, 2, 53040 San Casciano dei bagni SI, Italy","[42.891324, 11.938253]"
+"Domaine de BeauprÃ© Winery, France","1 Place de l'Église, 21700 Vosne-Romanée, France","[47.1617666, 4.9551114]"
+"ChÃ¢teau Rodin Winery, US",,
+"Baron Cooper Winery, US",,
+"Cachette Winery, France",France,"[46.227638, 2.213749]"
+"New Age Winery, Argentina",Argentina,"[-38.416097, -63.61667199999999]"
+"El Ganador Winery, Argentina",Argentina,"[-38.416097, -63.61667199999999]"
+"Pedernales Winery, US","2916 Upper Albert Rd, Stonewall, TX 78671, USA","[30.2010098, -98.6551193]"
+"Alba Roja Winery, Argentina",Argentina,"[-38.416097, -63.61667199999999]"
+"Shah Estate Winery, US","15500 Woodinville-Redmond Road Northeast C600, Woodinville, WA 98072, United States","[47.7400262, -122.1546965]"
+"PeÃ±alba Herraiz Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Cereghino Smith Winery, US",,
+"Last Judgment Winery, US",,
+"ChÃ¢teau PesquiÃ© Winery, France","2290 S French Rd, Lake Leelanau, MI 49653, USA","[44.9484416, -85.7551398]"
+"Sierra Virgen Winery, Spain","Av. Cooperativa, 21, 50310 Villarroya de la Sierra, Zaragoza, Spain","[41.4607829, -1.7856971]"
+"Bodega Belgrano Winery, Argentina","Juramento 1775, C1428DNA, Buenos Aires, Argentina","[-34.5583529, -58.45092940000001]"
+"Smythe & Renfield Winery, New Zealand",New Zealand,"[-40.900557, 174.885971]"
+"Pozzi Winery, Italy",Italy,"[41.87194, 12.56738]"
+"Barone Fini Winery, Italy",Italy,"[41.87194, 12.56738]"
+"Provenza Winery, Greece",Greece,"[39.074208, 21.824312]"
+"HRM Rex Goliath Winery, US",,
+"Torre di Luna Winery, Italy",Italy,"[41.87194, 12.56738]"
+"Chaleur Estate Winery, US","19 Hillside Ave, Summit, NJ 07901, USA","[40.7200253, -74.3610479]"
+"ChÃ¢teau Pavie Macquin Winery, France","1 Peygenestau, 33330 Saint-Émilion, France","[44.890687, -0.1491023]"
+"The Better Half Winery, New Zealand",New Zealand,"[-40.900557, 174.885971]"
+"Amos Cellars Winery, US","12346 US-290, Fredericksburg, TX 78624, USA","[30.22167099999999, -98.693597]"
+"Quinola Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Fondo del Barbera Winery, Italy",Italy,"[41.87194, 12.56738]"
+"Orma Winery, Italy","57022 Castagneto Carducci, Province of Livorno, Italy","[43.2169013, 10.6119284]"
+"Domaine Dyckerhoff Winery, France",France,"[46.227638, 2.213749]"
+"Cala de' Poeti Winery, Italy",Italy,"[41.87194, 12.56738]"
+"Drops of Jupiter Winery, US",,
+"DalÃ¿s Winery, France","8145 W Sinclair St, West Baden Springs, IN 47469, USA","[38.56171, -86.611716]"
+"Charnu Winery, US",,
+"La Vigna di Iseppo Winery, Italy",Italy,"[41.87194, 12.56738]"
+"SangenÃ­s I VaquÃ© Winery, Spain","122 W Spain St, Sonoma, CA 95476, USA","[38.29407, -122.459148]"
+"Nelwood Wines, Australia",Australia,"[-25.274398, 133.775136]"
+"Las NiÃ±as Winery, Chile",Chile,"[-35.675147, -71.542969]"
+"ChÃ¢teau Haut Mondain Winery, France","103 Avenue de Cadaujac, 33850 Léognan, France","[44.7332821, -0.5809653]"
+"CÃ´tnar Hills Winery, Ukraine","California, USA","[36.778261, -119.4179324]"
+"ViÃ±a San Juan Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"ChÃ¢teau Panchille Winery, France","2290 S French Rd, Lake Leelanau, MI 49653, USA","[44.9484416, -85.7551398]"
+"ChÃ¢teau Fortin Plaisance Winery, France",France,"[46.227638, 2.213749]"
+"ChÃ¢teau Hauchat Winery, France",France,"[46.227638, 2.213749]"
+"ChÃ¢teau Haut Clairbes Winery, France","103 Avenue de Cadaujac, 33850 Léognan, France","[44.7332821, -0.5809653]"
+"ChÃ¢teau la Croix du Casse Winery, France","56 Route de Périgueux, 33500 Pomerol, France","[44.9390169, -0.2114184]"
+"ChÃ¢teau Blouin Winery, France","2290 S French Rd, Lake Leelanau, MI 49653, USA","[44.9484416, -85.7551398]"
+"ChÃ¢teau Jaulien Winery, France",France,"[46.227638, 2.213749]"
+"Rudolf Eilenz Winery, Germany",Germany,"[51.165691, 10.451526]"
+"ChÃ¢teau la Croix Blanche Winery, France","1998 WI-87, St Croix Falls, WI 54024, USA","[45.497758, -92.65143300000001]"
+"ChÃ¢teau La Marotte Winery, France",France,"[46.227638, 2.213749]"
+"Sabina Vineyards, US","3291 St Helena Hwy, St Helena, CA 94574, USA","[38.536767, -122.509253]"
+"Clos Ventana Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Stormhoek Winery, South Africa",South Africa,"[-30.559482, 22.937506]"
+"ChÃ¢teau de l'HyverniÃ¨re Winery, France",France,"[46.227638, 2.213749]"
+"Tortoise Creek Winery, France",France,"[46.227638, 2.213749]"
+"JoaquÃ­n GÃ¡lvez BauzÃ¡ Winery, Spain","122 W Spain St, Sonoma, CA 95476, USA","[38.29407, -122.459148]"
+"Lionheart Winery, US",,
+"ChÃ¢teau Grand Rolland Winery, France",France,"[46.227638, 2.213749]"
+"KÃ¼hling-Gillot Winery, Germany",Germany,"[51.165691, 10.451526]"
+"Lonia Winery, Spain","Plaça Joan Sala, 2, 08770 Sant Sadurní d'Anoia, Barcelona, Spain","[41.4207495, 1.7940599]"
+"Assolati Winery, Italy",Italy,"[41.87194, 12.56738]"
+"Chilcas Winery, ",,
+"JÃ©rÃ©mie Huchet Winery, France",France,"[46.227638, 2.213749]"
+"Alvarez de Toledo Winery, Spain",Spain,"[40.46366700000001, -3.74922]"
+"Domaine Chaintreuil Winery, France","69820 Fleurie, France","[46.1867409, 4.6911588]"
+"25 Lagunas Winery, Argentina",Argentina,"[-38.416097, -63.61667199999999]"
+"White Cottage Winery, US","555 College Ave, Angwin, CA 94508, USA","[38.58446199999999, -122.45431]"
+"Luca Winery, Argentina",Argentina,"[-38.416097, -63.61667199999999]"
+"Campesino Winery, US",,
+"Tatomer Winery, US",United States,"[37.09024, -95.712891]"
+"ChÃ¢teau Corconnac Winery, France",France,"[46.227638, 2.213749]"
+"Heggies Vineyard, Australia",Australia,"[-25.274398, 133.775136]"
+"Antipodean Winery, Australia",Australia,"[-25.274398, 133.775136]"
+"Kenos Winery, Chile",Chile,"[-35.675147, -71.542969]"
+"Albada Winery, Spain","Av. Cooperativa, 21, 50310 Villarroya de la Sierra, Zaragoza, Spain","[41.4607829, -1.7856971]"
+"Wamakersvallei Winery, South Africa",South Africa,"[-30.559482, 22.937506]"
+"ChÃ¢teau de BÃ©ru Winery, France","Route des Arcs, 83460 Taradeau, France","[43.444206, 6.43316]"
+"Red Puro Winery, Argentina",Argentina,"[-38.416097, -63.61667199999999]"
+"ChÃ¢teau Trocard Monrepos Winery, France",,
+"Clos Saint Michel Winery, France",,
+"ChÃ¢teau du Trignon Winery, France",,
+"Bessa Winery, Bulgaria",,
+"Carlo Giacosa Winery, Italy",,
+"ChÃ¢teau Lafaurie-Peyraguey Winery, France",,
+"Bodini Winery, Argentina",,
+"Domaine BenoÃ®t & Mathieu Fleuriet Winery, France",,
+"Delmas Winery, France",,
+"Gualandi Winery, Italy",,
+"Clos des Orefeuilles Winery, France",,
+"Silver Spoon Winery, US",,
+"Bialla Winery, US",,
+"Bella Union Winery, US",,
+"Darms Lane Winery, US",,
+"Revolution Winery, Australia",,
+"Rudi Schultz Winery, South Africa",,
+"Serengeti Winery, South Africa",,
+"Bocage Winery, US",,
+"Salvatore Principe Winery, New Zealand",,
+"ChÃ¢teau Pigoudet Winery, France",,
+"Pippin Hill Farm Winery, US",,
+"Old House Winery, US",,
+"Bodegas y Vinedos del JalÃ³n Winery, Spain",,
+"Geografico Castello Tricerchi Winery, Italy",,
+"Red Blend Winery, France",,
+"Le Classique from the 3 Springs Vineyard, France",,
+"Bartali Winery, Italy",,
+"Day Winery, US",,
+"MarquÃ©s de Vitoria Winery, Spain",,
+"Trinity Vineyards, US",,
+"Wharton Winery, US",,
+"Santa Ema Winery, ",,
+"Callan Winery, US",,
+"ChÃ¢teau Tertre de BelvÃ¨s Winery, France",,
+"History Winery, US",,
+"Montes Toscanini Winery, Uruguay",,
+"Rocca Giovanni Winery, Italy",,
+"Villa Pozzi Winery, Italy",,
+"Turning Leaf Winery, US",,
+"Dancing Bear Cellars Winery, US",,
+"Ruston Winery, US",,
+"Sleeping Dogs Winery, New Zealand",,
+"Monkey Bay Winery, New Zealand",,
+"Kirkland Signature Winery, Chile",,
+"CrÃ¡pula Winery, Spain",,
+"Forward Kidd Winery, US",,
+"ChÃ¢teau Cossieu-Coutelin Winery, France",,
+"ChÃ¢teau d'Eyran Winery, France",,
+"Podere il Pozzo Winery, Italy",,
+"ChÃ¢teau Grand-Maison Winery, France",,
+"SeÃ±orio del Tallar Winery, Spain",,
+"Serra da Estrela Winery, Spain",,
+"ChÃ¢teau Gairoird Winery, France",,
+"Domaine de Paris Winery, France",,
+"El Porvenir Winery, Argentina",,
+"Adegas Terra Santa Winery, Spain",,
+"Gran Cruz Winery, Portugal",,
+"Glen Manor Winery, US",,
+"Tenuta Crocedimezzo Winery, Italy",,
+"Capo Soprano Winery, Italy",,
+"Xama Kaye Winery, Argentina",,
+"Red Earth Winery, Australia",,
+"Sunshine Organics Winery, South Africa",,
+"ViÃ±a Ochotierras Winery, Chile",,
+"Ataraxia Winery, South Africa",,
+"Villa Puccini Winery, Italy",,
+"Cambridge California Winery, US",,
+"Loca Winery, Spain",,
+"Los Dos Winery, Spain",,
+"Vecordia Winery, Spain",,
+"Pago de Sangara Winery, Spain",,
+"Chardonnay Winery, South Africa",,
+"Castello di MontepÃ² Winery, Italy",,
+"Tenuta Belguardo Winery, Italy",,
+"Lohsa Winery, Italy",,
+"AlmaTerra Winery, US",,
+"Surh Luchtel Winery, US",,
+"Otanon Winery, Spain",,
+"Seven Lions Winery, US",,
+"ChÃ¢teau Cantenac Brown Winery, France",,
+"Ioppa Winery, Italy",,
+"ChÃ¢teau de Genibon Winery, France",,
+"River Rock Winery, US",,
+"Domaine du Moulin-Pouzay Winery, France",,
+"Abiqua Wind Winery, US",,
+"Cantina di Gambellara Winery, Italy",,
+"Carmelo Patti Winery, Argentina",,
+"Tenuta Le Querce Winery, Italy",,
+"Vigneti del Vulture Winery, Italy",,
+"Pazo da BouciÃ±a Winery, Spain",,
+"CastellvÃ­ de la Marca Winery, Spain",,
+"ChÃ¢teau Guillot Clauzel Winery, France",,
+"ChÃ¢teau L'Ermitage Winery, France",,
+"Clos des Menuts Winery, France",,
+"Domaine du Tunnel Winery, France",,
+"Domaine Font de Michelle Winery, France",,
+"Piro Piro Piccolo Winery, US",,
+"Tiberini Winery, Italy",,
+"Tussock Jumper Winery, New Zealand",,
+"Chapter CapÃ­tulo 8 Winery, Spain",,
+"ChÃ¢teau MÃ©moires Winery, France",,
+"Domaine Guindon Winery, France",,
+"Eliana Winery, US",,
+"Lamin Winery, Spain",,
+"Black Ink Winery, US",,
+"Cantina dei Produttori Nebbiolo di Carema Winery, Italy",,
+"La Grande CÃ´te Winery, US",,
+"Patricius Winery, Hungary",,
+"Salitage Winery, Australia",,
+"Taking Root Winery, Moldova",,
+"Parsonage Village Winery, US",,
+"Moser Scharding Winery, US",,
+"Tenuta del Nanfro Winery, Italy",,
+"ViÃ±a Olvido Winery, Spain",,
+"Domaine des Mouilles Winery, France",,
+"Roku Winery, US",,
+"Tussock Jumper Winery, Argentina",,
+"Red Rock Winery, Argentina",,
+"Domaine Emmanuel Fellot Winery, France",,
+"Domaine Loubejac Winery, US",,
+"Grand Enclos du ChÃ¢teau de CÃ©rons Winery, France",,
+"Mila Vuolo Winery, Italy",,
+"Four Sisters Winery, Australia",,
+"Domaine de Souviou Winery, France",,
+"Coopers Creek Winery, New Zealand",,
+"Vital Winery, US",,
+"Cantaburros Winery, Spain",,
+"Tenuta Stella Winery, Italy",,
+"ChanamÃ© Winery, US",,
+"Butler Nephew & Co Winery, Portugal",,
+"Highland Hills Winery, US",,
+"Wild Brush Cellars Winery, US",,
+"Four Brix Winery, US",,
+"Algairen Winery, Spain",,
+"Beekeeper Cellars Winery, US",,
+"Dance Winery, US",,
+"Domaine Cordier PÃ¨re et Fils Winery, France",,
+"ChÃ¢teau Calvimont Winery, France",,
+"ChÃ¢teau Mission Saint Vincent Winery, France",,
+"ChÃ¢teau Roques Mauriac Winery, France",,
+"F2F Winery, Bulgaria",,
+"Fleur de Charme Winery, France",,
+"Grindstone Winery, US",,
+"Podere Castellinuzza Winery, Italy",,
+"Lecci e Brocchi Winery, Italy",,
+"Inception Winery, US",,
+"McKinley Springs Winery, US",,
+"Antoine et Rachel Olivier Winery, France",,
+"Blondie Winery, US",,
+"Cavalchina Winery, Italy",,
+"J. McClelland Winery, US",,
+"Gran Moraine Winery, US",,
+"Sadie Family Winery, South Africa",,
+"Mestres Winery, Spain",,
+"Nelms Road Winery, US",,
+"Pasini San Giovanni Winery, Italy",,
+"Dominio Do Bibei Winery, Spain",,
+"Jenkyn Place Vineyard, England",,
+"Julien Braud Winery, France",,
+"K. Martini & Son Winery, Italy",,
+"ChÃ¢teau d'Arce Winery, France",,
+"ChÃ¢teau du Bernat Winery, France",,
+"Imagine Moore Winery, US",,
+"Fontevecchia Winery, Italy",,
+"Hatcher Winery, US",,
+"Heredad Soliterra Winery, Spain",,
+"Tero Estates Winery, US",,
+"Mueller Winery, US",,
+"Obalo Winery, Spain",,
+"Pricum Winery, Spain",,
+"Monpissan Winery, Italy",,
+"Upper Five Winery, US",,
+"Domaine Santa Giulietta Winery, France",,
+"Vignobles AndrÃ© Lurton Winery, France",,
+"Taba Winery, Italy",,
+"Gregoletto Winery, Italy",,
+"Ermacora Winery, Italy",,
+"PV Vinhos Winery, Portugal",,
+"Montirius Winery, France",,
+"Quinta de Roriz Winery, Portugal",,
+"DivÃ­ ElegÃ ncia Winery, France",,
+"Saldo Winery, US",,
+"Picolino Winery, Spain",,
+"Dos Lagos Vineyards, US",,
+"ChÃ¢teau d'Issan Winery, France",,
+"Johndrow Vineyards, US",,
+"Domaine de Montille Winery, France",,
+"Domaine des Perdrix Winery, France",,
+"Grieve Winery, US",,
+"Domaine Seilly Winery, France",,
+"Stony Hill Winery, US",,
+"Dominio Lasierpe Winery, Spain",,
+"Arbor Hill Winery, US",,
+"Bodegas Tempore Winery, Spain",,
+"Jigsaw Winery, US",,
+"Le Bocce Winery, Italy",,
+"Palazzo Vecchio Winery, Italy",,
+"Pazo de Galegos Winery, Spain",,
+"Braveheart Winery, US",,
+"St. Clair Winery, US",,
+"High Desert Winery, Argentina",,
+"CermeÃ±o Winery, Spain",,
+"Frisby Winery, US",,
+"Michel Reybier Winery, France",,
+"Cascina Cucco Winery, Italy",,
+"ChÃ¢teau de Trousse Winery, France",,
+"ChÃ¢teau des Augustins Winery, France",,
+"Machine Breaker Winery, US",,
+"Poll-Fabaire Winery, Luxembourg",,
+"Madonna Estate Winery, US",,
+"Maple Lane Winery, US",,
+"Gere Attila Winery, Hungary",,
+"Domaine LathuiliÃ¨re Gravallon Winery, France",,
+"Lantides Winery, Greece",,
+"VENN Winery, US",,
+"There Winery, US",,
+"Charles de FÃ¨re Winery, France",,
+"Sonoma Hills Winery, US",,
+"Super Hero Winery, US",,
+"Tedeschi Winery, US",,
+"Four Cairn Winery, US",,
+"La Cerbaiola Winery, Italy",,
+"Vincent Price Winery, US",,
+"Las Valles Winery, Spain",,
+"Paranoia Winery, US",,
+"Paul Beaudet Winery, France",,
+"Sorelle Winery, US",,
+"ChÃ¢teau Beauregard-Ducourt Winery, France",,
+"Shipwreck Winery, US",,
+"Stonecap Winery, US",,
+"Aaron Winery, US",,
+"Bomb Winery, US",,
+"Cafaggio Winery, Italy",,
+"Vilalva Winery, Portugal",,
+"Paul Bertrand Winery, France",,
+"Ribbon Ridge Winery, US",,
+"Tenuta di Fiorano Winery, Italy",,
+"Loacker Winery, Italy",,
+"Marland Winery, US",,
+"Rain Dance Winery, US",,
+"BouchiÃ©-Chatellier Winery, France",,
+"Dominio de Punctum Winery, Spain",,
+"RessÃ² Winery, Spain",,
+"La Casa Maguila Winery, Spain",,
+"ChÃ¢teau Goudichaud Winery, France",,
+"Robert Goyette Winery, US",,
+"Salzl Seewinkelhof Winery, Austria",,
+"Table No. 7 Winery, US",,
+"Clos FloridÃ¨ne Winery, France",,
+"Mandolina Winery, US",,
+"Stacked Stone Winery, US",,
+"Domaine des Lambrays Winery, France",,
+"Clos de Tart Winery, France",,
+"Portia Winery, Spain",,
+"Talis Wine Winery, Italy",,
+"Matteo Winery, US",,
+"Poggio Lungo Winery, Italy",,
+"Petite Sirah Winery, US",,
+"Monthaven Winery, US",,
+"Palmoletino Winery, Italy",,
+"Tenuta Poggio Rosso Winery, Italy",,
+"ChÃ¢teau de Potiron Winery, France",,
+"Reversanti Winery, Italy",,
+"ChÃ¢teau de Terrefort Bibonne Winery, France",,
+"La Chanterelle Winery, US",,
+"The Archivist Winery, US",,
+"ChÃ¢teau de GoÃ«lane Winery, France",,
+"ChÃ¢teau de Monrecueil Winery, France",,
+"Domaine Begude Winery, France",,
+"La Noble Winery, France",,
+"Mara Winery, US",,
+"Occidental Road Cellars Winery, US",,
+"Rocca del Principe Winery, Italy",,
+"Bosco Nestore Winery, Italy",,
+"Cap Cette Winery, France",,
+"Garnacha de Fuego Winery, Spain",,
+"Shelton Vineyards, US",,
+"Fortius Winery, Spain",,
+"Allesverloren Winery, South Africa",,
+"Annie's Lane Winery, Australia",,
+"Barossa Valley Estate Winery, Australia",,
+"Tionio Winery, Spain",,
+"Elysian Fields Winery, Australia",,
+"McGuigan Winery, Australia",,
+"Rawson's Winery, South Africa",,
+"Dominio Dostares Winery, Spain",,
+"Cantina Tramin Winery, Italy",,
+"JoÃ£o Pires Winery, Portugal",,
+"Villa Carra Winery, Italy",,
+"The Seven Brothers Winery, US",,
+"ChÃ¢teau La Fleur Beaumont Winery, France",,
+"Coomber Family Ranch Winery, US",,
+"Fiddlebender Winery, US",,
+"Quinta do Judeu Winery, Portugal",,
+"Greenhill Winery, US",,
+"Barham Mendelsohn Winery, US",,
+"Bodegas Roda Winery, Spain",,
+"Jericho Canyon Vineyard, US",,
+"Tenuta Alzatura Winery, Italy",,
+"Les Vignerons de Grimaud Winery, France",,
+"ViÃ±a Hermosa Winery, Spain",,
+"Castillo Colina Winery, Spain",,
+"3 Steves Winery, US",,
+"Bodega Melgarajo Winery, Spain",,
+"Aletta Winery, Spain",,
+"Cantine Astroni Winery, Italy",,
+"ChÃ¢teau de Lussac Winery, France",,
+"Cherry Tart Winery, US",,
+"Claudio Quarta Winery, Italy",,
+"Contrada Salandra Winery, Italy",,
+"DemiÃ¨re-Ansiot Winery, France",,
+"Sightglass Winery, US",,
+"Bodegas Olarra Winery, Spain",,
+"Podere Le Ripi Winery, Italy",,
+"Psagot Winery, ",,
+"Trizanne Winery, South Africa",,
+"White Rock Vineyards, US",,
+"ChÃ¢teau de Montfort Winery, France",,
+"ChÃ¢teau l' Oiseau Winery, France",,
+"ChÃ¢teau Peneau Winery, France",,
+"Clear Night Winery, Germany",,
+"Con un Par Winery, Spain",,
+"Edizione Pennino Winery, US",,
+"Casale dello Sparviero Winery, Italy",,
+"ChÃ¢teau de Candale Winery, France",,
+"AJB Vineyards, US",,
+"Andrew Harris Winery, Australia",,
+"Philip Staley Winery, US",,
+"Stonecroft Winery, New Zealand",,
+"Garretson Winery, US",,
+"A Donkey and Goat Winery, US",,
+"Gianfranco Bovio Winery, Italy",,
+"Patianna Winery, US",,
+"Segue Winery, US",,
+"Hanging Vine Winery, US",,
+"Terra Australis Winery, Australia",,
+"Aconcagua Winery, Argentina",,
+"Surf Point Winery, US",,
+"Friday Monkey Winery, Australia",,
+"Patritti Winery, Australia",,
+"Angry Bunch Winery, US",,
+"Manastira Winery, Bulgaria",,
+"Ponte Winery, US",,
+"Tuxedo Cellars Winery, US",,
+"PÃ¶ckl Winery, Austria",,
+"Chartogne-Taillet Winery, France",,
+"Io Winery, US",,
+"Greystone Winery, New Zealand",,
+"Aaldering Winery, South Africa",,
+"Balnaves of Coonawarra Winery, Australia",,
+"ChÃ¢teau Branas Grand Poujeaux Winery, France",,
+"Contour Winery, US",,
+"Cantina Sociale Barbera dei Sei Castelli Winery, Italy",,
+"Wofford Acres Winery, US",,
+"ChÃ¢teau Myon de l'Enclos Winery, France",,
+"dÃ®ner Winery, US",,
+"Fourteen Appellations Winery, US",,
+"La Piasola Winery, Italy",,
+"Terre di Balbia Winery, Italy",,
+"Le Vigne di Eli Winery, Italy",,
+"Knappstein Winery, Australia",,
+"Urraca Winery, Argentina",,
+"Helix Winery, US",,
+"Cantine Due Palme Winery, Italy",,
+"Steve Hoff Winery, Australia",,
+"Baron d'Arignac Winery, France",,
+"ChÃ¢teau La Grange de Bessan Winery, France",,
+"Cielo Winery, Italy",,
+"Mondo del Vino Winery, Italy",,
+"Alpha Zeta Winery, Italy",,
+"ChÃ¢teau Joly Winery, France",,
+"Los Navales de MartÃºe Winery, Spain",,
+"ChÃ¢teau les Crostes Winery, France",,
+"ChÃ¢teau Tourril Winery, France",,
+"Domaine Gavoty Winery, France",,
+"MartÃ­n CÃ³dax Winery, Spain",,
+"Paso Creek Winery, US",,
+"Lorgeril Winery, France",,
+"Montpezat Winery, France",,
+"Redcliffe Winery, New Zealand",,
+"La Cruz Winery, Chile",,
+"Podrumi Belje Winery, Croatia",,
+"Domaine Foivos Winery, Greece",,
+"Heliodoro Winery, US",,
+"Reilly's Winery, Australia",,
+"Cascata Winery, US",,
+"Dante Robino Winery, Argentina",,
+"Giordano Winery, Italy",,
+"Castello Sonnino Winery, Italy",,
+"ChÃ¢teau les Aubiers Winery, France",,
+"Chateau les Tuilleries Winery, France",,
+"Demarjory Winery, France",,
+"Fattoria Campigiana Winery, Italy",,
+"FlyWine Winery, US",,
+"GarciarÃ©valo Winery, Spain",,
+"San Francisco Wine Press Winery, US",,
+"Garavin Winery, US",,
+"Lost and Found Winery, US",,
+"Omen Winery, US",,
+"Last Summer Winery, US",,
+"Armas de Guerra Winery, Spain",,
+"Dalva Winery, Portugal",,
+"Luminis Winery, Argentina",,
+"People's Wine Revolution Winery, US",,
+"Dujac Fils & Pere Winery, France",,
+"Cave de Rasteau Winery, France",,
+"Terre di Poggio Winery, Italy",,
+"Les Hauts de Tousquiron Winery, France",,
+"Campos de SueÃ±os Winery, Spain",,
+"Duran Winery, Spain",,
+"Fantinel Winery, Italy",,
+"Barista Winery, South Africa",,
+"Chillhouse Winery, US",,
+"Pago Jean Leon Winery, Spain",,
+"Clockspring Winery, US",,
+"Ribas de Cabrera Winery, Spain",,
+"Oriel Winery, US",,
+"Eppalock Ridge Winery, Australia",,
+"Feudi di Terra d'Otranto Winery, Italy",,
+"Henri Ehrhart Winery, France",,
+"Emmi Veruccia Winery, Italy",,
+"La Rioja Alta Winery, Spain",,
+"Mas de Daumas Gassac Winery, France",,
+"Domaine Luneau-Papin Winery, France",,
+"Weinrieder Winery, Austria",,
+"Delea Winery, Switzerland",,
+"Xumek Winery, Argentina",,
+"Chiorri Winery, Italy",,
+"Dan Aykroyd Wines, US",,
+"Stefano Ferrucci Winery, Italy",,
+"Two Hands Winery, Australia",,
+"Ernesto Catena Winery, Argentina",,
+"Casa Santa Eufemia Winery, Portugal",,
+"The Winery SF Winery, US",,
+"Feudi della Medusa Winery, Italy",,
+"Highway 128 Winery, US",,
+"Luccarelli Winery, Italy",,
+"Chiesa Carlo Winery, Italy",,
+"ChÃ¢teau Poitevin Winery, France",,
+"ChÃ¢teau Tour Haut-Caussan Winery, France",,
+"Quinta Vale de Fornos Winery, Portugal",,
+"Tenuta Cerulli Spinozzi Winery, Italy",,
+"Domaine LaouguÃ© Winery, France",,
+"Lucy Winery, US",,
+"Tess Winery, US",,
+"Albertina Winery, US",,
+"Cantine Lupo Winery, Italy",,
+"ChÃ¢teau Laroche Joubert Winery, France",,
+"Harlan Estate Winery, US",,
+"Prospect 1870 Winery, South Africa",,
+"Leonardo Family Vineyards, US",,
+"Simon Hackett Winery, Australia",,
+"ForestVille Winery, US",,
+"Pooles Rock Wines, Australia",,
+"Piggy Bank Winery, Chile",,
+"Haute Red Winery, US",,
+"Sombras del Sol Winery, Chile",,
+"Tussock Jumper Winery, US",,
+"Ankida Ridge Winery, US",,
+"Beautiful Dream Winery, US",,
+"H & G Winery, US",,
+"Attimo Winery, US",,
+"ChÃ¢teau la Calisse Winery, France",,
+"Domaine de l'Amaurigue Winery, France",,
+"Napa Station Winery, US",,
+"Verus Vineyards, Slovenia",,
+"Werewolf Winery, Romania",,
+"Weinreich Winery, Germany",,
+"Herdade da Capela Winery, Portugal",,
