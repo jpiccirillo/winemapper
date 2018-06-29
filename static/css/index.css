@@ -1,0 +1,39 @@
+body {
+    background-color: white
+}
+.title {
+    color: var(--greydark)
+}
+
+section,
+.options {
+    background-color: var(--light)
+}
+
+body {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 300;
+}       
+
+.btn-group {
+    float: right;
+}
+
+.btn-secondary {
+    margin-left: 5%;
+    padding-top: 2px;
+    padding-bottom: 5px;
+}
+
+.container-flex {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.header {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.col-2 {
+    padding:5px;
+}

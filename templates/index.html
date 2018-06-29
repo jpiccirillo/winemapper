@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+
+    <head>
+        <!-- This is the Home Page -->
+        <title>Dashboard Page</title>
+        <link rel="stylesheet" type="text/css" href="static/bootstrap/bootstrap_litera.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="static/css/default_style.css">
+        <link rel="stylesheet" type="text/css" href="static/css/index.css">
+        <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    </head>
+
+    <body>
+        <div class="container-flex">
+            <h2 class="header">Welcome to Wine Mapper!
+                <div class="btn-group">
+                <button type="button" class="btn btn-secondary"><a href="/logout" style="color: white; text-decoration: none;"><small>Log Out</small></a>
+                </div>
+        </h2>
+        </div>
+        <div class="container-flex">
+            <div class="row">
+                <div class="col-md-6">
+                    <section class="bigtitle" style="border-top: 3px solid var(--navy1)">
+                        <a href="/map" style="color: var(--darkblue); text-decoration: none;">
+                            <h2 class="bigtitle-title" style="background-color: var(--navy1)">Search Wines</h2>
+                            <p>Map of wine, soil and climate data paried with sommelier reviews to dig through.</p>
+                        </a>
+                    </section>
+                </div>
+                <div class="col-md-6">
+                    <section class="bigtitle" style="border-top: 3px solid var(--teal1)">
+                        <a href="/profile" style="color: var(--darkblue); text-decoration: none;">
+                            <h2 class="bigtitle-title" style="background-color: var(--teal1);">View Profile</h2>
+                            <p>Check out your address and past favorites.</p>
+                        </a>
+                    </section>
+                </div>
+            </div>
+            <div class="row">
+                <label for="example-text-input" class="col-2 col-form-label">Add to database: </label>
+                <div class="col-3">
+                    <input class="form-control" type="text" placeholder="(firstname)" id="firstname">
+                </div>
+                <div class="col-3">
+                    <input class="form-control" type="text" placeholder="(lastname)" id="lastname">
+                </div>
+                <div class="col-2">
+                    <button type="submit" class="btn btn-primary" style="float: right; margin: 0px; width: 100%" onClick="insert()">Insert</button>
+                </div>
+                <div class="col-2">
+                    <a href="/"><button type="submit" class="btn btn-success" style="float: right; margin: 0px; width: 100%">SELECT * (refresh)</button></a>
+                </div>
+            </div>
+            <div>
+                <br>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">First</th>
+                            <th scope="col">Last</th>
+                            <th scope="col">Age</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in entries %}
+                        <tr>
+                            <th scope="row">{{user[0]}}</th>
+                            <td>{{user[1]}}</td>
+                            <td>{{user[2]}}</td>
+                            <td>{{user[3]}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+
+    <script src="static/js/index.js"></script>
+</html>
