@@ -1,141 +1,89 @@
-
-/* Layout styles -----------------------------------*/
-@media (min-width: 620px) {
-  main {
-    column-count: 2;
-    column-gap: 20px;
-  }
-  .main2 {
-     column-count: 1;
-     column-gap: 20px;
-  }
-  section {
-    break-inside: avoid;
-  }
-}
-
-@media (min-width: 960px) {
-  main {
-     column-count: 3;
-  }
-}
+@import url("https://fonts.googleapis.com/css?family=Raleway:400,700");
 
 :root {
-    --darkblue: #34495e;
-    --navy1:#495a80;
-    --navy2:#616f8c;
-    --neutral:#9d9291;
-    --orange1:#c8a17e;
-    --orange2:#ed9845;
-    --darkorange: #df7c18;
+    --navcolor: #a73737;
+    --navcolorclicked: #8b2f2f;
+    --pagecolor: indianred;
+    --pagecolorclicked: #ab3c3c;
+    --textcolor: #484848;
+    --navtextcolor: white;
 }
-
-main {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  padding-bottom: 0px;
-}
- .main2{
-     max-width: 1200px;
-     margin: 0 auto;
-     padding-left: 20px;
-     padding-right: 20px;
- }
-
-header {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px 20px 0;
-}
-
-.title {
-  font-size: 2.6em;
-  text-align: center;
-  color: white;
-  margin-bottom: 20px
-}
-
-.figure-img {
-  display: block;
-  width: 100%;
-  object: fit;
-}
-
-h2 {
-  font-size: 1.4em;
-  padding: 10px;
-}
-
-p {
-  margin-bottom: 1em;
-  padding: 0 10px;
-  font-family: 'Ubuntu', sans-serif;
-  font-size: .875em;
-  font-weight: 100;
-}
-
-.info-link {
-  text-decoration: none;
-  color: var(--navy2);
-  padding: 10px;
-  display: block;
-}
-
-.options {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  padding: 10px;
-  border-top: 3px solid var(--blue);
-  border-radius: 3px;
-  background-color: lightgrey;
-}
-
-.options-link {
-  text-decoration: none;
-  font-size: 0.9em;
-  color: var(--darkblue);
-}
-
-section {
-  border-top: 3px solid var(--navy2);
-  border-radius: 3px;
-  background-color: lightgrey;
-  margin-bottom: 20px;
-  overflow: hidden;
-}
-
-.section-img {
-  display: block;
-  padding: 10px;
-  margin: 0 auto;
-}
-
-.bigtitle {
-  padding: 0;
-  min-height: 125px;
-}
-
-.bigtitle-title {
-  color: white;
-  background-color: var(--navy2);
-  margin-bottom: 10px;
-}
-
-.bigbottom-link {
-  background-color: var(--blue);
-  color: white;
-}
-
-.profile {
-  width: 80%;
-  border-radius: 50%;
-  margin-bottom: 10px;
-}
-
 @media (min-width: 620px) {
-  .options-link {
-    font-size: 1.4em;
-  }
+    main {
+        column-count: 2;
+        column-gap: 20px;
+    }
+    .main2 {
+        column-count: 1;
+        column-gap: 20px;
+    }
+    section {
+        break-inside: avoid;
+    }
+}
+.form-control {
+    padding: 8px;
+    font-size: 14px;
+}
+body {
+    font-family: 'Dosis', sans-serif;
+    font-weight: 300;
+    border-radius: 4px !important;
+    color: var(--textcolor);
+}
+form {
+    margin: auto;
+    /*width: 40%;*/
+}
+.dropdown-toggle {
+    padding-right: 7px !important;
+    padding-left: 7px !important;
+    margin-right: 10px;
+    height: 24px;
+}
+
+.btn-secondary.nav, .dropdown-toggle, .btn-secondary.page {
+    background-color: Transparent;
+    border-width: 0px;
+    text-decoration: none;
+    border-radius: 4px;
+    height: 100%;
+    color: white !important;
+    font-size: 14px;
+}
+.btn-secondary.page {
+    background-color: var(--pagecolor);
+}
+.btn-secondary.page:not(:disabled):not(.disabled):active {
+    background-color: var(--pagecolorclicked);
+}
+
+.btn-secondary.nav:hover, .dropdown-toggle:hover {
+    background-color: var(--navcolor);
+}
+
+.btn-secondary.nav:not(:disabled):not(.disabled):active, .dropdown-toggle:not(:disabled):not(.disabled):active {
+    background-color: var(--navcolorclicked);
+    /*border-color: #8a95a1*/
+}
+
+.btn a, .btn-secondary a, .btn-warning a, .btn-danger a {
+    color: var(--navtextcolor) !important;
+    text-decoration: none;
+}
+.navbar {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.wrapper {
+    margin: auto;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    display: flex;
+    text-align: center;
 }

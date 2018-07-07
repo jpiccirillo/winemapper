@@ -1,0 +1,5 @@
+total 16
+drwxr-xr-x  4 jeffreypiccirillo  staff   128B Jul  4 12:55 .
+drwxr-xr-x  8 jeffreypiccirillo  staff   256B Jul  4 12:36 ..
+-rw-r--r--  1 jeffreypiccirillo  staff     0B Jul  4 12:55 ben.txt
+-rw-r--r--  1 jeffreypiccirillo  staff   6.0K Jun 25 10:44 whole_decade_STN722265.csv

@@ -48,6 +48,7 @@
     --green1: #2d7254;
     --green2: #336739;
     --green3: #336739;
+    --wine: #722f37;
 
     --breakpoint-xs: 0;
     --breakpoint-sm: 576px;
@@ -83,7 +84,7 @@ article, aside, dialog, figcaption, figure, footer, header, hgroup, main, nav, s
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    font-size: 1rem;
+    /*font-size: 1rem;*/
     font-weight: 400;
     line-height: 1.5;
     color: #343a40;
@@ -249,7 +250,7 @@ label {
 }
 
 button {
-    border-radius: 0
+    border-radius: 2px;
 }
 
 button:focus {
@@ -3685,7 +3686,7 @@ tbody.collapse.show {
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    padding-left: 0;
+    /*padding-left: 0;*/
     margin-bottom: 0;
     list-style: none
 }
@@ -3990,15 +3991,15 @@ tbody.collapse.show {
         bottom: 100%
     }
 }
-
-@media (max-width: 991.98px) {
+/*
+@media (max-width: 700px) {
     .navbar-expand-lg>.container, .navbar-expand-lg>.container-fluid {
         padding-right: 0;
         padding-left: 0
     }
-}
+}*/
 
-@media (min-width: 992px) {
+@media (min-width: 0px) {
     .navbar-expand-lg {
         -webkit-box-orient: horizontal;
         -webkit-box-direction: normal;
@@ -4022,8 +4023,9 @@ tbody.collapse.show {
         left: auto
     }
     .navbar-expand-lg .navbar-nav .nav-link {
-        padding-right: 0.5rem;
-        padding-left: 0.5rem
+        padding: 5px;
+        padding-top:0px;
+        padding-bottom: 0px;
     }
     .navbar-expand-lg>.container, .navbar-expand-lg>.container-fluid {
         -ms-flex-wrap: nowrap;
@@ -8488,7 +8490,7 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .bg-dark {
-    background-color: var(--teal1) !important
+    background-color: var(--wine) !important
 }
 
 .bg-light {
