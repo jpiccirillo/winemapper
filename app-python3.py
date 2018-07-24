@@ -38,10 +38,47 @@ def home():
     #
     # else:
     session['logged_in'] = True
-    data = refreshData()
-    return render_template('browse.html', entries=json.dumps(data))
+    data = [1, 2, 3]
+    return render_template('browse.html', entries=data)
 
 app.secret_key = os.urandom(12)
+
+@app.route('/api/getWineries', methods=['POST', 'GET'])
+def wineries():
+
+    args = request.args
+    keys = args.keys()
+    values = args.values()
+
+    for i in values: bounds = i.split(",")
+
+    try:
+        db = psycopg2.connect(conn_string)
+        cur = db.cursor()
+
+        # SELECT * FROM public."Winery" w
+        # WHERE w.lat > 37.743571187449064 AND
+        # w.lat < 38.542795073979015 AND
+        # w.lon < -121.94686889648439 AND
+        # w.lon > -122.66784667968751
+        # LIMIT 10;
+
+        sql = "SELECT * FROM public.\"Winery\" w WHERE w.lat > " + bounds[0] + " AND w.lat < " + bounds[1] + " AND w.lon < " + bounds[3] + " AND w.lon > " + bounds[2] + " LIMIT 10"
+
+        cur.execute(sql)
+        rows = cur.fetchall()
+        print("Number of rows: ", cur.rowcount)
+        data = [row for row in rows]
+
+        cur.close()
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+
+    finally:
+        if db is not None: db.close()
+        return json.dumps(data)
+
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -113,10 +150,23 @@ def insertUser():
 def refreshData():
     db = None
     data = []
+    args = request.args
+    keys = args.keys()
+    values = args.values()
+
+    for i in range(0, len(values)):
+        print(keys[i] + values[i])
+
     try:
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
-        sql = "SELECT * FROM public.\"popularWineries\" ORDER BY \"wineryID\" ASC"
+#         SELECT * FROM public."Winery" w
+# WHERE w.lat > 37.743571187449064 AND
+# w.lat < 38.542795073979015 AND
+# w.lon < -121.94686889648439 AND
+# w.lon > -122.66784667968751
+# LIMIT 10;
+        # sql = "SELECT * FROM public.\"Winery\" w WHERE w.lat > ORDER BY \"wineryID\" ASC"
         cur.execute(sql)
 
         rows = cur.fetchall()
