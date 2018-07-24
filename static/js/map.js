@@ -13,6 +13,7 @@ function replot(oldBounds) {
     // if (map.getCenter() > (u_lat-lat)
     return 1;
 }
+
 function plotData() {
     var bounds = map.getBounds()
     // if (!oldBounds) {
@@ -23,6 +24,32 @@ function plotData() {
 
     var oldBounds = map.getBounds()
 }
+function plotHeader(winery) {
+    console.log(winery)
+    $(".wineheader").empty().append(
+        "<div class=\"card\">"+
+        "<div class=\"card-body\">"+
+        "<h6 class=\"card-title\" style=\"margin-bottom: 0px;\">Wines from " + winery + ":</h6>" +
+        "</div>"
+    )
+    // $(".wineheader")
+}
+
+function plotCards(wine) {
+
+    console.log(wine)
+    var text = wine[9]
+    var card = "<div class=\"card\">"+
+    // "<img class=\"card-img-top\" alt=\"Card image cap\">" +
+    "<div class=\"card-body\">"+
+    "<h7 class=\"card-title\">Card title</h7>" +
+    "<p class=\"card-text\">" + text + "</p>" +
+    "<a href=\"#\" class=\"btn btn-secondary\">Read Reviews</a>" +
+    "<a href=\"#\" class=\"btn btn-secondary\">Data on this Wine</a>"
+    "</div></div>"
+    $(".activearea").append(card)
+}
+
 
 function grabData(bounds) {
     //l = lower bound, u = upper bound
@@ -67,6 +94,27 @@ function eraseMarkers() {
     }
 }
 
+function rightPanel(id, name) {
+    console.log(id)
+    $.ajax({
+        type: 'GET',
+        url: "/api/getWines?id=" + id,
+        success: function(data) { // Response about a single UID2 status
+            // marker = [];
+            data = JSON.parse(data)
+            console.log(data)
+            plotHeader(name)
+            $(".activearea").empty()
+            for (var i = 0; i < data.length; i++) {
+                plotCards(data[i])
+            }
+        },
+        error: function(data) {
+            console.log("Error pulling addresses from database via cartCombo_app.py and ajax call\n")
+        }
+    });
+}
+
 function plotMarkers(winery) {
         var circlestyle = {
             color: 'darkred',
@@ -85,6 +133,9 @@ function plotMarkers(winery) {
         }
 
         var submarker = L.circleMarker([winery[2], winery[3]], circlestyle).bindPopup(customPopup, customOptions).addTo(map)
+        submarker.on('click', function(e) {
+          rightPanel(winery[0], winery[1]);
+        });
         marker.push(submarker)
     }
 

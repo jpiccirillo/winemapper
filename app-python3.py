@@ -43,6 +43,41 @@ def home():
 
 app.secret_key = os.urandom(12)
 
+@app.route('/api/getWines', methods=['POST', 'GET'])
+def wines():
+    wineryid = str(request.args.get('id'));
+    print(wineryid)
+    # return "success"
+
+    try:
+        db = psycopg2.connect(conn_string)
+        cur = db.cursor()
+
+
+
+        # SELECT * FROM public."Winery" w
+        # WHERE w.lat > 37.743571187449064 AND
+        # w.lat < 38.542795073979015 AND
+        # w.lon < -121.94686889648439 AND
+        # w.lon > -122.66784667968751
+        # LIMIT 10;
+
+        sql = 'SELECT * FROM (SELECT * FROM public.\"Wineries\" a WHERE a.\"wineryID\" = '+ wineryid + ') selected INNER JOIN public.\"Wine\" b ON b.\"wineryID\" = selected.\"wineryID\" LIMIT 10'
+
+        cur.execute(sql)
+        rows = cur.fetchall()
+        print("Number of rows: ", cur.rowcount)
+        data = [row for row in rows]
+        print(data)
+        cur.close()
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+
+    finally:
+        if db is not None: db.close()
+        return json.dumps(data)
+
 @app.route('/api/getWineries', methods=['POST', 'GET'])
 def wineries():
 
@@ -63,7 +98,7 @@ def wineries():
         # w.lon > -122.66784667968751
         # LIMIT 10;
 
-        sql = "SELECT * FROM public.\"Winery\" w WHERE w.lat > " + bounds[0] + " AND w.lat < " + bounds[1] + " AND w.lon < " + bounds[3] + " AND w.lon > " + bounds[2] + " LIMIT 10"
+        sql = "SELECT * FROM public.\"Wineries\" w WHERE w.lat > " + bounds[0] + " AND w.lat < " + bounds[1] + " AND w.lon < " + bounds[3] + " AND w.lon > " + bounds[2] + " LIMIT 10"
 
         cur.execute(sql)
         rows = cur.fetchall()

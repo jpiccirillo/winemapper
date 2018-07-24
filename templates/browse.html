@@ -19,7 +19,7 @@
 			--mapwidth: 70vw;
 		}
 
-		body {
+		body, .card-text {
 			font-family: 'Dosis', sans-serif;
 			font-weight: 300
 		}
@@ -83,6 +83,23 @@
 		.custom .leaflet-popup-content strong {
 			font-weight: 700;
 			font-size: 1.1em;
+		}
+		.card {
+			margin: 5px;
+		}
+		.card-body {
+			padding: 10px;
+		}
+		a.btn-secondary {
+			border-radius: 4px;
+			padding: 5px;
+			font-size: 12px;
+			text-decoration-line: none;
+			width: calc(50% - 5px);
+			margin-top: 5px;
+		}
+		a.btn-secondary:last-child {
+			float: right;
 		}
 		@media (max-width: 700px) {
 			#wrapper1 {
@@ -156,6 +173,8 @@
 
 	<div id="wrapper1">
 		<div class="cardpane" id="content1">
+			<div class="wineheader"></div>
+			<div class="activearea"></div>
 		</div>
 		<div id="sidebar1">
 			<div id="map"></div>
