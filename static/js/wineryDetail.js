@@ -2,12 +2,14 @@
 // winerydata = JSON.parse(win erydata)
 // console.log(wdata)
 
-var winery = info.split('|')
+// info = JSON.parse(info)
+// console.log(info)
+// var winery = info.split('|')
 wineryOverview()
 
 $.ajax({
     type: 'GET',
-    url: "/api/wineryDetailFurther?id=" + winery[0],
+    url: "/api/wineryDetailFurther?id=" + winery[0][0],
     success: function(data) { // Response about a single UID2 status
 
         data = JSON.parse(data)
@@ -24,8 +26,11 @@ $.ajax({
 });
 
 function wineryOverview() {
-    $("#address").text(winery[4])
-    $("#latlon").text(winery[2] + ", " + winery[3])
+    $("#soil h6").text("Soil Quality at " + winery[0][1])
+    $("#overview h6").text("Overview of " + winery[0][1])
+    $("#wines h6").text("Wines from " + winery[0][1])
+    $("#address").text(winery[0][4])
+    $("#latlon").text(winery[0][2] + ", " + winery[0][3])
 }
 
 function addWine(wdata) {
@@ -34,7 +39,7 @@ function addWine(wdata) {
     if (!wdata[6]) {
         text = text + "<strong>Average price:</strong> None listed."
     } else {text = text + "<strong>Average price:</strong> " + wdata[6] }
-    
+
     if (wdata[12]) {
         var province = ""
         if (wdata[13]) {

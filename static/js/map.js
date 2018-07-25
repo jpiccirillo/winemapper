@@ -126,11 +126,7 @@ function plotMarkers(winery) {
             radius: 8
         }
         var style = 'padding: 0px; margin-left: 0px; margin-top: 5px; border-radius: 4px;'
-        var info = ""
-        for (var i = 0; i<5; i++) { info = info + winery[i] + "|" }
-        info = info.replace("#", "%23")
-        console.log(info)
-        var link = '/api/wineryDetail?info='+info+'&&name=' + winery[1]
+        var link = '/api/wineryDetail?id='+winery[0]
         var customPopup = '<div><strong>'+winery[1]+'</strong><br>'+winery[4]+'<br><a href=\"'+link+'\" class=\"btn\" style=\"'+style+'\">Details on this Winery</a></div>';
 
         // specify popup options

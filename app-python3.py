@@ -47,7 +47,6 @@ app.secret_key = os.urandom(12)
 def wines():
     wineryid = str(request.args.get('id'));
     print(wineryid)
-    # return "success"
 
     try:
         db = psycopg2.connect(conn_string)
@@ -80,15 +79,30 @@ def wines():
 
 @app.route('/api/wineryDetail', methods=['POST', 'GET'])
 def wineryDetail():
-    info = str(request.args.get('info'));
-    name = str(request.args.get('name'));
-    print(name)
-    return render_template("wineryDetail.html", info = info, name = name)
+
+    wineryid = str(request.args.get('id'));
+    print(wineryid)
+    try:
+        db = psycopg2.connect(conn_string)
+        cur = db.cursor()
+        sql = 'SELECT * FROM public.\"Wineries\" a WHERE a.\"wineryID\" = ' + wineryid
+        cur.execute(sql)
+        rows = cur.fetchall()
+        # for row in rows:
+        #     print(row)
+        data = [row for row in rows]
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if db is not None: db.close()
+
+    return render_template("wineryDetail.html", winery = json.dumps(data))
 
 @app.route('/api/wineryDetailFurther', methods=['POST', 'GET'])
 def wineryDetailFurther():
     wineryid = str(request.args.get('id'));
-    print(wineryid)
+    # print(wineryid)
 
     try:
         db = psycopg2.connect(conn_string)

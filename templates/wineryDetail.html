@@ -93,7 +93,7 @@
             <div class="row">
             <div class="col-md-6">
                 <div class="card middle" id="overview">
-                  <h6 class="card-header">Overview for {{name}}</h6>
+                  <h6 class="card-header"></h6>
                   <div class="card-body">
                     <!-- <h7 class="card-title">This page will show data for WineryID: {{id}}.</h7> -->
                     <p class="card-text">
@@ -108,7 +108,7 @@
     		</div>
             <div class="col-md-6">
                 <div class="card middle" id="soil">
-                  <h6 class="card-header">Soil Quality at {{name}}:</h6>
+                  <h6 class="card-header"></h6>
                   <div class="card-body">
                     <!-- <h7 class="card-title">This page will show data for WineryID: {{id}}.</h7> -->
                     <p class="card-text">With supporting text below as a natural lead-in to additional content.With supporting text b.</p>
@@ -134,7 +134,7 @@
             <!-- <div class="row"> -->
                 <!-- <div class="col-md-12"> -->
             <div class="card" id="wines">
-              <h6 class="card-header">Wines from {{name}}:</h6>
+              <h6 class="card-header"></h6>
 			  <div id="bottle">
 			  <svg width="50px" height="150px">
 				  <g>
@@ -157,8 +157,8 @@
 
 	<!-- </div> -->
     <script>
-    var info = '{{info}}'
-	var name = '{{name}}'
+    var winery = {{winery | safe}}
+	// var name = '{{name}}'
     </script>
 <script  src="../static/js/wineryDetail.js"></script>
 </body>
