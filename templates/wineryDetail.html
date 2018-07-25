@@ -1,0 +1,166 @@
+<!doctype html>
+<html>
+
+<head>
+	<!-- <link rel="stylesheet" type="text/css" href="static/css/logout.css"> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../static/bootstrap/bootstrap_litera.min.css">
+	<link rel="stylesheet" type="text/css" href="../static/css/default_style.css">
+	<!-- https://fonts.google.com/specimen/Dosis -->
+	<link href="https://fonts.googleapis.com/css?family=Dosis:400,700" rel="stylesheet">
+    <style>
+    *{
+        text-align: left;
+		font-family: Dosis;
+		font-weight: 300;
+    }
+    form {
+        width: 100%;
+    }
+	strong {
+		font-weight: 700;
+	}
+    .card {
+        margin-top: 15px;
+        height: calc(100% - 15px);
+        max-height: calc(100vh - 30px - 24px - 15px)
+    }
+	#wines .card-body .card:first-child {
+		margin-top:0px;
+	}
+    .card.middle {
+        max-height: calc(66vh - 30px - 24px - 15px)
+    }
+    .card-body {
+        overflow: scroll;
+    }
+	#wines .card-body  {
+		padding: 7px;
+	}
+	strong {
+		font-weight:
+	}
+	a.btn.btn-secondary {
+		border-radius: 2px;
+		padding: 2px;
+		width: 100%;
+		text-decoration: none;
+	}
+	.path {
+		stroke-dasharray: 4500;
+		stroke-dashoffset: 4500;
+		animation: dash 2s linear alternate infinite;
+	}
+
+	@keyframes dash {
+		from { stroke-dashoffset: 5000; }
+		to { stroke-dashoffset: 0; }
+	}
+
+	g { transform: scale(.075) translate(-750px, -50px); }
+	#bottle {
+		width: 100%;
+		height: 100%;
+	}
+	svg{
+		display: block;
+		margin: auto;
+		margin-top: 10%;
+	}
+    </style>
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active" style="color: white; margin-right: 10px">
+				WineMapper
+			</li>
+		</ul>
+		<ul class="navbar-nav">
+            <li class="nav-item">
+                <button class="btn-secondary nav"><a href="/">Back to Map</button>
+            </li>
+			<li class="nav-item">
+				<button class="btn-secondary nav"><a class="nav-link" href="/login">Log In</a></button>
+			</li>
+		</ul>
+	</nav>
+	<div class="container-fluid">
+        <div class="row">
+        <div class="col-md-8">
+            <div class="row">
+            <div class="col-md-6">
+                <div class="card middle" id="overview">
+                  <h6 class="card-header">Overview for {{name}}</h6>
+                  <div class="card-body">
+                    <!-- <h7 class="card-title">This page will show data for WineryID: {{id}}.</h7> -->
+                    <p class="card-text">
+						<strong>Address: </strong><span id="address">
+						</span><br>
+						<strong>Coordinates: </strong><span id="latlon">
+						</span>
+						</p>
+                    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                  </div>
+                </div>
+    		</div>
+            <div class="col-md-6">
+                <div class="card middle" id="soil">
+                  <h6 class="card-header">Soil Quality at {{name}}:</h6>
+                  <div class="card-body">
+                    <!-- <h7 class="card-title">This page will show data for WineryID: {{id}}.</h7> -->
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.With supporting text b.</p>
+                    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card" id="climate">
+                  <h6 class="card-header">Climate Data plot here</h6>
+                  <div class="card-body">
+                    <h7 class="card-title">This page will show data for WineryID: {{id}}.</h7>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                  </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="col-md-4">
+            <!-- <div class="row"> -->
+                <!-- <div class="col-md-12"> -->
+            <div class="card" id="wines">
+              <h6 class="card-header">Wines from {{name}}:</h6>
+			  <div id="bottle">
+			  <svg width="50px" height="150px">
+				  <g>
+					<path class="path" fill="none" stroke="#000000" stroke-width="30" stroke-miterlimit="10" d="M818,1782c0,0,35.569,51.542,196.045,44.627
+					  C1174.521,1819.713,1205,1782,1205,1782V737c0,0-2.896-88.072-66-140c-70.354-48.303-63.791-93-63.791-93L1078,195l6-11l1-47l-7-16
+					  l-0.209-22.836L952,97.746l-2.164,19.464L941,132v42.836L947,190v322c0,0,3.393,35.554-38,56c-41.393,20.446-84.65,76.434-89,159
+					  C815.65,809.566,818,1782,818,1782z"/>
+				  </g>
+			  </svg>
+		  </div>
+              <div class="card-body">
+                <!-- <h7 class="card-title">This page will show data for WineryID: {{id}}.</h7> -->
+                <p class="card-text main"></p>
+                <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+              </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+	<!-- </div> -->
+    <script>
+    var info = '{{info}}'
+	var name = '{{name}}'
+    </script>
+<script  src="../static/js/wineryDetail.js"></script>
+</body>
+
+</html>

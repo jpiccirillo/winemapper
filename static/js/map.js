@@ -24,9 +24,10 @@ function plotData() {
 
     var oldBounds = map.getBounds()
 }
+
 function plotHeader(winery) {
     console.log(winery)
-    $(".wineheader").empty().append(
+    $(".wineheader").show().empty().append(
         "<div class=\"card\">"+
         "<div class=\"card-body\">"+
         "<h6 class=\"card-title\" style=\"margin-bottom: 0px;\">Wines from " + winery + ":</h6>" +
@@ -42,10 +43,10 @@ function plotCards(wine) {
     var card = "<div class=\"card\">"+
     // "<img class=\"card-img-top\" alt=\"Card image cap\">" +
     "<div class=\"card-body\">"+
-    "<h7 class=\"card-title\">Card title</h7>" +
+    // "<h7 class=\"card-title\">Card title</h7>" +
     "<p class=\"card-text\">" + text + "</p>" +
     "<a href=\"#\" class=\"btn btn-secondary\">Read Reviews</a>" +
-    "<a href=\"#\" class=\"btn btn-secondary\">Data on this Wine</a>"
+    // "<a href=\"#\" class=\"btn btn-secondary\">Data on this Wine</a>"
     "</div></div>"
     $(".activearea").append(card)
 }
@@ -103,6 +104,7 @@ function rightPanel(id, name) {
             // marker = [];
             data = JSON.parse(data)
             console.log(data)
+            $(".filler").hide()
             plotHeader(name)
             $(".activearea").empty()
             for (var i = 0; i < data.length; i++) {
@@ -123,25 +125,37 @@ function plotMarkers(winery) {
             weight: 1,
             radius: 8
         }
-
-        var customPopup = '<strong>' + winery[1] + '</strong><br>' + winery[4];
+        var style = 'padding: 0px; margin-left: 0px; margin-top: 5px; border-radius: 4px;'
+        var info = ""
+        for (var i = 0; i<5; i++) { info = info + winery[i] + "|" }
+        info = info.replace("#", "%23")
+        console.log(info)
+        var link = '/api/wineryDetail?info='+info+'&&name=' + winery[1]
+        var customPopup = '<div><strong>'+winery[1]+'</strong><br>'+winery[4]+'<br><a href=\"'+link+'\" class=\"btn\" style=\"'+style+'\">Details on this Winery</a></div>';
 
         // specify popup options
         var customOptions = {
-            'maxWidth': '100',
+            'maxWidth': '200',
             'className' : 'custom'
         }
 
         var submarker = L.circleMarker([winery[2], winery[3]], circlestyle).bindPopup(customPopup, customOptions).addTo(map)
         submarker.on('click', function(e) {
           rightPanel(winery[0], winery[1]);
-        });
+      }).on('popupclose', function(e) {
+          $(".activearea").empty()
+          $(".wineheader").hide()
+          $(".filler").show()
+      });
         marker.push(submarker)
     }
 
 
 
-var map = L.map('map').setView([38.144595, -122.307990], 10);
+var map = L.map('map', {
+    closePopupOnClick: false
+    }).setView([38.144595, -122.307990], 10);
+var hash = new L.Hash(map); //Stateful URL implementation
 
 mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
 L.tileLayer(  'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {

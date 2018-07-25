@@ -13,6 +13,7 @@
 	<!-- https://fonts.google.com/specimen/Dosis -->
 	<link href="https://fonts.googleapis.com/css?family=Dosis:400,700" rel="stylesheet">
 	<script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
+	<script src="../static/js/leaflethash.js"></script>
 
 	<style type="text/css">
 		:root {
@@ -96,8 +97,21 @@
 			font-size: 12px;
 			text-decoration-line: none;
 			width: calc(50% - 5px);
+			/*width: 100%;*/
 			margin-top: 5px;
 		}
+		.filler {
+			font-size: 30px;
+			padding: 20px;
+			opacity: .5;
+			text-align: center;
+		}
+		/*a.btn.btn-success.tooltip {*/
+			/*padding: 5px;
+		    margin-left: 0px;
+		    padding-left: 0px;
+		    padding-bottom: 0px;*/
+		/*}*/
 		a.btn-secondary:last-child {
 			float: right;
 		}
@@ -173,6 +187,7 @@
 
 	<div id="wrapper1">
 		<div class="cardpane" id="content1">
+			<div class="filler">Click on markers in the map for info on a winery</div>
 			<div class="wineheader"></div>
 			<div class="activearea"></div>
 		</div>

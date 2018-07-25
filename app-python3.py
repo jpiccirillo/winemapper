@@ -78,6 +78,59 @@ def wines():
         if db is not None: db.close()
         return json.dumps(data)
 
+@app.route('/api/wineryDetail', methods=['POST', 'GET'])
+def wineryDetail():
+    info = str(request.args.get('info'));
+    name = str(request.args.get('name'));
+    print(name)
+    return render_template("wineryDetail.html", info = info, name = name)
+
+@app.route('/api/wineryDetailFurther', methods=['POST', 'GET'])
+def wineryDetailFurther():
+    wineryid = str(request.args.get('id'));
+    print(wineryid)
+
+    try:
+        db = psycopg2.connect(conn_string)
+        cur = db.cursor()
+
+# SELECT * FROM (
+# 	SELECT * FROM (
+# 		SELECT * FROM public."Wineries" a
+# 		WHERE a.name = 'Testarossa'
+# 	) selected
+# 	INNER JOIN public."Wine" b ON b."wineryID" = selected."wineryID"
+# ) winery
+# INNER JOIN public."Variety" v ON winery."varietyID" = v."varietyID";
+
+
+# SELECT * FROM (
+# 	SELECT * FROM (
+# 		SELECT * FROM public."Wineries" w
+# 		WHERE w."wineryID" = 279
+# 	) selected
+# 	INNER JOIN (
+# 		SELECT * FROM public."Wine" b, public."Area" a
+# 		WHERE b."areaID" = a."areaID") area
+# 	ON area."wineryID" = selected."wineryID"
+# ) winery
+# INNER JOIN public."Variety" v ON winery."varietyID" = v."varietyID";
+
+        sql = 'SELECT * FROM (SELECT * FROM (SELECT a.name, a.\"wineryID\", a.lat, a.lon FROM public.\"Wineries\" a WHERE a.\"wineryID\" = '+ wineryid + ') selected INNER JOIN (SELECT * FROM public.\"Wine\" b, public.\"Area\" a WHERE b.\"areaID\" = a.\"areaID\") area ON area.\"wineryID\" = selected.\"wineryID\") winery INNER JOIN public.\"Variety\" v ON winery.\"varietyID\" = v.\"varietyID\"'
+
+        cur.execute(sql)
+        rows = cur.fetchall()
+        print("Number of rows: ", cur.rowcount)
+        data = [row for row in rows]
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+
+    finally:
+        if db is not None: db.close()
+
+    return json.dumps(data)
+
 @app.route('/api/getWineries', methods=['POST', 'GET'])
 def wineries():
 
