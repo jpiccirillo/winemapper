@@ -30,7 +30,11 @@ function wineryOverview() {
 
 function addWine(wdata) {
     var title = wdata[5]
-    var text = "<strong>Average price:</strong> $" + wdata[6]
+    var text = ""
+    if (!wdata[6]) {
+        text = text + "<strong>Average price:</strong> None listed."
+    } else {text = text + "<strong>Average price:</strong> " + wdata[6] }
+    
     if (wdata[12]) {
         var province = ""
         if (wdata[13]) {

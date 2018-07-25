@@ -157,6 +157,12 @@ var map = L.map('map', {
     }).setView([38.144595, -122.307990], 10);
 var hash = new L.Hash(map); //Stateful URL implementation
 
+L.Control.geocoder({
+    position: "topleft",
+    placeholder: "Enter an Address",
+    showResultIcons: false,
+}).addTo(map)
+
 mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
 L.tileLayer(  'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
     maxZoom: 18,
