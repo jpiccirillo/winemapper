@@ -38,9 +38,6 @@
 	#wines .card-body  {
 		padding: 7px;
 	}
-	strong {
-		font-weight:
-	}
 	a.btn.btn-secondary {
 		border-radius: 2px;
 		padding: 2px;
@@ -88,14 +85,20 @@
 		</ul>
 	</nav>
 	<div class="container-fluid">
-        <div class="row">
-        <div class="col-md-8">
-            <div class="row">
-            <div class="col-md-6">
-                <div class="card middle" id="overview"></div>
-    		</div>
-        </div>
-    </div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="card middle" id="overviewCard">
+					<h6 class="card-header" id="overviewTitle"></h6>
+					<p class="card-body" id="overviewText"></p>
+				</div>
+			</div>
+			<div class="col-md-8">
+				<div class="card" id="reviewPanel">
+					<h6 class="card-header" id="reviewTitle"></h6>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- </div> -->
     <script>

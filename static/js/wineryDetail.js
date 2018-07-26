@@ -10,7 +10,7 @@ wineryOverview()
 // Gets ancillary wine info - returns a row for each wine
 $.ajax({
     type: 'GET',
-    url: "/api/wineryDetailFurther?id=" + winery[0],
+    url: "/api/wineryWineInfo?id=" + winery[0],
     success: function(data) { // Response about a single UID2 status
 
         data = JSON.parse(data)
@@ -44,7 +44,7 @@ function makeWineCard(wineData) {
     if (wineData[11]) {
         var province = "";
         if (wineData[12]) {
-            province = "<a href=" + wineData[12] + " target = \"_blank\">" + wineData[11] + "</a>";
+            province = '<a href=' + wineData[12] + ' target = "_blank">' + wineData[11] + '</a>';
         } else { province = wineData[11]; }
         text = text + "<br><strong>Province/Region: </strong>" + province;
     }
@@ -56,10 +56,9 @@ function makeWineCard(wineData) {
     if (wineData[4]) {
         text = text + "<br><strong>Designation: </strong>" + wineData[4];
     }
-    var style = 'padding: 5px';
     var textstyle = "font-family: Dosis!important";
     var link = '/api/wineDetail?id='+wineData[0];
-    var card = "<div class=\"card\">"+
+    var card = '<div class="card">'+
     // "<img class=\"card-img-top\" alt=\"Card image cap\">" +
     '<div class="card-body">'+
     '<h7 class="card-title"> ' + title + '</h7>' +

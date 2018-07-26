@@ -95,7 +95,7 @@ def wineDetail():
     try:
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
-        sql = 'SELECT * FROM public."Wine" WHERE "wineID" = {}'.format(wineID)
+        sql = 'SELECT w.*, v.*, a.*, p.* FROM "Wine" w LEFT JOIN "Area" a ON w."areaID" = a."areaID" LEFT JOIN "Area" p ON a."provinceID" = p."areaID" LEFT JOIN "Variety" v ON w."varietyID" = v."varietyID" WHERE w."wineID" = {}'.format(wineID)
         cur.execute(sql)
         data = list(cur.fetchone())
     
@@ -107,18 +107,39 @@ def wineDetail():
     return render_template("wineDetails.html", wine = json.dumps(data))
 
 
-@app.route('/api/wineryDetailFurther', methods=['GET'])
-def wineryDetailFurther():
-    wineryid = str(request.args.get('id'))
-    # print(wineryid)
+@app.route('/api/wineReviews', methods=['GET'])
+def wineReviews():
+    wineID = str(request.args.get('id'))
 
     try:
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
 
+        # Returns all reviews for the given wine
+        sql = 'SELECT r."description", r."points", t."tasterID", t."name" FROM "Review" r LEFT JOIN "Taster" t ON r."tasterID" = t."tasterID" WHERE "wineID" = {}'.format(wineID)
+
+        cur.execute(sql)
+        rows = cur.fetchall()
+        data = [row for row in rows]
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+
+    finally:
+        if db is not None: db.close()
+
+    return json.dumps(data)
+
+@app.route('/api/wineryWineInfo', methods=['GET'])
+def wineryWineInfo():
+    wineryid = str(request.args.get('id'))
+    # print(wineryid)
+
+    try:
+        db = psycopg2.connect(conn_string)
         # Returns all other info related to that winery surrounding its wines (Wine, Area, Variety info all joined to Winery)
         sql = 'SELECT w.*, v.*, a.* FROM "Wineries" wn JOIN "Wine" w ON w."wineryID" = wn."wineryID" JOIN "Area" a ON w."areaID" = a."areaID" JOIN "Variety" v ON w."varietyID" = v."varietyID" WHERE wn."wineryID" = {}'.format(wineryid)
-
+        cur = db.cursor()
         cur.execute(sql)
         rows = cur.fetchall()
         data = [row for row in rows]
