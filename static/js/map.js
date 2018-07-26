@@ -28,10 +28,10 @@ function plotData() {
 function plotHeader(winery) {
     console.log(winery)
     $(".wineheader").show().empty().append(
-        "<div class=\"card\">"+
-        "<div class=\"card-body\">"+
-        "<h6 class=\"card-title\" style=\"margin-bottom: 0px;\">Wines from " + winery + ":</h6>" +
-        "</div>"
+        '<div class="card">'+
+        '<div class="card-body">'+
+        '<h6 class="card-title" style="margin-bottom: 0px;">Wines from ' + winery + ':</h6>' +
+        '</div>'
     )
     // $(".wineheader")
 }
@@ -39,13 +39,14 @@ function plotHeader(winery) {
 function plotCards(wine) {
 
     console.log(wine)
-    var text = wine[9]
-    var card = "<div class=\"card\">"+
+    var text = wine[1]
+    var link = '/api/wineDetail?id='+wine[0];
+    var card = '<div class="card">'+
     // "<img class=\"card-img-top\" alt=\"Card image cap\">" +
-    "<div class=\"card-body\">"+
+    '<div class="card-body">'+
     // "<h7 class=\"card-title\">Card title</h7>" +
-    "<p class=\"card-text\">" + text + "</p>" +
-    "<a href=\"#\" class=\"btn btn-secondary\">Read Reviews</a>" +
+    '<p class="card-text">' + text + '</p>' +
+    '<a href="'+ link + '"class="btn btn-secondary">Read Reviews</a>' +
     // "<a href=\"#\" class=\"btn btn-secondary\">Data on this Wine</a>"
     "</div></div>"
     $(".activearea").append(card)
@@ -127,7 +128,7 @@ function plotMarkers(winery) {
         }
         var style = 'padding: 0px; margin-left: 0px; margin-top: 5px; border-radius: 4px;'
         var link = '/api/wineryDetail?id='+winery[0]
-        var customPopup = '<div><strong>'+winery[1]+'</strong><br>'+winery[4]+'<br><a href=\"'+link+'\" class=\"btn\" style=\"'+style+'\">Details on this Winery</a></div>';
+        var customPopup = '<div><strong>'+winery[1]+'</strong><br>'+winery[4]+'<br><a href="'+link+'" class="btn" style="'+style+'">Details on this Winery</a></div>';
 
         // specify popup options
         var customOptions = {

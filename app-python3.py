@@ -18,7 +18,7 @@ conn_string = "host={} port={} dbname={} user={} password={}".format(host, port,
 
 app = Flask(__name__)
 
-# @app.route('/', methods=['POST', 'GET'])
+# @app.route('/', methods=['GET'])
 # def home():
 #     if not session.get('logged_in'):
 #         return render_template('login.html')
@@ -31,7 +31,7 @@ app = Flask(__name__)
 #        #if session.get('is_power'):
 #         #   return render_template('powerHome.html')
 
-@app.route('/', methods=['POST', 'GET'])
+@app.route('/', methods=['GET'])
 def home():
     # if not session.get('logged_in'):
     #     return render_template('login.html')
@@ -43,25 +43,17 @@ def home():
 
 app.secret_key = os.urandom(12)
 
-@app.route('/api/getWines', methods=['POST', 'GET'])
+@app.route('/api/getWines', methods=['GET'])
 def wines():
-    wineryid = str(request.args.get('id'));
+    wineryid = str(request.args.get('id'))
     print(wineryid)
 
     try:
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
 
-
-
-        # SELECT * FROM public."Winery" w
-        # WHERE w.lat > 37.743571187449064 AND
-        # w.lat < 38.542795073979015 AND
-        # w.lon < -121.94686889648439 AND
-        # w.lon > -122.66784667968751
-        # LIMIT 10;
-
-        sql = 'SELECT * FROM (SELECT * FROM public.\"Wineries\" a WHERE a.\"wineryID\" = '+ wineryid + ') selected INNER JOIN public.\"Wine\" b ON b.\"wineryID\" = selected.\"wineryID\" LIMIT 10'
+        # Selects all wines from a given winery
+        sql = 'SELECT * FROM "Wine" w JOIN "Wineries" wn ON w."wineryID" = wn."wineryID" WHERE wn."wineryID" = ' + wineryid;
 
         cur.execute(sql)
         rows = cur.fetchall()
@@ -77,20 +69,16 @@ def wines():
         if db is not None: db.close()
         return json.dumps(data)
 
-@app.route('/api/wineryDetail', methods=['POST', 'GET'])
+@app.route('/api/wineryDetail', methods=['GET'])
 def wineryDetail():
-
-    wineryid = str(request.args.get('id'));
+    wineryid = str(request.args.get('id'))
     print(wineryid)
     try:
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
-        sql = 'SELECT * FROM public.\"Wineries\" a WHERE a.\"wineryID\" = ' + wineryid
+        sql = 'SELECT * FROM public."Wineries" wn WHERE wn."wineryID" = ' + wineryid
         cur.execute(sql)
-        rows = cur.fetchall()
-        # for row in rows:
-        #     print(row)
-        data = [row for row in rows]
+        data = list(cur.fetchone())
 
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
@@ -99,43 +87,42 @@ def wineryDetail():
 
     return render_template("wineryDetail.html", winery = json.dumps(data))
 
-@app.route('/api/wineryDetailFurther', methods=['POST', 'GET'])
+
+@app.route('/api/wineDetail', methods=['GET'])
+def wineDetail():
+    wineID = str(request.args.get('id'))
+    print("WineID: {}".format(wineID))
+    try:
+        db = psycopg2.connect(conn_string)
+        cur = db.cursor()
+        sql = 'SELECT * FROM public."Wine" WHERE "wineID" = {}'.format(wineID)
+        cur.execute(sql)
+        data = list(cur.fetchone())
+    
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if db is not None: db.close()
+
+    return render_template("wineDetails.html", wine = json.dumps(data))
+
+
+@app.route('/api/wineryDetailFurther', methods=['GET'])
 def wineryDetailFurther():
-    wineryid = str(request.args.get('id'));
+    wineryid = str(request.args.get('id'))
     # print(wineryid)
 
     try:
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
 
-# SELECT * FROM (
-# 	SELECT * FROM (
-# 		SELECT * FROM public."Wineries" a
-# 		WHERE a.name = 'Testarossa'
-# 	) selected
-# 	INNER JOIN public."Wine" b ON b."wineryID" = selected."wineryID"
-# ) winery
-# INNER JOIN public."Variety" v ON winery."varietyID" = v."varietyID";
-
-
-# SELECT * FROM (
-# 	SELECT * FROM (
-# 		SELECT * FROM public."Wineries" w
-# 		WHERE w."wineryID" = 279
-# 	) selected
-# 	INNER JOIN (
-# 		SELECT * FROM public."Wine" b, public."Area" a
-# 		WHERE b."areaID" = a."areaID") area
-# 	ON area."wineryID" = selected."wineryID"
-# ) winery
-# INNER JOIN public."Variety" v ON winery."varietyID" = v."varietyID";
-
-        sql = 'SELECT * FROM (SELECT * FROM (SELECT a.name, a.\"wineryID\", a.lat, a.lon FROM public.\"Wineries\" a WHERE a.\"wineryID\" = '+ wineryid + ') selected INNER JOIN (SELECT * FROM public.\"Wine\" b, public.\"Area\" a WHERE b.\"areaID\" = a.\"areaID\") area ON area.\"wineryID\" = selected.\"wineryID\") winery INNER JOIN public.\"Variety\" v ON winery.\"varietyID\" = v.\"varietyID\"'
+        # Returns all other info related to that winery surrounding its wines (Wine, Area, Variety info all joined to Winery)
+        sql = 'SELECT w.*, v.*, a.* FROM "Wineries" wn JOIN "Wine" w ON w."wineryID" = wn."wineryID" JOIN "Area" a ON w."areaID" = a."areaID" JOIN "Variety" v ON w."varietyID" = v."varietyID" WHERE wn."wineryID" = {}'.format(wineryid)
 
         cur.execute(sql)
         rows = cur.fetchall()
-        print("Number of rows: ", cur.rowcount)
         data = [row for row in rows]
+        print("Number of rows: ", cur.rowcount)
 
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
@@ -145,7 +132,7 @@ def wineryDetailFurther():
 
     return json.dumps(data)
 
-@app.route('/api/getWineries', methods=['POST', 'GET'])
+@app.route('/api/getWineries', methods=['GET'])
 def wineries():
 
     args = request.args
@@ -165,7 +152,7 @@ def wineries():
         # w.lon > -122.66784667968751
         # LIMIT 10;
 
-        sql = "SELECT * FROM public.\"Wineries\" w WHERE w.lat > " + bounds[0] + " AND w.lat < " + bounds[1] + " AND w.lon < " + bounds[3] + " AND w.lon > " + bounds[2] + " LIMIT 10"
+        sql = 'SELECT * FROM public."Wineries" w WHERE w.lat > ' + bounds[0] + ' AND w."lat" < ' + bounds[1] + ' AND w."lon" < ' + bounds[3] + ' AND w."lon" > ' + bounds[2] + ' LIMIT 10'
 
         cur.execute(sql)
         rows = cur.fetchall()
@@ -225,7 +212,7 @@ def logout():
 def showPlot():
     return render_template("climate.html")
 
-@app.route('/api/insert', methods=['POST', 'GET'])
+@app.route('/api/insert', methods=['POST'])
 def insertUser():
     print("Logged In: ", session.get('logged_in'))
     if not session.get('logged_in'):
@@ -236,7 +223,7 @@ def insertUser():
 
     db = psycopg2.connect(conn_string)
     cur = db.cursor()
-    sql = "INSERT INTO public.\"ListOfNames\" (first_name, last_name, age) VALUES (%s,%s,%s)"
+    sql = 'INSERT INTO public."User" VALUES (%s,%s,%s)'
     insert_data = (firstname, lastname, 5)
     try:
         cur.execute(sql, insert_data)
@@ -268,7 +255,7 @@ def refreshData():
 # w.lon < -121.94686889648439 AND
 # w.lon > -122.66784667968751
 # LIMIT 10;
-        # sql = "SELECT * FROM public.\"Winery\" w WHERE w.lat > ORDER BY \"wineryID\" ASC"
+        sql = 'SELECT * FROM public."Winery" w WHERE w."lat" > ORDER BY s"wineryID" ASC'
         cur.execute(sql)
 
         rows = cur.fetchall()
