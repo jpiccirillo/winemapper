@@ -8,8 +8,8 @@ $.ajax({
 
         data = JSON.parse(data)
 
-        $("#reviews .card-text").empty()
-        $("#reviews #bottle").remove()
+        $("#wineReviews .card-text").empty()
+        $("#wineReviews #bottle").remove()
         for (var i = 0; i < data.length; i++) {
             makeReviewCard(data[i])
         }
@@ -20,8 +20,8 @@ $.ajax({
 });
 
 function wineOverview() {
-    $("#overviewTitle").text("Overview of " + wine[1]);
-    $("#reviewTitle").text("Reviews for " + wine[1]);
+    $("#wineOverviewTitle").text("Overview of " + wine[1]);
+    $("#wineReviewTitle").text("Reviews for " + wine[1]);
 
     var text = "";
     if (!wine[2]) {
@@ -52,7 +52,7 @@ function wineOverview() {
     if (wine[4]) {
         text = text + "<br><strong>Designation: </strong>" + wine[4];
     }
-    $("#overviewText").append(text);
+    $("#wineOverviewText").append(text);
 }
 
 function makeReviewCard(reviewInfo) {
@@ -73,5 +73,5 @@ function makeReviewCard(reviewInfo) {
     '<p class="card-text" style="'+ textstyle +'">' + text + '</p>' +
     '</div></div>';
 
-    $("#reviewContainer").append(card);
+    $("#wineReviewContainer").append(card);
 }

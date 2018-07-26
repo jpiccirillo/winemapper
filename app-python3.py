@@ -91,7 +91,6 @@ def wineryDetail():
 @app.route('/api/wineDetail', methods=['GET'])
 def wineDetail():
     wineID = str(request.args.get('id'))
-    print("WineID: {}".format(wineID))
     try:
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
@@ -107,6 +106,24 @@ def wineDetail():
     return render_template("wineDetails.html", wine = json.dumps(data))
 
 
+@app.route('/api/tasterDetail', methods=['GET'])
+def tasterDetail():
+    tasterID = str(request.args.get('id'))
+    try:
+        db = psycopg2.connect(conn_string)
+        cur = db.cursor()
+        sql = 'SELECT * FROM "Taster" t WHERE t."tasterID" = {}'.format(tasterID)
+        cur.execute(sql)
+        data = list(cur.fetchone())
+    
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if db is not None: db.close()
+
+    return render_template("tasterDetails.html", taster = json.dumps(data))
+
+
 @app.route('/api/wineReviews', methods=['GET'])
 def wineReviews():
     wineID = str(request.args.get('id'))
@@ -118,6 +135,27 @@ def wineReviews():
         # Returns all reviews for the given wine
         sql = 'SELECT r."description", r."points", t."tasterID", t."name" FROM "Review" r LEFT JOIN "Taster" t ON r."tasterID" = t."tasterID" WHERE "wineID" = {}'.format(wineID)
 
+        cur.execute(sql)
+        rows = cur.fetchall()
+        data = [row for row in rows]
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+
+    finally:
+        if db is not None: db.close()
+
+    return json.dumps(data)
+
+@app.route('/api/reviewedWineryMost', methods=['GET'])
+def reviewedWineryMost():
+    wineryID = str(request.args.get('id'))
+    try:
+        db = psycopg2.connect(conn_string)
+        cur = db.cursor()
+
+        # Returns a list of reviewers who have reviewed the winery the most as [tasterID, name, count]
+        sql = 'SELECT * FROM wineryReviewedMostBy({})'.format(wineryID)
         cur.execute(sql)
         rows = cur.fetchall()
         data = [row for row in rows]

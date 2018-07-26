@@ -1,5 +1,4 @@
-tasterOverview()
-
+tasterOverview();
 function tasterOverview() {
-    $("#overview").text("Stuff " + taster[1]);
+    $("#tasterOverviewText").append(taster);
 }

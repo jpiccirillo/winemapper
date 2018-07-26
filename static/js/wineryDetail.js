@@ -15,23 +15,45 @@ $.ajax({
 
         data = JSON.parse(data)
 
-        $("#wines .card-text").empty()
-        $("#wines #bottle").remove()
+        $("#wineryWines .card-text").empty()
+        $("#wineryWines #bottle").remove()
         for (var i = 0; i < data.length; i++) {
-            makeWineCard(data[i])
+            makeWineCard(data[i]);
         }
     },
     error: function(data) {
-        console.log("Error pulling addresses from database via cartCombo_app.py and ajax call\n")
+        console.log("Error pulling addresses from database via cartCombo_app.py and ajax call")
     }
 });
 
+// Gets info about who has reviewed the winery the most
+function getMostReviews(){
+    $.ajax({
+        type: 'GET',
+        url: "/api/reviewedWineryMost?id=" + winery[0],
+        success: function(data) { // Response about a single UID2 status
+    
+            data = JSON.parse(data)
+    
+            for (var i = 0; i < data.length; i++) {
+                var listItem = '<li><a href="/api/tasterDetail?id=' + data[i][0] + '">' + data[i][1] + ' with ' + data[i][2] + ' reviews from this winery.</a></li\>';
+                $("#wineryMostReviews").append(listItem);
+            }    
+        },
+        error: function(data) {
+            console.log("Error pulling addresses from database via cartCombo_app.py and ajax call\n")
+        }
+    });
+}
+
+
 function wineryOverview() {
-    $("#soil h6").text("Soil Quality at " + winery[1]);
-    $("#overview h6").text("Overview of " + winery[1]);
-    $("#wines h6").text("Wines from " + winery[1]);
-    $("#address").text(winery[4]);
-    $("#latlon").text(winery[2] + ", " + winery[3]);
+    $("#winerySoil h6").text("Soil Quality at " + winery[1]);
+    $("#wineryOverview h6").text("Overview of " + winery[1]);
+    $("#wineryWines h6").text("Wines from " + winery[1]);
+    $("#wineryAddress").text(winery[4]);
+    $("#wineryLatLon").text(winery[2] + ", " + winery[3]);
+    getMostReviews();
 }
 
 function makeWineCard(wineData) {
@@ -66,5 +88,5 @@ function makeWineCard(wineData) {
     '<a href="' + link + '" class="btn btn-secondary">Read Reviews</a>' +
     // "<a href=\"#\" class=\"btn btn-secondary\">Data on this Wine</a>"
     '</div></div>';
-    $("#wines .card-body .main").append(card);
+    $("#wineryWines .card-body .main").append(card);
 }
