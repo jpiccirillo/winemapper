@@ -23,7 +23,6 @@
 	}
     .card {
         margin-top: 15px;
-        height: calc(100% - 15px);
         max-height: calc(100vh - 30px - 24px - 15px)
     }
 	#wines .card-body .card:first-child {
@@ -35,7 +34,7 @@
     .card-body {
         overflow: auto;
     }
-	#wines .card-body  {
+	#reviewPanel .card-body  {
 		padding: 7px;
 	}
 	a.btn.btn-secondary {
@@ -95,6 +94,7 @@
 			<div class="col-md-8">
 				<div class="card" id="reviewPanel">
 					<h6 class="card-header" id="reviewTitle"></h6>
+					<div class="card-body" id="reviewContainer"></div>
 				</div>
 			</div>
 		</div>

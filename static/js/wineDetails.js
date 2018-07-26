@@ -26,7 +26,7 @@ function wineOverview() {
     var text = "";
     if (!wine[2]) {
         text = text + "<strong>Average price:</strong> None listed.";
-    } else {text = text + "<strong>Average price:</strong> " + wine[6]; }
+    } else {text = text + "<strong>Average price:</strong> $" + wine[2]; }
 
     if (wine[15]) {
         var province = "";
@@ -66,12 +66,12 @@ function makeReviewCard(reviewInfo) {
     }
     var text = reviewInfo[0];
     var textstyle = "font-family: Dosis!important";
-    var card = '<div class="card" style="margin:5px">'+
+    var card = '<div class="card">'+
     '<div class="card-body">'+
     '<h7 class="card-title"> ' + title + '</h7>' +
     '<h8 class="card-subtitle" style="float:right">Points: ' + reviewInfo[1] + '</h8>' +
     '<p class="card-text" style="'+ textstyle +'">' + text + '</p>' +
     '</div></div>';
 
-    $("#reviewPanel").append(card);
+    $("#reviewContainer").append(card);
 }
