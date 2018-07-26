@@ -133,7 +133,7 @@ def wineReviews():
         cur = db.cursor()
 
         # Returns all reviews for the given wine
-        sql = 'SELECT r."description", r."points", t."tasterID", t."name" FROM "Review" r LEFT JOIN "Taster" t ON r."tasterID" = t."tasterID" WHERE "wineID" = {}'.format(wineID)
+        sql = 'SELECT r."description", r."points", t."tasterID", t."name" FROM "Review" r LEFT JOIN "Taster" t ON r."tasterID" = t."tasterID" WHERE "wineID" = {} ORDER BY r."points" DESC'.format(wineID)
 
         cur.execute(sql)
         rows = cur.fetchall()
@@ -211,7 +211,7 @@ def wineries():
         # w.lon > -122.66784667968751
         # LIMIT 10;
 
-        sql = 'SELECT * FROM public."Wineries" w WHERE w.lat > ' + bounds[0] + ' AND w."lat" < ' + bounds[1] + ' AND w."lon" < ' + bounds[3] + ' AND w."lon" > ' + bounds[2] + ' LIMIT 10'
+        sql = 'SELECT * FROM public."Wineries" w WHERE w.lat > ' + bounds[0] + ' AND w."lat" < ' + bounds[1] + ' AND w."lon" < ' + bounds[3] + ' AND w."lon" > ' + bounds[2] + ' LIMIT 30'
 
         cur.execute(sql)
         rows = cur.fetchall()
