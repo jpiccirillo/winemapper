@@ -8,7 +8,7 @@ import pytz
 import psycopg2
 import re
 import html.parser
-import numpy
+import time
 
 dbname = "winemapper"
 user = "ec2_user"
@@ -140,7 +140,7 @@ def getClimateData(wid):
 
         cur.execute(sql)
         rows = cur.fetchall()
-        data = [row for row in rows]
+        data = list([list(row) for row in rows])
         # print(data)
 
     except (Exception, psycopg2.DatabaseError) as error:
@@ -156,10 +156,52 @@ def getClimateData(wid):
     totalTemps.append(['x', '2018-01-01', '2018-02-01', '2018-03-01', '2018-04-01', '2018-05-01', '2018-06-01', '2018-07-01', '2018-08-01', '2018-09-01', '2018-10-01', '2018-11-01', '2018-12-01'])
     # x = numpy.array(data).T
 
-    x = [list([row[i] for row in data]) for i in range(len(data[0]))]
-    unique = set(x[7])
 
-    print(1)
+    c = 1;
+    normalized = [];
+    print(data)
+    for row in data:
+        # for month in range(1, 13):
+        # print("newrecord")
+        write = False;
+        if row[8] == c%12:
+            write=True;
+
+        else:
+
+            while (row[8] >= c%12):
+                print(row[8], c%12, c)
+                if (row[8]%12==c%12):
+                    # time.sleep(.5)
+                    write=True;
+                    break;
+                #
+                # elif (row[8]%12==c%12):
+                #     time.sleep(.5)
+                #     write=True;
+                #     break;
+
+                else:
+                    print(row[8], c%12)
+                    # time.sleep(.5)
+                    newRow = row[:8]
+                    newRow.append(c%12)
+                    newRow.append("None")
+                    newRow.append("None")
+                    newRow.append("None")
+                    normalized.append(newRow)
+                    c+=1;
+        if write:
+                print(row[8], c%12)
+                normalized.append(row)
+                # time.sleep(.5)
+                c+=1
+
+    print(normalized)
+
+    x = [list([row[i] for row in normalized]) for i in range(len(normalized[0]))]
+    unique = sorted(set(x[7]))
+    print(unique)
     for i in range(len(x)):
 
         if (i==2): #append USAF ID
@@ -173,9 +215,9 @@ def getClimateData(wid):
 
             k = 0
             for year in unique:
-                if len(temps[k]) == 12:
-                    temps[k].insert(0, year)
-                    totalTemps.append(temps[k])
+                # if len(temps[k]) == 12:
+                temps[k].insert(0, year)
+                totalTemps.append(temps[k])
                 k+=1;
 
     totalData.append(totalTemps)
