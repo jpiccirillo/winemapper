@@ -73,6 +73,7 @@ def wines():
 @app.route('/api/wineryDetail', methods=['GET'])
 def wineryDetail():
     wineryid = str(request.args.get('id'))
+
     print(wineryid)
     return render_template("wineryDetail.html", wid = wineryid, winery = getBasicWineryData(wineryid), wines = winesAtWinery(wineryid))
 
@@ -128,6 +129,7 @@ def getWineData(wid):
         if db is not None: db.close()
 
     return data
+
 def getClimateData(wid):
     print(wid)
     try:
@@ -139,7 +141,7 @@ def getClimateData(wid):
         cur.execute(sql)
         rows = cur.fetchall()
         data = [row for row in rows]
-        print(data)
+        # print(data)
 
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
@@ -149,25 +151,35 @@ def getClimateData(wid):
 
     # print(data)
 # ['x', 'Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+    totalData = [];
     totalTemps = [];
     totalTemps.append(['x', '2018-01-01', '2018-02-01', '2018-03-01', '2018-04-01', '2018-05-01', '2018-06-01', '2018-07-01', '2018-08-01', '2018-09-01', '2018-10-01', '2018-11-01', '2018-12-01'])
-    x = numpy.array(data).T
+    # x = numpy.array(data).T
+
+    x = [list([row[i] for row in data]) for i in range(len(data[0]))]
     unique = set(x[7])
 
+    print(1)
     for i in range(len(x)):
-        if (i==9):
+
+        if (i==2): #append USAF ID
+            totalData.append([x[i][0]])
+
+        elif (i==3): #append Station Name
+            totalData[0].append(x[i][0].title())
+
+        elif (i==9):
             temps = [x[i][j:j + 12] for j in range(0, len(x[i]), 12)]
+
             k = 0
             for year in unique:
-                temps[k] = numpy.insert(temps[k], 0, year)
-                totalTemps.append(temps[k])
+                if len(temps[k]) == 12:
+                    temps[k].insert(0, year)
+                    totalTemps.append(temps[k])
                 k+=1;
 
-    parsed = numpy.array(totalTemps).tolist()
-    print(parsed)
-    return json.dumps(parsed)
-    #
-    # return json.dumps(data)
+    totalData.append(totalTemps)
+    return json.dumps(totalData)
 
 def getReveiwData(wid):
     # Returns all reviews for the given wine
@@ -199,8 +211,9 @@ def wineDetail():
 
 @app.route('/api/getCliamteData', methods=['GET'])
 def climateDataResults():
-    # print(wineryid)
+
     wineryID = str(request.args.get('id'))
+    print(wineryID)
     return getClimateData(wineryID)
 
 @app.route('/api/tasterDetail', methods=['GET'])
@@ -227,10 +240,11 @@ def reviewedWineryMost():
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
 
+        data = [];
         # Returns a list of reviewers who have reviewed the winery the most as [tasterID, name, count]
         sql = 'SELECT * FROM wineryReviewedMostBy({})'.format(wineryID)
         cur.execute(sql)
-        rows = cur.fetchall()
+        rows = cur.fetchone()
         data = [row for row in rows]
 
     except (Exception, psycopg2.DatabaseError) as error:

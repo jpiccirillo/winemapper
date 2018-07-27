@@ -65,15 +65,15 @@
 		to { stroke-dashoffset: 0; }
 	}
 
-	/*g { transform: scale(.10) translate(-750px, 50px); }
+	#bottle g { transform: scale(.10) translate(-750px, 50px); }
 	#bottle {
 		width: 100%;
 		height: 100%;
 	}
-	svg{
+	#bottle svg{
 		display: block;
 		margin: auto;
-	}*/
+	}
 	.c3 svg g g.c3-axis.c3-axis-y,.c3 svg g g.c3-axis.c3-axis-x {
 		font-size: 11px;
 	}
@@ -83,6 +83,11 @@
 	#climate .card-body {
 		padding-left:0px;
 		padding-right:10px;
+	}
+	#stn-info {
+		float: right;
+		font-size: 15px;
+		vertical-align: middle;
 	}
     </style>
 </head>
@@ -134,7 +139,7 @@
 					<h6 class="card-header">Soil Characteristics at {{winery[1]}}</h6>
 					<div class="card-body">
 						<!-- <h7 class="card-title">This page will show data for WineryID: {{id}}.</h7> -->
-						<p class="card-text">With supporting text below as a natural lead-in to additional content.With supporting text b.</p>
+						<div class="card-text">With supporting text below as a natural lead-in to additional content.With supporting text b.</div>
 						<!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
 					</div>
 					</div>
@@ -143,10 +148,11 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="card" id="climate">
-					<h6 class="card-header">Climate Data plot here</h6>
+					<h6 class="card-header">Historical Climate Data:<span id="stn-info"></span></h6>
 					<div class="card-body">
 						<div id="chart"></div>
-
+						<div class="card-text" style="font-size: 12px; font-style: italic; padding-left:20px; float: right">Data from NCDC / NOAA <a href="https://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv&georegionabbv" target = _blank>Global Summary of the Day (GSOD)</a>, bucketed up to decade level
+					</div>
 						<!-- <div id="bottle">
 						<svg width="70px" height="200px">
 							<g>
@@ -157,9 +163,6 @@
 							</g>
 						</svg>
 					</div> -->
-						<!-- <h7 class="card-title"></h7> -->
-						<!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
-						<!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
 					</div>
 					</div>
 				</div>

@@ -10,23 +10,23 @@ function getMostReviews() {
         success: function(data) { // Response about a single UID2 status
 
             data = JSON.parse(data)
-            // console.log(data.length)
+            // console.log(data[1])
             if (data.length == 0) {
                 $("#reviewer").append('Anonymous users')
                 $("#numreviews").remove();
                 $("#reviewlink").remove()
-            }
-            for (var i = 0; i < data.length; i++) {
+            } else {
+            // for (var i = 0; i < data.length; i++) {
                 // console.log(data[i])
-                var link = '/api/tasterDetail?id=' + data[i][0]
-                var text = 'Reviewed ' + data[i][2]
-                if (data[i][2] > 1) {
+                var link = '/api/tasterDetail?id=' + data[0]
+                var text = 'Reviewed ' + data[2]
+                if (data[2] > 1) {
                     text = text + ' wines here'
                 } else {
                     text = text + ' wine here'
                 }
                 // console.log(text)
-                $("#reviewer").append(data[i][1])
+                $("#reviewer").append(data[1])
                 $("#numreviews").text(text);
                 var button = '<a href="' + link + '" class="btn btn-secondary">View Profile</a>'
                 $("#wineryOverview .card-body .card-body").append(button)
@@ -48,13 +48,14 @@ function getClimateData() {
         success: function(data) { // Response about a single UID2 status
 
             data = JSON.parse(data)
-            console.log(data)
+            $("#stn-info").text(data[0][1] + " (Station # " + data[0][0] + ")")
+            console.log(data[1])
             //
             var chart = c3.generate({
                 data: {
                     x: 'x',
                     xFormat: '%Y-%m-%d', // 'xFormat' can be used as custom format of 'x'
-                    columns: data,
+                    columns: data[1],
                     type: 'spline'
                 },
                 axis: {
