@@ -8,6 +8,7 @@ import pytz
 import psycopg2
 import re
 import html.parser
+import numpy
 
 dbname = "winemapper"
 user = "ec2_user"
@@ -73,38 +74,134 @@ def wines():
 def wineryDetail():
     wineryid = str(request.args.get('id'))
     print(wineryid)
+    return render_template("wineryDetail.html", wid = wineryid, winery = getBasicWineryData(wineryid), wines = winesAtWinery(wineryid))
+
+def winesAtWinery(wid):
     try:
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
-        sql = 'SELECT * FROM public."Wineries" wn WHERE wn."wineryID" = ' + wineryid
+        sql = 'SELECT w.*, v.*, a.*, p.* FROM "Wineries" wn JOIN "Wine" w ON w."wineryID" = wn."wineryID" JOIN "Area" a ON w."areaID" = a."areaID" LEFT JOIN "Area" p ON a."provinceID" = p."areaID" JOIN "Variety" v ON w."varietyID" = v."varietyID" WHERE wn."wineryID" = {}'.format(wid)
         cur.execute(sql)
-        data = list(cur.fetchone())
+        rows = cur.fetchall()
+        print(rows)
 
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
+
     finally:
         if db is not None: db.close()
 
-    return render_template("wineryDetail.html", winery = json.dumps(data))
+    return rows
 
+def getBasicWineryData(wid):
+    try:
+        db = psycopg2.connect(conn_string)
+        cur = db.cursor()
+        sql = 'SELECT wn.* FROM "Wineries" wn WHERE wn."wineryID" = {}'.format(wid)
+        cur.execute(sql)
+        winery = cur.fetchone()
+        print(winery)
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+
+    finally:
+        if db is not None: db.close()
+
+    return winery
+
+def getWineData(wid):
+    # Returns all winedata for the given wine
+    try:
+        db = psycopg2.connect(conn_string)
+        cur = db.cursor()
+
+        sql = 'SELECT w.*, v.*, a.*, p.* FROM "Wine" w LEFT JOIN "Area" a ON w."areaID" = a."areaID" LEFT JOIN "Area" p ON a."provinceID" = p."areaID" LEFT JOIN "Variety" v ON w."varietyID" = v."varietyID" WHERE w."wineID" = {}'.format(wid)
+        cur.execute(sql)
+        data = cur.fetchone()
+        print(data)
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+
+    finally:
+        if db is not None: db.close()
+
+    return data
+def getClimateData(wid):
+    print(wid)
+    try:
+        db = psycopg2.connect(conn_string)
+        cur = db.cursor()
+
+        sql = 'SELECT * FROM (SELECT w.name, w."wineryID", s.* FROM "Station" s, "Wineries" w WHERE w."wineryID" = {} AND w."stationID" = s."STNnum") station INNER JOIN public."STNData" d ON station."STNnum" = d."USAF_ID"'.format(wid)
+
+        cur.execute(sql)
+        rows = cur.fetchall()
+        data = [row for row in rows]
+        print(data)
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+
+    finally:
+        if db is not None: db.close()
+
+    # print(data)
+# ['x', 'Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+    totalTemps = [];
+    totalTemps.append(['x', '2018-01-01', '2018-02-01', '2018-03-01', '2018-04-01', '2018-05-01', '2018-06-01', '2018-07-01', '2018-08-01', '2018-09-01', '2018-10-01', '2018-11-01', '2018-12-01'])
+    x = numpy.array(data).T
+    unique = set(x[7])
+
+    for i in range(len(x)):
+        if (i==9):
+            temps = [x[i][j:j + 12] for j in range(0, len(x[i]), 12)]
+            k = 0
+            for year in unique:
+                temps[k] = numpy.insert(temps[k], 0, year)
+                totalTemps.append(temps[k])
+                k+=1;
+
+    parsed = numpy.array(totalTemps).tolist()
+    print(parsed)
+    return json.dumps(parsed)
+    #
+    # return json.dumps(data)
+
+def getReveiwData(wid):
+    # Returns all reviews for the given wine
+    try:
+        db = psycopg2.connect(conn_string)
+        cur = db.cursor()
+
+        sql = 'SELECT r."description", r."points", t."tasterID", t."name" FROM "Review" r LEFT JOIN "Taster" t ON r."tasterID" = t."tasterID" WHERE "wineID" = {} ORDER BY r."points" DESC'.format(wid)
+
+        cur.execute(sql)
+        rows = cur.fetchall()
+        data = [row for row in rows]
+        print(data)
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+
+    finally:
+        if db is not None: db.close()
+
+    return data
 
 @app.route('/api/wineDetail', methods=['GET'])
 def wineDetail():
     wineID = str(request.args.get('id'))
-    try:
-        db = psycopg2.connect(conn_string)
-        cur = db.cursor()
-        sql = 'SELECT w.*, v.*, a.*, p.* FROM "Wine" w LEFT JOIN "Area" a ON w."areaID" = a."areaID" LEFT JOIN "Area" p ON a."provinceID" = p."areaID" LEFT JOIN "Variety" v ON w."varietyID" = v."varietyID" WHERE w."wineID" = {}'.format(wineID)
-        cur.execute(sql)
-        data = list(cur.fetchone())
-    
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
-    finally:
-        if db is not None: db.close()
+    wineData = getWineData(wineID)
+    reviewData = getReveiwData(wineID)
+    return render_template("wineDetails.html", w = wineData, reviews = reviewData)
 
-    return render_template("wineDetails.html", wine = json.dumps(data))
-
+@app.route('/api/getCliamteData', methods=['GET'])
+def climateDataResults():
+    # print(wineryid)
+    wineryID = str(request.args.get('id'))
+    return getClimateData(wineryID)
 
 @app.route('/api/tasterDetail', methods=['GET'])
 def tasterDetail():
@@ -115,37 +212,13 @@ def tasterDetail():
         sql = 'SELECT * FROM "Taster" t WHERE t."tasterID" = {}'.format(tasterID)
         cur.execute(sql)
         data = list(cur.fetchone())
-    
+
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
         if db is not None: db.close()
 
     return render_template("tasterDetails.html", taster = json.dumps(data))
-
-
-@app.route('/api/wineReviews', methods=['GET'])
-def wineReviews():
-    wineID = str(request.args.get('id'))
-
-    try:
-        db = psycopg2.connect(conn_string)
-        cur = db.cursor()
-
-        # Returns all reviews for the given wine
-        sql = 'SELECT r."description", r."points", t."tasterID", t."name" FROM "Review" r LEFT JOIN "Taster" t ON r."tasterID" = t."tasterID" WHERE "wineID" = {} ORDER BY r."points" DESC'.format(wineID)
-
-        cur.execute(sql)
-        rows = cur.fetchall()
-        data = [row for row in rows]
-
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
-
-    finally:
-        if db is not None: db.close()
-
-    return json.dumps(data)
 
 @app.route('/api/reviewedWineryMost', methods=['GET'])
 def reviewedWineryMost():
@@ -159,29 +232,6 @@ def reviewedWineryMost():
         cur.execute(sql)
         rows = cur.fetchall()
         data = [row for row in rows]
-
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
-
-    finally:
-        if db is not None: db.close()
-
-    return json.dumps(data)
-
-@app.route('/api/wineryWineInfo', methods=['GET'])
-def wineryWineInfo():
-    wineryid = str(request.args.get('id'))
-    # print(wineryid)
-
-    try:
-        db = psycopg2.connect(conn_string)
-        # Returns all other info related to that winery surrounding its wines (Wine, Area, Variety info all joined to Winery)
-        sql = 'SELECT w.*, v.*, a.* FROM "Wineries" wn JOIN "Wine" w ON w."wineryID" = wn."wineryID" JOIN "Area" a ON w."areaID" = a."areaID" JOIN "Variety" v ON w."varietyID" = v."varietyID" WHERE wn."wineryID" = {}'.format(wineryid)
-        cur = db.cursor()
-        cur.execute(sql)
-        rows = cur.fetchall()
-        data = [row for row in rows]
-        print("Number of rows: ", cur.rowcount)
 
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
@@ -211,7 +261,7 @@ def wineries():
         # w.lon > -122.66784667968751
         # LIMIT 10;
 
-        sql = 'SELECT * FROM public."Wineries" w WHERE w.lat > ' + bounds[0] + ' AND w."lat" < ' + bounds[1] + ' AND w."lon" < ' + bounds[3] + ' AND w."lon" > ' + bounds[2] + ' LIMIT 30'
+        sql = 'SELECT * FROM "Wineries" w WHERE w.lat > ' + bounds[0] + ' AND w."lat" < ' + bounds[1] + ' AND w."lon" < ' + bounds[3] + ' AND w."lon" > ' + bounds[2] + ' LIMIT 30'
 
         cur.execute(sql)
         rows = cur.fetchall()
@@ -335,3 +385,49 @@ def refreshData():
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
+
+    # @app.route('/api/wineryWineInfo', methods=['GET'])
+    # def wineryWineInfo():
+    #     wineryid = str(request.args.get('id'))
+    #     # print(wineryid)
+    #
+    #     try:
+    #         db = psycopg2.connect(conn_string)
+    #         # Returns all other info related to that winery surrounding its wines (Wine, Area, Variety info all joined to Winery)
+    #         sql = 'SELECT w.*, v.*, a.* FROM "Wineries" wn JOIN "Wine" w ON w."wineryID" = wn."wineryID" JOIN "Area" a ON w."areaID" = a."areaID" JOIN "Variety" v ON w."varietyID" = v."varietyID" WHERE wn."wineryID" = {}'.format(wineryid)
+    #         cur = db.cursor()
+    #         cur.execute(sql)
+    #         rows = cur.fetchall()
+    #         data = [row for row in rows]
+    #         print("Number of rows: ", cur.rowcount)
+    #
+    #     except (Exception, psycopg2.DatabaseError) as error:
+    #         print(error)
+    #
+    #     finally:
+    #         if db is not None: db.close()
+    #
+    #     return json.dumps(data)
+
+    # @app.route('/api/wineReviews', methods=['GET'])
+    # def wineReviews():
+    #     wineID = str(request.args.get('id'))
+    #
+    #     try:
+    #         db = psycopg2.connect(conn_string)
+    #         cur = db.cursor()
+    #
+    #         # Returns all reviews for the given wine
+    #         sql = 'SELECT r."description", r."points", t."tasterID", t."name" FROM "Review" r LEFT JOIN "Taster" t ON r."tasterID" = t."tasterID" WHERE "wineID" = {} ORDER BY r."points" DESC'.format(wineID)
+    #
+    #         cur.execute(sql)
+    #         rows = cur.fetchall()
+    #         data = [row for row in rows]
+    #         print(data)
+    #     except (Exception, psycopg2.DatabaseError) as error:
+    #         print(error)
+    #
+    #     finally:
+    #         if db is not None: db.close()
+    #
+    #     return json.dumps(data)

@@ -12,7 +12,7 @@
     <style>
     *{
         text-align: left;
-		font-family: Dosis;
+		font-family: Dosis !important;
 		font-weight: 300;
     }
     form {
@@ -25,9 +25,9 @@
         margin-top: 15px;
         max-height: calc(100vh - 30px - 24px - 15px)
     }
-	#wines .card-body .card:first-child {
+	/*#wines .card-body .card:first-child {
 		margin-top:0px;
-	}
+	}*/
     .card.middle {
         max-height: calc(66vh - 30px - 24px - 15px)
     }
@@ -36,6 +36,14 @@
     }
 	#reviewPanel .card-body  {
 		padding: 7px;
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+	#reviewPanel .card-body .card:first-child {
+		margin-top:0px;
+	}
+	#toptitle .card-header {
+		border-bottom-width:0px;
 	}
 	a.btn.btn-secondary {
 		border-radius: 2px;
@@ -71,13 +79,16 @@
 	<nav class="navbar navbar-expand-lg navbar-light bg-dark">
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item active" style="color: white; margin-right: 10px">
-				WineMapper
+				WineMapper&emsp;<strong>Wine Overview</strong>
 			</li>
 		</ul>
 		<ul class="navbar-nav">
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <button class="btn-secondary nav"><a href="/">Back to Map</button>
-            </li>
+            </li> -->
+			<li class="nav-item">
+				<button class="btn-secondary nav"><a href="/">Back to Map</button>
+			</li>
 			<li class="nav-item">
 				<button class="btn-secondary nav"><a class="nav-link" href="/login">Log In</a></button>
 			</li>
@@ -85,26 +96,95 @@
 	</nav>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-4">
-				<div class="card middle" id="wineOverviewCard">
-					<h6 class="card-header" id="wineOverviewTitle"></h6>
-					<p class="card-body" id="wineOverviewText"></p>
-				</div>
-			</div>
-			<div class="col-md-8">
-				<div class="card" id="wineReviewPanel">
-					<h6 class="card-header" id="wineReviewTitle"></h6>
-					<div class="card-body" id="wineReviewContainer"></div>
+			<div class="col-md-12">
+
+				<div class="card" id="toptitle">
+				<h6 class="card-header">{{w[1]}}</h6>
 				</div>
 			</div>
 		</div>
-	</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="card middle">
+					<h6 class="card-header">Overview:</h6>
+					<div class="card-body">
+						<strong>Average Price: </strong>
+						{% if w[2] %}
+							${{w[2]}}
+						{% else %} 	Price not listed.
+						{% endif %}
+						<br>
 
+						{% if w[15] %}
+							<strong>Province: </strong>
+							{% if w[16] %}
+								<a href={{w[16]}} target = _blank>{{w[15]}}</a>
+							{% else %} {{w[15]}}
+							{% endif %}
+							<br>
+						{% endif %}
+
+						{% if w[11] %}
+							<strong>Region: </strong>
+							{% if w[12] %}
+								<a href={{w[12]}} target = _blank>{{w[11]}}</a>
+							{% else %} {{w[11]}}
+							{% endif %}
+							<br>
+						{% endif %}
+
+						<strong>Variety: </strong>
+						{% if w[8] %}
+							{{w[8]}}
+						{% else %} No information.
+						{% endif %}
+						<br>
+						{% if w[9] %}
+							<strong>Variety Description: </strong>
+							{{w[9]}}
+							<br>
+						{% endif %}
+						{% if w[4] %}
+							<strong>Designation: </strong>
+							{{w[4]}}
+							<br>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+			<div class="col-md-8">
+				<div class="card" id="reviewPanel">
+					<h6 class="card-header">Reviews:</h6>
+					<div class="card-body">
+					{% for r in reviews %}
+					<div class="card">
+					<div class="card-body">
+						<h7 class="card-title"><strong>
+							{% if r[3] %}
+								<a href="/api/tasterDetail?id='{{r[2]}}'"><strong>{{r[3]}}</strong></a>
+							{% else %}
+								Anonymous Reviewer
+							{% endif %}
+						</strong>
+						<span style="float:right">Points: {{r[1]}}</span>
+						</h7>
+						<p class="card-text">{{r[0]}}</p>
+						</div>
+					</div>
+					{% endfor %}
+					<!-- <div class="card-body" id="wineReviewContainer"></div> -->
+				</div>
+			</div>
+			</div>
+		</div>
+	</div>
+	<!-- {{w}}
+{{reviews}} -->
 	<!-- </div> -->
     <script>
-        var wine = {{wine | safe}}
+        // var wine = {{wine}}
     </script>
-<script  src="../static/js/wineDetails.js"></script>
+<!-- <script  src="../static/js/wineDetails.js"></script> -->
 </body>
 
 </html>

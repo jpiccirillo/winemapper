@@ -7,12 +7,16 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="../static/bootstrap/bootstrap_litera.min.css">
 	<link rel="stylesheet" type="text/css" href="../static/css/default_style.css">
-	<!-- https://fonts.google.com/specimen/Dosis -->
-	<link href="https://fonts.googleapis.com/css?family=Dosis:400,700" rel="stylesheet">
+	<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.css" rel="stylesheet" />
+
+	<link href="https://fonts.googleapis.com/css?family=Dosis:400,700,900" rel="stylesheet">
     <style>
     *{
         text-align: left;
-		font-family: Dosis;
+		font-family: Dosis !important;
 		font-weight: 300;
     }
     form {
@@ -26,7 +30,10 @@
         height: calc(100% - 15px);
         max-height: calc(100vh - 30px - 24px - 15px)
     }
-	#wines .card-body .card:first-child {
+	.card-title {
+		font-size:17px;
+	}
+	#wineryWines .card-body .card:first-child {
 		margin-top:0px;
 	}
     .card.middle {
@@ -35,8 +42,11 @@
     .card-body {
         overflow: auto;
     }
-	#wines .card-body  {
+	#wineryWines .card-body  {
 		padding: 7px;
+	}
+	#chart {
+		/*min-height: 500px;*/
 	}
 	a.btn.btn-secondary {
 		border-radius: 2px;
@@ -55,7 +65,7 @@
 		to { stroke-dashoffset: 0; }
 	}
 
-	g { transform: scale(.075) translate(-750px, -50px); }
+	/*g { transform: scale(.10) translate(-750px, 50px); }
 	#bottle {
 		width: 100%;
 		height: 100%;
@@ -63,7 +73,16 @@
 	svg{
 		display: block;
 		margin: auto;
-		margin-top: 10%;
+	}*/
+	.c3 svg g g.c3-axis.c3-axis-y,.c3 svg g g.c3-axis.c3-axis-x {
+		font-size: 11px;
+	}
+	.c3-axis-y-label {
+		font-size: 12px;
+	}
+	#climate .card-body {
+		padding-left:0px;
+		padding-right:10px;
 	}
     </style>
 </head>
@@ -72,7 +91,7 @@
 	<nav class="navbar navbar-expand-lg navbar-light bg-dark">
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item active" style="color: white; margin-right: 10px">
-				WineMapper
+				WineMapper&emsp;<strong>Winery Overview</strong>
 			</li>
 		</ul>
 		<ul class="navbar-nav">
@@ -90,22 +109,29 @@
 				<div class="row">
 				<div class="col-md-6">
 					<div class="card middle" id="wineryOverview">
-					<h6 class="card-header"></h6>
+					<h6 class="card-header">Overview of {{winery[1]}}</h6>
 					<div class="card-body">
-						<!-- <h7 class="card-title">This page will show data for WineryID: {{id}}.</h7> -->
-						<p class="card-text">
-							<strong>Address: </strong><span id="wineryAddress"></span><br>
-							<strong>Coordinates: </strong><span id="wineryLatLon"></span><br>
-							<strong>Most Reviews By: </strong><br>
-								<ul id="wineryMostReviews"></ul>
-							</p>
+						<h7 class="card-title"></h7>
+						<!-- <p class="card-text"> -->
+							<strong>Address: </strong>{{winery[4]}}<br>
+							<strong>Coordinates: </strong>{{winery[2]}}, {{winery[3]}}<span id="wineryLatLon"></span><br>
+							<strong>Most Reviews By: </strong><span id="reviewer"></span><br>
+								<!-- <ul id="wineryMostReviews"></ul> -->
+							<div class="card" style="margin-top: 0px; border-width:0px">
+
+								<div class="card-body" style="padding: 5px">
+									<div class="card-text"></div>
+									<div class="card-text" id="numreviews" style="font-style: italic;"></div>
+								</div>
+							</div>
+							<!-- </p> -->
 						<!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
 					</div>
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="card middle" id="winerySoil">
-					<h6 class="card-header"></h6>
+					<h6 class="card-header">Soil Characteristics at {{winery[1]}}</h6>
 					<div class="card-body">
 						<!-- <h7 class="card-title">This page will show data for WineryID: {{id}}.</h7> -->
 						<p class="card-text">With supporting text below as a natural lead-in to additional content.With supporting text b.</p>
@@ -119,8 +145,20 @@
 					<div class="card" id="climate">
 					<h6 class="card-header">Climate Data plot here</h6>
 					<div class="card-body">
-						<h7 class="card-title">This page will show data for WineryID: {{id}}.</h7>
-						<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+						<div id="chart"></div>
+
+						<!-- <div id="bottle">
+						<svg width="70px" height="200px">
+							<g>
+								<path class="path" fill="none" stroke="#000000" stroke-width="30" stroke-miterlimit="10" d="M818,1782c0,0,35.569,51.542,196.045,44.627
+								C1174.521,1819.713,1205,1782,1205,1782V737c0,0-2.896-88.072-66-140c-70.354-48.303-63.791-93-63.791-93L1078,195l6-11l1-47l-7-16
+								l-0.209-22.836L952,97.746l-2.164,19.464L941,132v42.836L947,190v322c0,0,3.393,35.554-38,56c-41.393,20.446-84.65,76.434-89,159
+								C815.65,809.566,818,1782,818,1782z"></path>
+							</g>
+						</svg>
+					</div> -->
+						<!-- <h7 class="card-title"></h7> -->
+						<!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
 						<!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
 					</div>
 					</div>
@@ -131,31 +169,71 @@
 				<!-- <div class="row"> -->
 					<!-- <div class="col-md-12"> -->
 				<div class="card" id="wineryWines">
-				<h6 class="card-header"></h6>
-				<div id="bottle">
-				<svg width="50px" height="150px">
-					<g>
-						<path class="path" fill="none" stroke="#000000" stroke-width="30" stroke-miterlimit="10" d="M818,1782c0,0,35.569,51.542,196.045,44.627
-						C1174.521,1819.713,1205,1782,1205,1782V737c0,0-2.896-88.072-66-140c-70.354-48.303-63.791-93-63.791-93L1078,195l6-11l1-47l-7-16
-						l-0.209-22.836L952,97.746l-2.164,19.464L941,132v42.836L947,190v322c0,0,3.393,35.554-38,56c-41.393,20.446-84.65,76.434-89,159
-						C815.65,809.566,818,1782,818,1782z"></path>
-					</g>
-				</svg>
-			</div>
+				<h6 class="card-header">Wines from {{winery[1]}}</h6>
 				<div class="card-body">
 					<!-- <h7 class="card-title">This page will show data for WineryID: {{id}}.</h7> -->
-					<p class="card-text main"></p>
-					<!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+					 {% for w in wines %}
+					<div class="card">
+						<!-- "<img class=\"card-img-top\" alt=\"Card image cap\">" + -->
+						<div class="card-body" style="padding: 5px">
+							<h7 class="card-title">{{w[1]}}</h7>
+							<p class="card-text" style="font-family: Dosis!important">
+								<strong>Average Price: </strong>
+								{% if w[2] %}
+									${{w[2]}}
+								{% else %} 	Price not listed.
+								{% endif %}
+								<br>
+
+								{% if w[15] %}
+									<strong>Province: </strong>
+									{% if w[16] %}
+										<a href={{w[16]}} target = _blank>{{w[15]}}</a>
+									{% else %} {{w[15]}}
+									{% endif %}
+									<br>
+								{% endif %}
+
+								{% if w[11] %}
+									<strong>Region: </strong>
+									{% if w[12] %}
+										<a href={{w[12]}} target = _blank>{{w[11]}}</a>
+									{% else %} {{w[11]}}
+									{% endif %}
+									<br>
+								{% endif %}
+
+								<strong>Variety: </strong>
+								{% if w[8] %}
+									{{w[8]}}
+								{% else %} No information.
+								{% endif %}
+								<br>
+								{% if w[9] %}
+									<strong>Variety Description: </strong>
+									{{w[9]}}
+									<br>
+								{% endif %}
+								{% if w[4] %}
+									<strong>Designation: </strong>
+									{{w[4]}}
+									<br>
+								{% endif %}
+
+								<!-- <span id="wineryAddress"></span> -->
+
+							</p>
+							<a href="/api/wineDetail?id={{w[0]}}" class="btn btn-secondary">Read Reviews</a>
+						</div>
+					</div>
+					{% endfor %}
 				</div>
 				</div>
 			</div>
 		</div>
     </div>
-
-	<!-- </div> -->
     <script>
-    var winery = {{winery | safe}}
-	// var name = '{{name}}'
+	var wineryid = {{wid}}
     </script>
 <script  src="../static/js/wineryDetail.js"></script>
 </body>
