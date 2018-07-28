@@ -91,13 +91,22 @@
 						<p class="card-body" id="tasterOverviewText"></p>
 					</div>
 				</div>
+				<div class="col-md-4">
+					<div class="card middle">
+						<p>stuff</p>
+					</div>
+				</div>
+				{% if taster[1] %}
+					<div class="col-md-4">
+						<div class="card right">
+							<a class="twitter-timeline" href="https://twitter.com/{{taster[1]}}?ref_src=twsrc">Tweets by {{taster[1]}}</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+						</div>
+					</div>
+				{% endif %}
 			</div>
 		</div>
 
 		<!-- </div> -->
-		<script>
-			var taster = {{taster | safe}}
-		</script>
 		<script  src="../static/js/tasterDetails.js"></script>
 	</body>
 

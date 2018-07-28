@@ -273,7 +273,9 @@ def tasterDetail():
     finally:
         if db is not None: db.close()
 
-    return render_template("tasterDetails.html", taster = json.dumps(data))
+    data[1] = data[1].replace('@', '')
+
+    return render_template("tasterDetails.html", taster = data)
 
 @app.route('/api/reviewedWineryMost', methods=['GET'])
 def reviewedWineryMost():
