@@ -54,7 +54,7 @@ def wines():
         cur = db.cursor()
 
         # Selects all wines from a given winery
-        sql = 'SELECT * FROM "Wine" w JOIN "Wineries" wn ON w."wineryID" = wn."wineryID" WHERE wn."wineryID" = ' + wineryid;
+        sql = 'SELECT * FROM "Wine" w JOIN "Wineries" wn ON w."wineryID" = wn."wineryID" WHERE wn."wineryID" = {}'.format(wineryid)
 
         cur.execute(sql)
         rows = cur.fetchall()
@@ -70,12 +70,14 @@ def wines():
         if db is not None: db.close()
         return json.dumps(data)
 
+
 @app.route('/api/wineryDetail', methods=['GET'])
 def wineryDetail():
     wineryid = str(request.args.get('id'))
 
     print(wineryid)
     return render_template("wineryDetail.html", wid = wineryid, winery = getBasicWineryData(wineryid), wines = winesAtWinery(wineryid))
+
 
 def winesAtWinery(wid):
     try:
@@ -94,6 +96,7 @@ def winesAtWinery(wid):
 
     return rows
 
+
 def getBasicWineryData(wid):
     try:
         db = psycopg2.connect(conn_string)
@@ -110,6 +113,7 @@ def getBasicWineryData(wid):
         if db is not None: db.close()
 
     return winery
+
 
 def getWineData(wid):
     # Returns all winedata for the given wine
@@ -129,6 +133,7 @@ def getWineData(wid):
         if db is not None: db.close()
 
     return data
+
 
 def getClimateData(wid):
     print(wid)
@@ -223,6 +228,7 @@ def getClimateData(wid):
     totalData.append(totalTemps)
     return json.dumps(totalData)
 
+
 def getReveiwData(wid):
     # Returns all reviews for the given wine
     try:
@@ -244,12 +250,14 @@ def getReveiwData(wid):
 
     return data
 
+
 @app.route('/api/wineDetail', methods=['GET'])
 def wineDetail():
     wineID = str(request.args.get('id'))
     wineData = getWineData(wineID)
     reviewData = getReveiwData(wineID)
     return render_template("wineDetails.html", w = wineData, reviews = reviewData)
+
 
 @app.route('/api/getCliamteData', methods=['GET'])
 def climateDataResults():
@@ -258,24 +266,55 @@ def climateDataResults():
     print(wineryID)
     return getClimateData(wineryID)
 
+
 @app.route('/api/tasterDetail', methods=['GET'])
 def tasterDetail():
     tasterID = str(request.args.get('id'))
+    tasterData = getTasterData(tasterID)
+    reviewData = getTasterReviewData(tasterID)
+
+    return render_template("tasterDetails.html", taster = tasterData, reviews = reviewData)
+
+def getTasterReviewData(tasterID):
+    """
+    Gets taster's review information from the server
+    """
+    reviewData = []
     try:
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
-        sql = 'SELECT * FROM "Taster" t WHERE t."tasterID" = {}'.format(tasterID)
+        sql = 'SELECT r."description", r."points", w."wineID", w."title", v."vName", wn."name", wn."country" FROM "Review" r JOIN "Taster" t ON r."tasterID" = t."tasterID" JOIN "Wine" w ON w."wineID" = r."wineID" LEFT JOIN "Wineries" wn ON w."wineryID" = wn."wineryID" LEFT JOIN "Variety" v ON w."varietyID" = v."varietyID" WHERE t."tasterID" = {}'.format(tasterID)
         cur.execute(sql)
-        data = list(cur.fetchone())
+        reviewData = cur.fetchall()
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if db is not None: db.close()
+    return reviewData
+
+def getTasterData(tasterID):
+    """
+    Gets taster information from the DB
+    """
+    tasterData = []
+    try:
+        db = psycopg2.connect(conn_string)
+        cur = db.cursor()
+        sql = 'SELECT t.*, COUNT(r."revID"), AVG(r."points") FROM "Taster" t JOIN "Review" r on t."tasterID" = r."tasterID" WHERE t."tasterID" = {} GROUP BY t."tasterID"'.format(tasterID)
+        cur.execute(sql)
+        tasterData = list(cur.fetchone())
 
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
         if db is not None: db.close()
 
-    data[1] = data[1].replace('@', '')
+    if tasterData[1]:
+        tasterData[1] = tasterData[1].replace('@', '')
 
-    return render_template("tasterDetails.html", taster = data)
+    return tasterData
+
 
 @app.route('/api/reviewedWineryMost', methods=['GET'])
 def reviewedWineryMost():
@@ -298,6 +337,7 @@ def reviewedWineryMost():
         if db is not None: db.close()
 
     return json.dumps(data)
+
 
 @app.route('/api/getWineries', methods=['GET'])
 def wineries():
@@ -375,9 +415,11 @@ def logout():
     session['logged_in'] = False
     return render_template("logout.html")
 
+
 @app.route('/climate')
 def showPlot():
     return render_template("climate.html")
+
 
 @app.route('/api/insert', methods=['POST'])
 def insertUser():
