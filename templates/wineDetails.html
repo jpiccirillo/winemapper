@@ -89,8 +89,19 @@
 			<li class="nav-item">
 				<button class="btn-secondary nav"><a href="/">Back to Map</button>
 			</li>
+			{% if loggedin %}
 			<li class="nav-item">
-				<button class="btn-secondary nav"><a class="nav-link" href="/login">Log In</a></button>
+				<button class="btn-secondary nav"><a class="nav-link" href="">Profile</a></button>
+			</li>
+			{% endif %}
+			<li class="nav-item">
+				<button class="btn-secondary nav">
+				{% if loggedin %}
+				<a class="nav-link" href="\logout">Log Out</a>
+				{% else %}
+				<a class="nav-link" href="\login">Log In</a>
+				{% endif %}
+				</button>
 			</li>
 		</ul>
 	</nav>

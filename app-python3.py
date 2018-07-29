@@ -9,6 +9,7 @@ import psycopg2
 import re
 import html.parser
 import time
+import random
 
 dbname = "winemapper"
 user = "ec2_user"
@@ -16,36 +17,64 @@ password = "winemapper"
 host = "winemapper.ctm2fbq02abz.us-east-2.rds.amazonaws.com"
 port = "5432"
 conn_string = "host={} port={} dbname={} user={} password={}".format(host, port, dbname, user, password)
-
+# session['logged_in'] = False
 app = Flask(__name__)
-
-# @app.route('/', methods=['GET'])
-# def home():
-#     if not session.get('logged_in'):
-#         return render_template('login.html')
-#     if session.get('is_power'):
-#         return render_template('powerHome.html')
-#     else:
-#         return render_template('home.html')
-#        #if session.get('is_regular'):
-#         #   return render_template('home.html')
-#        #if session.get('is_power'):
-#         #   return render_template('powerHome.html')
 
 @app.route('/', methods=['GET'])
 def home():
-    # if not session.get('logged_in'):
-    #     return render_template('login.html')
-    #
-    # else:
-    session['logged_in'] = True
-    data = [1, 2, 3]
-    return render_template('browse.html', entries=data)
+    if not session.get('logged_in'):
+        print("not logged in")
+        session['logged_in'] = False;
+
+    return render_template('browse.html', loggedin = checkLogin())
 
 app.secret_key = os.urandom(12)
 
+def checkLogin():
+    if not session.get('logged_in'):
+        session['logged_in'] = False;
+        return False;
+    else:
+        return session['logged_in']
+
+@app.route('/api/checkLoginForClient', methods=['GET'])
+def checkLoginForClient():
+    if checkLogin()==False:
+        return "false"
+    else:
+        return "true"
+
+@app.route('/openProfile', methods=['GET'])
+def openProfile():
+    # SELECT * FROM "User" u, "Favorites" f WHERE f."userID" = u."userID"
+    print(UID)
+    #queries to get user info and their favorites
+    try:
+        db = psycopg2.connect(conn_string)
+        cur = db.cursor()
+
+        # Selects all wines from a given winery
+        sql = 'SELECT * FROM "User" u, "Favorites" f WHERE f."userID" = u."userID" AND u."userID" = {}'.format(UID)
+
+        cur.execute(sql)
+        rows = cur.fetchall()
+        print("Number of rows: ", cur.rowcount)
+        data = [row for row in rows]
+        print(data)
+        cur.close()
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+
+    finally:
+        if db is not None: db.close()
+
+    return render_template('user.html', uid = UID, favorites = json.dumps(data), loggedin = checkLogin())
+
+
 @app.route('/api/getWines', methods=['GET'])
 def wines():
+    # checkLogin()
     wineryid = str(request.args.get('id'))
     print(wineryid)
 
@@ -76,7 +105,7 @@ def wineryDetail():
     wineryid = str(request.args.get('id'))
 
     print(wineryid)
-    return render_template("wineryDetail.html", wid = wineryid, winery = getBasicWineryData(wineryid), wines = winesAtWinery(wineryid))
+    return render_template("wineryDetail.html", wid = wineryid, winery = getBasicWineryData(wineryid), wines = winesAtWinery(wineryid), loggedin = checkLogin())
 
 
 def winesAtWinery(wid):
@@ -155,19 +184,16 @@ def getClimateData(wid):
         if db is not None: db.close()
 
     # print(data)
-# ['x', 'Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+    # ['x', 'Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
     totalData = [];
     totalTemps = [];
     totalTemps.append(['x', '2018-01-01', '2018-02-01', '2018-03-01', '2018-04-01', '2018-05-01', '2018-06-01', '2018-07-01', '2018-08-01', '2018-09-01', '2018-10-01', '2018-11-01', '2018-12-01'])
     # x = numpy.array(data).T
 
-
     c = 1;
     normalized = [];
     print(data)
     for row in data:
-        # for month in range(1, 13):
-        # print("newrecord")
         write = False;
         if row[8] == c%12:
             write=True;
@@ -180,11 +206,6 @@ def getClimateData(wid):
                     # time.sleep(.5)
                     write=True;
                     break;
-                #
-                # elif (row[8]%12==c%12):
-                #     time.sleep(.5)
-                #     write=True;
-                #     break;
 
                 else:
                     print(row[8], c%12)
@@ -253,10 +274,11 @@ def getReveiwData(wid):
 
 @app.route('/api/wineDetail', methods=['GET'])
 def wineDetail():
+    print(session['logged_in'])
     wineID = str(request.args.get('id'))
     wineData = getWineData(wineID)
     reviewData = getReveiwData(wineID)
-    return render_template("wineDetails.html", w = wineData, reviews = reviewData)
+    return render_template("wineDetails.html", w = wineData, reviews = reviewData, loggedin = checkLogin())
 
 
 @app.route('/api/getCliamteData', methods=['GET'])
@@ -273,7 +295,7 @@ def tasterDetail():
     tasterData = getTasterData(tasterID)
     reviewData = getTasterReviewData(tasterID)
 
-    return render_template("tasterDetails.html", taster = tasterData, reviews = reviewData)
+    return render_template("tasterDetails.html", taster = tasterData, reviews = reviewData, loggedin = checkLogin())
 
 def getTasterReviewData(tasterID):
     """
@@ -375,113 +397,83 @@ def wineries():
         if db is not None: db.close()
         return json.dumps(data)
 
-
-@app.route('/login', methods=['POST', 'GET'])
-def login():
+@app.route('/login')
+def loginpage():
     return render_template("login.html")
-#    global UID
-#    username = request.form['username']
-#    print(username)
-#    password = request.form['password']
-#    print(password)
-#    con = sql.connect(db)
-#    con.row_factory = sql.Row
-#    cur = con.cursor()
-#
-#    query = "SELECT * FROM User WHERE Username=\'" + username + "\'"
-#    cur.execute(query)
-#    rows = cur.fetchall()
-#
-#    if len(rows) == 0:
-#       return home()
-#
-#    elif helper_function.checkPassword(password.encode(), rows[0]['Password'].encode()):
-#        if rows[0]['UserLevel'] == 'power':
-#           session['is_power'] = True
-#        elif rows[0]['UserLevel'] == '':
-#           session['is_regular'] = True
-#        session['logged_in'] = True
-#        session['username'] = username
-#        UID = rows[0]['UID']
-#       #print("UID: ", UID)
-#
-#        return home()
-#
-#    else:
-#       return home()
+
+@app.route('/login_action', methods=['POST', 'GET'])
+def login():
+    global UID
+    username = request.form['username']
+    print(username)
+    password = request.form['password']
+    print(password)
+
+    db = psycopg2.connect(conn_string)
+    cur = db.cursor()
+
+    query = 'SELECT * FROM "User" WHERE "uName"=\'' + username +'\''
+    cur.execute(query)
+    user = list(cur.fetchone())
+
+    if password == user[2]:
+        session['logged_in'] = True
+        session['username'] = user[0]
+        UID = user[0]
+        return home()
+
+    else:
+        return loginpage()
+
+@app.route('/addUser', methods = ['POST', 'GET'])
+def new_user():
+    # if not session.get('logged_in'):
+    #     return render_template('login.html')
+
+    return render_template('newUser.html')
+
+@app.route('/addUserData', methods = ['POST', 'GET'])
+def addUserData():
+    # if not session.get('logged_in'):
+    #     return render_template('login.html')
+    # if not session.get('is_power'):
+    #     return render_template('home.html')
+    try:
+        db = psycopg2.connect(conn_string)
+        cur = db.cursor()
+
+        username = request.form['username']
+        password = request.form['password']
+        # email = request.form['email']
+        address = request.form['inputAddress']
+        firstname = request.form['firstname']
+
+        print(username, password, address, firstname)
+        getUserID = 'SELECT MAX("userID") FROM "User"'
+        cur.execute(getUserID)
+        max = cur.fetchone()
+        uID = max[0]+1
+        print(uID)
+
+        sql = 'INSERT INTO "User" ("userID", "uName", "pWord", name, address) VALUES (%s,%s,%s,%s,%s)'
+        insertValues = (uID, username, password, address, firstname)
+
+        cur.execute(sql, insertValues)
+        db.commit()
+        msg = "You're in! Welcome to WineMapper :)"
+
+    except Exception as e:
+        con.rollback()
+        msg = e
+
+    finally:
+        return render_template("result.html", msg = msg)
+        db.close()
 
 @app.route('/logout')
 def logout():
     session['logged_in'] = False
-    return render_template("logout.html")
-
-
-@app.route('/climate')
-def showPlot():
-    return render_template("climate.html")
-
-
-@app.route('/api/insert', methods=['POST'])
-def insertUser():
-    print("Logged In: ", session.get('logged_in'))
-    if not session.get('logged_in'):
-        return render_template('login.html')
-
-    firstname = request.args.get("firstname")
-    lastname = request.args.get("lastname")
-
-    db = psycopg2.connect(conn_string)
-    cur = db.cursor()
-    sql = 'INSERT INTO public."User" VALUES (%s,%s,%s)'
-    insert_data = (firstname, lastname, 5)
-    try:
-        cur.execute(sql, insert_data)
-        db.commit()
-
-    except Exception as e:
-        print(insert_data)
-        print(e)
-
-    return "success"
-
-# @app.route('api/refresh'):
-def refreshData():
-    db = None
-    data = []
-    args = request.args
-    keys = args.keys()
-    values = args.values()
-
-    for i in range(0, len(values)):
-        print(keys[i] + values[i])
-
-    try:
-        db = psycopg2.connect(conn_string)
-        cur = db.cursor()
-#         SELECT * FROM public."Winery" w
-# WHERE w.lat > 37.743571187449064 AND
-# w.lat < 38.542795073979015 AND
-# w.lon < -121.94686889648439 AND
-# w.lon > -122.66784667968751
-# LIMIT 10;
-        sql = 'SELECT * FROM public."Winery" w WHERE w."lat" > ORDER BY s"wineryID" ASC'
-        cur.execute(sql)
-
-        rows = cur.fetchall()
-        print("The number of rows: ", cur.rowcount)
-        for row in rows:
-            data.append(row)
-            print(row)
-        # print(data)
-        cur.close()
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
-
-    finally:
-        if db is not None:
-            db.close()
-        return data
-
+    return render_template("logout.html", loggedin = checkLogin())
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)

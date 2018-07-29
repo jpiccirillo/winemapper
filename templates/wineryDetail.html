@@ -48,11 +48,14 @@
 	#chart {
 		/*min-height: 500px;*/
 	}
-	a.btn.btn-secondary {
+	a.btn.btn-secondary, a.btn.btn-success {
 		border-radius: 2px;
 		padding: 2px;
 		width: 100%;
 		text-decoration: none;
+	}
+	#wineryWines a.btn.btn-secondary, #wineryWines a.btn.btn-success:last-child {
+		margin-top:5px;
 	}
 	.path {
 		stroke-dasharray: 4500;
@@ -103,8 +106,19 @@
             <li class="nav-item">
                 <button class="btn-secondary nav"><a href="/">Back to Map</a></button>
             </li>
+			{% if loggedin %}
 			<li class="nav-item">
-				<button class="btn-secondary nav"><a class="nav-link" href="/login">Log In</a></button>
+				<button class="btn-secondary nav"><a class="nav-link" href="">Profile</a></button>
+			</li>
+			{% endif %}
+			<li class="nav-item">
+				<button class="btn-secondary nav">
+				{% if loggedin %}
+				<a class="nav-link" href="\logout">Log Out</a>
+				{% else %}
+				<a class="nav-link" href="\login">Log In</a>
+				{% endif %}
+				</button>
 			</li>
 		</ul>
 	</nav>
@@ -226,6 +240,7 @@
 								<!-- <span id="wineryAddress"></span> -->
 
 							</p>
+							<a onClick="checkLogin()" class="btn btn-success">Add to Favorites</a>
 							<a href="/api/wineDetail?id={{w[0]}}" class="btn btn-secondary">Read Reviews</a>
 						</div>
 					</div>
@@ -238,7 +253,8 @@
     <script>
 	var wineryid = {{wid}}
     </script>
-<script  src="../static/js/wineryDetail.js"></script>
+	<script  src="../static/js/wineryDetail.js"></script>
+	<script  src="../static/js/favorites.js"></script>
 </body>
 
 </html>

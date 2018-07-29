@@ -53,7 +53,9 @@
 			display: block;
 			margin: 0 auto;
 		}
-
+		strong {
+			font-weight: 700;
+		}
 		#wrapper1 {
 			margin-left: var(--mapwidth);
 			height: calc(100% - 40px);
@@ -95,7 +97,7 @@
 		.card-body {
 			padding: 10px;
 		}
-		a.btn-secondary {
+		a.btn-secondary, a.btn-success {
 			border-radius: 4px;
 			padding: 5px;
 			font-size: 12px;
@@ -116,7 +118,7 @@
 		    padding-left: 0px;
 		    padding-bottom: 0px;*/
 		/*}*/
-		a.btn-secondary:last-child {
+		a.btn-success:last-child {
 			float: right;
 		}
 		@media (max-width: 700px) {
@@ -160,7 +162,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-dark">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active" style="color: white; margin-right: 10px">
-                    WineMapper
+                    WineMapper&emsp;<strong>Browse Wineries and Wines</strong>
                 </li>
                 <li class="nav-item">
                     <button class="btn-secondary nav"><a class="nav-link" href="#">Features</a></button>
@@ -180,11 +182,19 @@
                     	<a class="dropdown-item" href="#">Another action</a>
                     </div>
                 </li>
+				{% if loggedin %}
                 <li class="nav-item">
-                    <button class="btn-secondary nav"><a class="nav-link" href="">Profile</a></button>
+                    <button class="btn-secondary nav"><a class="nav-link" href="/openProfile">Profile</a></button>
                 </li>
+				{% endif %}
                 <li class="nav-item">
-                    <button class="btn-secondary nav"><a class="nav-link" href="\logout">Log Out</a></button>
+					<button class="btn-secondary nav">
+					{% if loggedin %}
+					<a class="nav-link" href="\logout">Log Out</a>
+					{% else %}
+					<a class="nav-link" href="\login">Log In</a>
+					{% endif %}
+					</button>
                 </li>
             </ul>
     </nav>
@@ -197,8 +207,9 @@
 		</div>
 		<div id="sidebar1">
 			<div id="map"></div>
-			<script>var entries = {{entries | safe}}</script>
+			<!-- <script>var entries = {{entries | safe}}</script> -->
 			<script src="../static/js/map.js"></script>
+			<script  src="../static/js/favorites.js"></script>
 		</div>
 		<div id="cleared1"></div>
 	</div>

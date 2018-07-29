@@ -33,14 +33,13 @@ function getMostReviews() {
             }
         },
         error: function(data) {
-            console.log("Error pulling addresses from database via cartCombo_app.py and ajax call\n")
+            console.log("Error originaing from ajax call\n")
         }
     });
 }
 
 
 function getClimateData() {
-
     var monthNameFormat = d3.time.format("%B");
     $.ajax({
         type: 'GET',
@@ -50,7 +49,6 @@ function getClimateData() {
             data = JSON.parse(data)
             $("#stn-info").text(data[0][1] + " (Station # " + data[0][0] + ")")
             console.log(data[1])
-            //
             var chart = c3.generate({
                 data: {
                     x: 'x',
@@ -93,10 +91,9 @@ function getClimateData() {
                 //   left: 20
                 // }
             });
-
         },
         error: function(data) {
-            console.log("Error pulling addresses from database via cartCombo_app.py and ajax call\n")
+            console.log("Error originaing from ajax call\n")
         }
     });
 }

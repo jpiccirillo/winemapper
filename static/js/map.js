@@ -1,6 +1,3 @@
-console.log(entries)
-
-
 function replot(oldBounds) {
     var l_lat = oldBounds._southWest.lat,
     u_lat = oldBounds._northEast.lat,
@@ -47,7 +44,7 @@ function plotCards(wine) {
     // "<h7 class=\"card-title\">Card title</h7>" +
     '<p class="card-text">' + text + '</p>' +
     '<a href="'+ link + '"class="btn btn-secondary">Read Reviews</a>' +
-    // "<a href=\"#\" class=\"btn btn-secondary\">Data on this Wine</a>"
+    "<a onClick=\"checkLogin()\" class=\"btn btn-success\">Add to Favorites</a>"
     "</div></div>"
     $(".activearea").append(card)
 }
@@ -83,7 +80,7 @@ function grabData(bounds) {
             }
         },
         error: function(data) {
-            console.log("Error pulling addresses from database via cartCombo_app.py and ajax call\n")
+            console.log("Error originaing from ajax call\n")
         }
     });
 }
@@ -113,7 +110,7 @@ function rightPanel(id, name) {
             }
         },
         error: function(data) {
-            console.log("Error pulling addresses from database via cartCombo_app.py and ajax call\n")
+            console.log("Error originaing from ajax call\n")
         }
     });
 }

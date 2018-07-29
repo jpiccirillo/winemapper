@@ -34,7 +34,7 @@
 		.card-body {
 			overflow: auto;
 		}
-		#reviewPanel .card-body  {
+		#favePanel .card-body  {
 			padding: 7px;
 		}
 		a.btn.btn-secondary {
@@ -71,7 +71,7 @@
 		<nav class="navbar navbar-expand-lg navbar-light bg-dark">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active" style="color: white; margin-right: 10px">
-					WineMapper&emsp;<strong>Taster Overview</strong>
+					WineMapper&emsp;<strong>Your Favorites:</strong>
 				</li>
 			</ul>
 			<ul class="navbar-nav">
@@ -98,56 +98,21 @@
 			<div class="row">
 				<div class="col-md-4">
 					<div class="card left">
-						<h6 class="card-header">{{taster[2]}}</h6>
+						<h6 class="card-header"></h6>
 						<p class="card-body">
-							<strong>Number of Wine Reviews: </strong>{{taster[3]}}<br>
-							<strong>Average Rating: </strong>{{taster[4]}}<br>
-							<div id="bottle">
-							<svg width="70px" height="200px">
-								<g>
-									<path class="path" fill="none" stroke="#000000" stroke-width="30" stroke-miterlimit="10" d="M818,1782c0,0,35.569,51.542,196.045,44.627
-									C1174.521,1819.713,1205,1782,1205,1782V737c0,0-2.896-88.072-66-140c-70.354-48.303-63.791-93-63.791-93L1078,195l6-11l1-47l-7-16
-									l-0.209-22.836L952,97.746l-2.164,19.464L941,132v42.836L947,190v322c0,0,3.393,35.554-38,56c-41.393,20.446-84.65,76.434-89,159
-									C815.65,809.566,818,1782,818,1782z"></path>
-								</g>
-							</svg>
-						</div>
-							<strong>Winery most reviewed: </strong>
+							<strong>Winery most faveed: </strong>
 						</p>
 					</div>
 				</div>
-				{% if taster[1] %}
 				<div class="col-md-4">
-				{% else %}
 				<div class="col-md-8">
-				{% endif %}
 					<div class="card middle">
-						<h6 class="card-header">Reviews by {{taster[2]}}</h6>
-						<div class="card-body">
-							{% for review in reviews %}
-							<div class="card">
-								<div class="card-body">
-									<h7 class="card-title">
-										<a href="/api/wineDetail?id='{{review[2]}}'"><strong>{{review[3]}}</strong></a>
-										<p style="float:right">Points: {{review[1]}}</p>
-									</h7><br>
-									{% if review[4] %}
-									<h8>Variety: {{review[4]}}</h8><br>
-									{% endif %}
-									<h8>Winery: {{review[5]}}</h8><br>
-									<h8>Country: {{review[6]}}</h8>
-									<p class="card-text">{{review[0]}}
-								</p>
-								</div>
-							</div>
-							{% endfor %}
-						</div>
+						<h6 class="card-header">Reviews by </h6>
+						<div class="card-text">{{favorites}}</div>
 					</div>
 				</div>
-				{% if taster[1] %}
 				<div class="col-md-4">
 					<div class="card right">
-						<a class="twitter-timeline" href="https://twitter.com/{{taster[1]}}?ref_src=twsrc">Tweets by {{taster[1]}}</a>
 						<script type=text/javascript charset="utf-8">
 							function removeWineLoader() {
 								$("#bottle").hide();
@@ -157,7 +122,6 @@
 						<script async src="https://platform.twitter.com/widgets.js" charset="utf-8" onload ="removeWineLoader()"></script>
 					</div>
 				</div>
-				{% endif %}
 			</div>
 		</div>
 	</body>

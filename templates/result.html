@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+
+<head>
+	<!-- <link rel="stylesheet" type="text/css" href="static/css/logout.css"> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../static/bootstrap/bootstrap_litera.min.css">
+	<link rel="stylesheet" type="text/css" href="../static/css/default_style.css">
+	<link href="https://fonts.googleapis.com/css?family=Dosis:400,700,900" rel="stylesheet">
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active" style="color: white; margin-right: 10px">
+				WineMapper
+			</li>
+		</ul>
+		<ul class="navbar-nav">
+			<li class="nav-item">
+				<button class="btn-secondary nav"><a class="nav-link" href="\login">Log In</a></button>
+			</li>
+		</ul>
+	</nav>
+	<div class="wrapper">
+		<form action="/login" method="POST">
+			<div class="form-group col-md-12">
+				<h4>{{msg}}</h4>
+				<!-- <h6>Thanks for using Wine Mapper!</h6> -->
+				<button class="btn-secondary page"><a href="/">Check out the Wine Map</a></button>
+			</div>
+		</form>
+
+	</div>
+</body>
+
+</html>
