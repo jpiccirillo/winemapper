@@ -44,9 +44,9 @@ function plotCards(wine) {
     // "<h7 class=\"card-title\">Card title</h7>" +
     '<p class="card-text">' + text + '</p>' +
     '<a href="'+ link + '"class="btn btn-secondary">Read Reviews</a>' +
-    "<a onClick=\"checkLogin()\" class=\"btn btn-success\">Add to Favorites</a>"
-    "</div></div>"
-    $(".activearea").append(card)
+    '<a onClick="checkLogin()" class="btn btn-success">Add to Favorites</a>' +
+    "</div></div>";
+    $(".activearea").append(card);
 }
 
 

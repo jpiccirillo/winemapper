@@ -96,7 +96,7 @@
 		</nav>
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-md-4">
+				<div class="col-md-6">
 					<div class="card left">
 						<h6 class="card-header"></h6>
 						<p class="card-body">
@@ -104,11 +104,26 @@
 						</p>
 					</div>
 				</div>
-				<div class="col-md-4">
-				<div class="col-md-8">
+				<div class="col-md-6">
 					<div class="card middle">
-						<h6 class="card-header">Reviews by </h6>
-						<div class="card-text">{{favorites}}</div>
+						<h6 class="card-header">Favorited Wines </h6>
+						<div class="card-body">
+							{% for favorite in favorites %}
+							<div class="card">
+								<div class="card-body">
+									<h7 class="card-title"><strong>{{favorite[1]}}</strong></h7><br>
+									<div class="card-text">
+										{% if favorite[2] %}
+										<h8><strong>Variety: </strong>{{favorite[2]}}</h8><br>
+										{% endif %}
+										<h8><strong>Winery: </strong>{{favorite[3]}}</h8><br>
+										<h8><strong>Country: </strong>{{favorite[4]}}</h8>
+										<a href="/api/wineDetail?id='{{favorite[0]}}'" class='btn btn-secondary'>Read Reviews</a>
+									</div>
+								</div>
+							</div>
+							{% endfor %}
+						</div>
 					</div>
 				</div>
 				<div class="col-md-4">
@@ -117,9 +132,7 @@
 							function removeWineLoader() {
 								$("#bottle").hide();
 							}
-
 						</script>
-						<script async src="https://platform.twitter.com/widgets.js" charset="utf-8" onload ="removeWineLoader()"></script>
 					</div>
 				</div>
 			</div>

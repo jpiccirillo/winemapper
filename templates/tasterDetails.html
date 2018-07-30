@@ -102,6 +102,7 @@
 						<p class="card-body">
 							<strong>Number of Wine Reviews: </strong>{{taster[3]}}<br>
 							<strong>Average Rating: </strong>{{taster[4]}}<br>
+							<strong>Winery most reviewed: </strong>
 							<div id="bottle">
 							<svg width="70px" height="200px">
 								<g>
@@ -112,7 +113,6 @@
 								</g>
 							</svg>
 						</div>
-							<strong>Winery most reviewed: </strong>
 						</p>
 					</div>
 				</div>
@@ -122,7 +122,7 @@
 				<div class="col-md-8">
 				{% endif %}
 					<div class="card middle">
-						<h6 class="card-header">Reviews by {{taster[2]}}</h6>
+						<h6 class="card-header">Top 100 Reviews by {{taster[2]}}</h6>
 						<div class="card-body">
 							{% for review in reviews %}
 							<div class="card">
@@ -152,7 +152,6 @@
 							function removeWineLoader() {
 								$("#bottle").hide();
 							}
-
 						</script>
 						<script async src="https://platform.twitter.com/widgets.js" charset="utf-8" onload ="removeWineLoader()"></script>
 					</div>

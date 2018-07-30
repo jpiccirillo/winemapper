@@ -12,9 +12,9 @@ import time
 import random
 
 dbname = "winemapper"
-user = "ec2_user"
-password = "winemapper"
-host = "winemapper.ctm2fbq02abz.us-east-2.rds.amazonaws.com"
+user = "postgres" #"ec2_user"
+password = "postgres" ##winemapper"
+host = "localhost" #"winemapper.ctm2fbq02abz.us-east-2.rds.amazonaws.com"
 port = "5432"
 conn_string = "host={} port={} dbname={} user={} password={}".format(host, port, dbname, user, password)
 # session['logged_in'] = False
@@ -46,21 +46,18 @@ def checkLoginForClient():
 
 @app.route('/openProfile', methods=['GET'])
 def openProfile():
-    # SELECT * FROM "User" u, "Favorites" f WHERE f."userID" = u."userID"
     print(UID)
     #queries to get user info and their favorites
     try:
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
 
-        # Selects all wines from a given winery
-        sql = 'SELECT * FROM "User" u, "Favorites" f WHERE f."userID" = u."userID" AND u."userID" = {}'.format(UID)
+        # Selects a user's favorite wines
+        sql = 'SELECT w."wineID", w."title", v."vName", wn."name", wn."country" FROM "Favorites" f JOIN "Wine" w ON f."wineID" = w."wineID" JOIN "Wineries" wn ON  wn."wineryID" = w."wineryID" JOIN "Variety" v ON v."varietyID" = w."varietyID" WHERE f."userID" = {}'.format(UID)
 
         cur.execute(sql)
         rows = cur.fetchall()
-        print("Number of rows: ", cur.rowcount)
         data = [row for row in rows]
-        print(data)
         cur.close()
 
     except (Exception, psycopg2.DatabaseError) as error:
@@ -69,7 +66,7 @@ def openProfile():
     finally:
         if db is not None: db.close()
 
-    return render_template('user.html', uid = UID, favorites = json.dumps(data), loggedin = checkLogin())
+    return render_template('user.html', uid = UID, favorites = data, loggedin = checkLogin())
 
 
 @app.route('/api/getWines', methods=['GET'])
@@ -305,7 +302,7 @@ def getTasterReviewData(tasterID):
     try:
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
-        sql = 'SELECT r."description", r."points", w."wineID", w."title", v."vName", wn."name", wn."country" FROM "Review" r JOIN "Taster" t ON r."tasterID" = t."tasterID" JOIN "Wine" w ON w."wineID" = r."wineID" LEFT JOIN "Wineries" wn ON w."wineryID" = wn."wineryID" LEFT JOIN "Variety" v ON w."varietyID" = v."varietyID" WHERE t."tasterID" = {}'.format(tasterID)
+        sql = 'SELECT r."description", r."points", w."wineID", w."title", v."vName", wn."name", wn."country" FROM "Review" r JOIN "Taster" t ON r."tasterID" = t."tasterID" JOIN "Wine" w ON w."wineID" = r."wineID" LEFT JOIN "Wineries" wn ON w."wineryID" = wn."wineryID" LEFT JOIN "Variety" v ON w."varietyID" = v."varietyID" WHERE t."tasterID" = {} ORDER BY r."points" DESC LIMIT 100'.format(tasterID)
         cur.execute(sql)
         reviewData = cur.fetchall()
 
