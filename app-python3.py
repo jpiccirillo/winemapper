@@ -12,9 +12,9 @@ import time
 import random
 
 dbname = "winemapper"
-user = "postgres" #"ec2_user"
-password = "postgres" ##winemapper"
-host = "localhost" #"winemapper.ctm2fbq02abz.us-east-2.rds.amazonaws.com"
+user = "ec2_user" #"postgres" 
+password = "winemapper" #"postgres"
+host = "winemapper.ctm2fbq02abz.us-east-2.rds.amazonaws.com" #"localhost"
 port = "5432"
 conn_string = "host={} port={} dbname={} user={} password={}".format(host, port, dbname, user, password)
 # session['logged_in'] = False
