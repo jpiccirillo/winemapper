@@ -38,8 +38,12 @@ form {
 .dropdown-toggle {
     padding-right: 7px !important;
     padding-left: 7px !important;
-    margin-right: 10px;
+    /*margin-right: 10px;*/
     height: 24px;
+}
+.dropdown {
+    margin-right: 5px;
+    margin-left: 5px;
 }
 
 .btn-secondary.nav, .dropdown-toggle, .btn-secondary.page {
@@ -71,15 +75,23 @@ form {
     color: var(--navtextcolor) !important;
     text-decoration: none;
 }
-.navbar {
+* {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    /*padding-right: 0px;*/
 }
 
+span.dropdown-item:active {
+    background-color: gainsboro;
+    color: var(--textcolor)
+}
+.nav-link.dropdown-toggle {
+    min-width:110px;
+}
 .wrapper {
     margin: auto;
     margin-top: 16px;

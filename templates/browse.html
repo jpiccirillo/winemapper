@@ -121,6 +121,16 @@
 		a.btn-success:last-child {
 			float: right;
 		}
+		.form-control {
+    		padding: 0px 4px;
+		}
+		.search-container{
+			display:flex;
+			max-width:80%;
+		}
+		.nav-item .form-control{
+			display: none;
+		}
 		@media (max-width: 700px) {
 			#wrapper1 {
 				margin-left: 0vw;
@@ -161,19 +171,56 @@
 		</div>
     <nav class="navbar navbar-expand-lg navbar-light bg-dark">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active" style="color: white; margin-right: 10px">
+                <li class="nav-item active removable" style="color: white; margin-right: 10px">
                     WineMapper&emsp;<strong>Browse Wineries and Wines</strong>
                 </li>
 
             </ul>
             <ul class="navbar-nav">
+				<div class="search-container">
+				<li class="nav-item">
+					<input class="form-control" type="text" placeholder="Title..." id="title">
+				</li>
+				<li class="nav-item">
+					<input class="form-control" type="text" placeholder="Variety..." id="variety">
+				</li>
+				<li class="nav-item">
+					<input class="form-control" type="text" placeholder="Designation..." id="designation">
+				</li>
+				<li class="nav-item">
+					<input class="form-control" type="text" placeholder="Max wine price..." id="maxprice">
+				</li>
+				<li class="nav-item">
+					<input class="form-control" type="text" placeholder="Area..." id="area">
+				</li>
+				<li class="nav-item">
+					<input class="form-control" type="text" placeholder="Winery..." id="winery">
+				</li>
+				<li class="nav-item">
+					<input class="form-control" type="text" placeholder="Keyword..." id="keyword">
+				</li>
+			</div>
+<div class="dropdown show">
+  <button class="btn-secondary nav" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><a class="nav-link dropdown-toggle" onClick="prepUIforSearch()">Filter by wine:</a></button>
+
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+	<span class="dropdown-item" onClick="show('title')" >Title</span>
+	<span class="dropdown-item" onClick="show('variety')" href="#">Variety</span>
+	<span class="dropdown-item" onClick="show('designation')" href="#">Designation</span>
+	<span class="dropdown-item" onClick="show('maxprice')" href="#">Max Price</span>
+	<span class="dropdown-item" onClick="show('area')" href="#">Area</span>
+	<span class="dropdown-item" onClick="show('winery')" href="#">Winery</span>
+	<span class="dropdown-item" onClick="show('keyword')" href="#">Keyword</span>
+  </div>
+</div>
+				<button type="submit" class="btn-secondary nav"><a class="nav-link" onClick="startSearch()">Search!</a></button>
 				{% if loggedin %}
                 <li class="nav-item">
-                    <button class="btn-secondary nav"><a class="nav-link" href="/openProfile">Profile</a></button>
+                    <button class="btn-secondary nav removable"><a class="nav-link" href="/openProfile">Profile</a></button>
                 </li>
 				{% endif %}
                 <li class="nav-item">
-					<button class="btn-secondary nav">
+					<button class="btn-secondary nav removable">
 					{% if loggedin %}
 					<a class="nav-link" href="\logout">Log Out</a>
 					{% else %}
