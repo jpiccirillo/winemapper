@@ -12,9 +12,9 @@ import time
 import random
 
 dbname = "winemapper"
-user = "ec2_user" #"postgres" 
-password = "winemapper" #"postgres"
-host = "winemapper.ctm2fbq02abz.us-east-2.rds.amazonaws.com" #"localhost"
+user = "ec2_user" #"postgres" #
+password = "winemapper" #"postgres" #
+host = "winemapper.ctm2fbq02abz.us-east-2.rds.amazonaws.com" #"localhost" #
 port = "5432"
 conn_string = "host={} port={} dbname={} user={} password={}".format(host, port, dbname, user, password)
 # session['logged_in'] = False
@@ -53,11 +53,34 @@ def openProfile():
         cur = db.cursor()
 
         # Selects a user's favorite wines
-        sql = 'SELECT w."wineID", w."title", v."vName", wn."name", wn."country" FROM "Favorites" f JOIN "Wine" w ON f."wineID" = w."wineID" JOIN "Wineries" wn ON  wn."wineryID" = w."wineryID" JOIN "Variety" v ON v."varietyID" = w."varietyID" WHERE f."userID" = {}'.format(UID)
 
+        favorites = []
+        sql = 'SELECT w."wineID", w."title", v."vName", wn."name", wn."country" FROM "Favorites" f JOIN "Wine" w ON f."wineID" = w."wineID" JOIN "Wineries" wn ON  wn."wineryID" = w."wineryID" JOIN "Variety" v ON v."varietyID" = w."varietyID" WHERE f."userID" = {}'.format(UID)
         cur.execute(sql)
         rows = cur.fetchall()
-        data = [row for row in rows]
+        favorites = [row for row in rows]
+
+        count = 0
+        sql = 'SELECT COUNT(f."wineID") FROM "Favorites" f WHERE f."userID" = {} GROUP BY f."userID"'.format(UID)
+        cur.execute(sql)
+        count = cur.fetchone()[0]
+
+        varieties = []
+        sql = "SELECT * FROM favoriteVariety({})".format(UID)
+        cur.execute(sql)
+        rows = cur.fetchall()
+        varieties = [row for row in rows]
+
+        wineries = []
+        sql = "SELECT * FROM favoriteWinery({})".format(UID)
+        cur.execute(sql)
+        rows = cur.fetchall()
+        wineries = [row for row in rows]
+
+        userName = ''
+        sql = 'SELECT u."name" FROM "User" u WHERE u."userID" = {}'.format(UID)
+        cur.execute(sql)
+        userName = cur.fetchone()[0]
         cur.close()
 
     except (Exception, psycopg2.DatabaseError) as error:
@@ -66,7 +89,7 @@ def openProfile():
     finally:
         if db is not None: db.close()
 
-    return render_template('user.html', uid = UID, favorites = data, loggedin = checkLogin())
+    return render_template('user.html', uid = UID, count = count, userName = userName, favorites = favorites, varieties = varieties, wineries = wineries, loggedin = checkLogin())
 
 
 @app.route('/api/getWines', methods=['GET'])

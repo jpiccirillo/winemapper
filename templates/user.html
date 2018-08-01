@@ -98,10 +98,24 @@
 			<div class="row">
 				<div class="col-md-6">
 					<div class="card left">
-						<h6 class="card-header"></h6>
-						<p class="card-body">
-							<strong>Winery most faveed: </strong>
-						</p>
+						<h6 class="card-header">Overview for {{userName}}</h6>
+						<div class="card-body">
+							<div class="card-text">
+								<strong>Number of favorite wines: </strong>{{count}}<br><br>
+								{% if wineries %}
+								<strong>Most Favorited Wineries: </strong>
+								{% for winery in wineries %}
+									<ul><a href="/api/wineryDetail?id='{{winery[0]}}'">{{winery[1]}}</a></ul>
+								{% endfor %}
+								{% endif %}
+								{% if varieties %}
+								<strong>Most Favorited Varieties: </strong>
+								{% for variety in varieties %}
+									<ul>{{variety[0]}}</ul>
+								{% endfor %}
+								{% endif %}
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="col-md-6">
@@ -124,15 +138,6 @@
 							</div>
 							{% endfor %}
 						</div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="card right">
-						<script type=text/javascript charset="utf-8">
-							function removeWineLoader() {
-								$("#bottle").hide();
-							}
-						</script>
 					</div>
 				</div>
 			</div>
