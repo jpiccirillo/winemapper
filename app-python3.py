@@ -12,9 +12,9 @@ import time
 import random
 
 dbname = "winemapper"
-user = "ec2_user" #"postgres" #
-password = "winemapper" #"postgres" #
-host = "winemapper.ctm2fbq02abz.us-east-2.rds.amazonaws.com" #"localhost" #
+user = "ec2_user" #"postgres"
+password = "winemapper" #"postgres"
+host = "winemapper.ctm2fbq02abz.us-east-2.rds.amazonaws.com" #"localhost"
 port = "5432"
 conn_string = "host={} port={} dbname={} user={} password={}".format(host, port, dbname, user, password)
 # session['logged_in'] = False
@@ -357,6 +357,44 @@ def getTasterData(tasterID):
 
     return tasterData
 
+@app.route('/api/search', methods=['GET'])
+def search():
+    title = request.args.get('title')
+    variety = request.args.get('variety')
+    designation = request.args.get('variety')
+    maxprice = request.args.get('maxprice')
+    area = request.args.get('area')
+    winery = request.args.get('winery')
+    keyword = request.args.get('keyword')
+
+    title = NULL
+    variety = NULL
+    designation = NULL
+    maxprice = NULL
+    area = NULL
+    keyword = NULL
+    
+    try:
+        db = psycopg2.connect(conn_string)
+        cur = db.cursor()
+
+        data = [];
+        # Returns a list of reviewers who have reviewed the winery the most as [tasterID, name, count]
+        sql = 'SELECT * from public.findwines(%s, %s, %s, %s, %s, %s, %s, NULL, NULL)'
+        insertValues = (title, variety, designation, maxprice, area, winery, keyword)
+        print(sql)
+        cur.execute(sql, insertValues)
+        rows = cur.fetchall()
+        data = [row for row in rows]
+        print(data)
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+
+    finally:
+        if db is not None: db.close()
+
+    return json.dumps(data)
 
 @app.route('/api/reviewedWineryMost', methods=['GET'])
 def reviewedWineryMost():

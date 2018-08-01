@@ -1,3 +1,41 @@
+function prepUIforSearch() {
+    $(".btn-secondary.nav.removable").hide(400)
+    $(".nav-item.active.removable").hide(400)
+}
+function startSearch() {
+    // $(".nav-item .form-control").hide(200).val("")
+    ids = ['title', 'variety', 'designation', 'maxprice', 'area', 'winery', 'keyword']
+    url = "";
+    $.each(ids, function(index, value) {
+        console.log(value)
+        input = $("#" + value).val()
+        if (!input && value=='maxprice') {input=1000}
+        if (!input) { input = 'NULL'}
+        url = url + value + "=" + input + "&&"
+    });
+    console.log(url.slice(0, -2))
+    $.ajax({
+        type: 'GET',
+        url: "/api/search?" + url,
+        success: function(data) { // Response about a single UID2 status
+            marker = [];
+            data = JSON.parse(data)
+            console.log(data)
+            for (var i = 0; i < data.length; i++) {
+                plotMarkers(data[i])
+            }
+        },
+        error: function(data) {
+            console.log("Error originaing from ajax call\n")
+        }
+    });
+}
+
+function show(id) {
+    console.log(id)
+    $(".nav-item .form-control#" + id).show(400)
+}
+
 function replot(oldBounds) {
     var l_lat = oldBounds._southWest.lat,
     u_lat = oldBounds._northEast.lat,
