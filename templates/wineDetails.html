@@ -91,7 +91,7 @@
 			</li>
 			{% if loggedin %}
 			<li class="nav-item">
-				<button class="btn-secondary nav"><a class="nav-link" href="">Profile</a></button>
+				<button class="btn-secondary nav"><a class="nav-link" href="/openProfile">Profile</a></button>
 			</li>
 			{% endif %}
 			<li class="nav-item">
@@ -108,9 +108,12 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">
-
 				<div class="card" id="toptitle">
-				<h6 class="card-header">{{w[1]}}</h6>
+					<h6 class="card-header">{{w[1]}}
+						{% if loggedin %}
+						<span><a style="float:right" onClick="checkLogin()" class="btn btn-success">Add to Favorites</a></span>
+						{% endif %}
+					</h6>
 				</div>
 			</div>
 		</div>
