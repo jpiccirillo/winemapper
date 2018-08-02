@@ -135,7 +135,6 @@ def winesAtWinery(wid):
         sql = 'SELECT w.*, v.*, a.*, p.* FROM "Wineries" wn JOIN "Wine" w ON w."wineryID" = wn."wineryID" JOIN "Area" a ON w."areaID" = a."areaID" LEFT JOIN "Area" p ON a."provinceID" = p."areaID" JOIN "Variety" v ON w."varietyID" = v."varietyID" WHERE wn."wineryID" = {}'.format(wid)
         cur.execute(sql)
         rows = cur.fetchall()
-        print(rows)
 
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
