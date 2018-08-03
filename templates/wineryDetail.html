@@ -108,7 +108,7 @@
             </li>
 			{% if loggedin %}
 			<li class="nav-item">
-				<button class="btn-secondary nav"><a class="nav-link" href="">Profile</a></button>
+				<button class="btn-secondary nav"><a class="nav-link" href="/openProfile">Profile</a></button>
 			</li>
 			{% endif %}
 			<li class="nav-item">
@@ -202,33 +202,33 @@
 								{% endif %}
 								<br>
 
-								{% if w[15] %}
+								{% if w[16] %}
 									<strong>Province: </strong>
-									{% if w[16] %}
-										<a href={{w[16]}} target = _blank>{{w[15]}}</a>
-									{% else %} {{w[15]}}
+									{% if w[17] %}
+										<a href={{w[17]}} target = _blank>{{w[16]}}</a>
+									{% else %} {{w[16]}}
 									{% endif %}
 									<br>
 								{% endif %}
 
-								{% if w[11] %}
+								{% if w[12] %}
 									<strong>Region: </strong>
-									{% if w[12] %}
-										<a href={{w[12]}} target = _blank>{{w[11]}}</a>
-									{% else %} {{w[11]}}
+									{% if w[13] %}
+										<a href={{w[13]}} target = _blank>{{w[12]}}</a>
+									{% else %} {{w[12]}}
 									{% endif %}
 									<br>
 								{% endif %}
 
 								<strong>Variety: </strong>
-								{% if w[8] %}
-									{{w[8]}}
+								{% if w[9] %}
+									{{w[9]}}
 								{% else %} No information.
 								{% endif %}
 								<br>
-								{% if w[9] %}
+								{% if w[10] %}
 									<strong>Variety Description: </strong>
-									{{w[9]}}
+									{{w[10]}}
 									<br>
 								{% endif %}
 								{% if w[4] %}
