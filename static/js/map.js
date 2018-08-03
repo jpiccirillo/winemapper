@@ -1,63 +1,6 @@
-function prepUIforSearch() {
-    $(".btn-secondary.nav.removable").hide(400)
-    $(".nav-item.active.removable").hide(400)
-}
-function startSearch() {
-    // $(".nav-item .form-control").hide(200).val("")
-    ids = ['title', 'variety', 'designation', 'maxprice', 'area', 'winery', 'keyword']
-    url = "";
-    $.each(ids, function(index, value) {
-        console.log(value)
-        input = $("#" + value).val()
-        if (!input && value=='maxprice') {input=1000}
-        if (!input) { input = 'NULL'}
-        url = url + value + "=" + input + "&&"
-    });
-    console.log(url.slice(0, -2))
-    $.ajax({
-        type: 'GET',
-        url: "/api/search?" + url,
-        success: function(data) { // Response about a single UID2 status
-            marker = [];
-            data = JSON.parse(data)
-            console.log(data)
-            for (var i = 0; i < data.length; i++) {
-                plotMarkers(data[i])
-            }
-        },
-        error: function(data) {
-            console.log("Error originaing from ajax call\n")
-        }
-    });
-}
-
 function show(id) {
     console.log(id)
     $(".nav-item .form-control#" + id).show(400)
-}
-
-function replot(oldBounds) {
-    var l_lat = oldBounds._southWest.lat,
-    u_lat = oldBounds._northEast.lat,
-    w_lon = oldBounds._southWest.lng,
-    e_lon = oldBounds._northEast.lng,
-    lon_dif = Math.abs(w_lon - e_lon),
-    lat_dif = Math.abs(u_lat - l_lat)
-    oldcenter = [u_lat - lon_dif/2, w_lon + lon_dif/2]
-    console.log(oldBounds)
-    // if (map.getCenter() > (u_lat-lat)
-    return 1;
-}
-
-function plotData() {
-    var bounds = map.getBounds()
-    // if (!oldBounds) {
-    //     if (!replot(oldBounds)) { return }
-    // }
-    eraseMarkers()
-    grabData(bounds)
-
-    var oldBounds = map.getBounds()
 }
 
 function plotHeader(winery) {
@@ -72,7 +15,6 @@ function plotHeader(winery) {
 }
 
 function plotCards(wine) {
-
     console.log(wine)
     var text = wine[1]
     var link = '/api/wineDetail?id='+wine[0];
@@ -85,42 +27,6 @@ function plotCards(wine) {
     '<a onClick="checkLogin()" class="btn btn-success">Add to Favorites</a>' +
     "</div></div>";
     $(".activearea").append(card);
-}
-
-
-function grabData(bounds) {
-    //l = lower bound, u = upper bound
-    //w = west bound, e = east bound
-    var l_lat = bounds._southWest.lat,
-    u_lat = bounds._northEast.lat,
-    w_lon = bounds._southWest.lng,
-    e_lon = bounds._northEast.lng
-
-    four = []
-    four.push(l_lat, u_lat, w_lon, e_lon)
-
-    //SELECT * FROM public."Winery" w
-    // WHERE w.lat > 37.743571187449064 AND
-    // w.lat < 38.542795073979015 AND
-    // w.lon < -121.94686889648439 AND
-    // w.lon > -122.66784667968751
-    // LIMIT 10;
-
-    $.ajax({
-        type: 'GET',
-        url: "/api/getWineries?bounds=" + four,
-        success: function(data) { // Response about a single UID2 status
-            marker = [];
-            data = JSON.parse(data)
-            console.log(data)
-            for (var i = 0; i < data.length; i++) {
-                plotMarkers(data[i])
-            }
-        },
-        error: function(data) {
-            console.log("Error originaing from ajax call\n")
-        }
-    });
 }
 
 function eraseMarkers() {
@@ -153,59 +59,98 @@ function rightPanel(id, name) {
     });
 }
 
-function plotMarkers(winery) {
-        var circlestyle = {
-            color: 'darkred',
-            fillColor: 'indianred',
-            fillOpacity: .5,
-            weight: 1,
-            radius: 8
-        }
-        var style = 'padding: 0px; margin-left: 0px; margin-top: 5px; border-radius: 4px;'
-        var link = '/api/wineryDetail?id='+winery[0]
-        var customPopup = '<div><strong>'+winery[1]+'</strong><br>'+winery[4]+'<br><a href="'+link+'" class="btn" style="'+style+'">Details on this Winery</a></div>';
 
-        // specify popup options
-        var customOptions = {
-            'maxWidth': '200',
-            'className' : 'custom'
-        }
-
-        var submarker = L.circleMarker([winery[2], winery[3]], circlestyle).bindPopup(customPopup, customOptions).addTo(map)
-        submarker.on('click', function(e) {
-          rightPanel(winery[0], winery[1]);
-      }).on('popupclose', function(e) {
-          $(".activearea").empty()
-          $(".wineheader").hide()
-          $(".filler").show()
-      });
-        marker.push(submarker)
+// parameters:  lat, lon, id, name, address
+function plotMarkers(mode, args) {
+    console.log(mode)
+    // specify popup options
+    var customOptions = {
+        'maxWidth': '200',
+        'className' : 'custom'
+    }
+    var style = 'padding: 0px; margin-left: 0px; margin-top: 5px; border-radius: 4px;'
+    var circlestyle = {
+        fillOpacity: .5,
+        weight: 1,
+        radius: 8
     }
 
+    if (mode=='homepage') {
+        circlestyle.color = 'darkred'
+        circlestyle.fillColor = 'indianred'
 
+        var link = '/api/wineryDetail?id=' + args[0]
+        var customPopup = '<div><strong>' + args[1] + '</strong><br>' + args[4] + '<br><a href="' + link + '" class="btn" style="' + style + '">Details on this Winery</a></div>';
 
-var map = L.map('map', {
-    closePopupOnClick: false
-    }).setView([38.144595, -122.307990], 10);
-var hash = new L.Hash(map); //Stateful URL implementation
+        var submarker = L.circleMarker([args[2], args[3]], circlestyle).bindPopup(customPopup, customOptions).addTo(map)
 
-L.Control.geocoder({
-    position: "topleft",
-    placeholder: "Enter an Address",
-    showResultIcons: false,
-}).addTo(map)
+        submarker.on('click', function(e) {
+            rightPanel(args[0], args[1]);
+        }).on('popupclose', function(e) {
+            $(".activearea").empty()
+            $(".wineheader").hide()
+            $(".filler").show()
+        });
+        marker.push(submarker)
 
-mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
-L.tileLayer(  'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-    maxZoom: 18,
-}).addTo(map);
+    } else {
+        circlestyle.color = 'darkblue'
+        circlestyle.fillColor = 'lightblue'
 
-marker = [];
-var submarker = {};
+        var link = '/api/wineryDetail?id=' + args[0]
+        var customPopup = '<div><strong>' + args[1] + '</strong><br>' + args[4] + '<br><a href="' + link + '" class="btn" style="' + style + '">Details on this Winery</a></div>';
 
-plotData()
+        var submarker = L.circleMarker([args[10], args[11]], circlestyle).bindPopup(customPopup, customOptions).addTo(map)
+        submarker.on('click', function(e) {
+            rightPanel(args[0], args[1]);
+        }).on('popupclose', function(e) {
+            $(".activearea").empty()
+            $(".wineheader").hide()
+            $(".filler").show()
+        });
+        marker.push(submarker)
 
-map.on('moveend', function(e) {
-   // var bounds = map.getBounds();
-   plotData()
-});
+        console.log(mode, args)
+    }
+}
+
+function startMap(mapcenter, markers, zoom) {
+    // console.log(markers)
+    marker = [];
+    map = L.map('map', {
+        closePopupOnClick: false
+    }).setView(mapcenter, zoom);
+    //add ins  (de-stack overlapping points, stateful URL, geocoder)
+    oms = new OverlappingMarkerSpiderfier(map),
+    hash = new L.Hash(map), //Stateful URL implementation
+    geocoder = L.Control.geocoder({
+        position: "topleft",
+        placeholder: "Enter an Address",
+        showResultIcons: false,
+    }).addTo(map)
+
+    mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+    L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+    }).addTo(map);
+
+    if (!markers) { //if we're in homepage mode (markers not provided)
+        var bounds = map.getBounds()
+        grabData(bounds);
+
+    } else { //we're in search mode (markers provided)
+        data = JSON.parse(markers)
+        console.log(data)
+        for (var i = 0; i < data.length; i++) {
+            plotMarkers('search', data[i])
+        }
+        // console.log(marker)
+        var group = new L.featureGroup(marker);
+        map.fitBounds(group.getBounds().pad(0.5));
+    }
+}
+
+// marker = [];
+// var submarker = {};
+
+// plotData()

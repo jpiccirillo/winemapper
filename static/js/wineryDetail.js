@@ -38,7 +38,6 @@ function getMostReviews() {
     });
 }
 
-
 function getClimateData() {
     var monthNameFormat = d3.time.format("%B");
     $.ajax({

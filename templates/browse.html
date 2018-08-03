@@ -18,6 +18,7 @@
 	<!-- <link rel="stylesheet" type="text/css" href="../static/css/Control.Geocoder.css"> -->
 	<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
 	<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier-Leaflet/0.2.6/oms.min.js"></script>
 
 	<style type="text/css">
 		:root {
@@ -150,8 +151,12 @@
 		}
 	</style>
 </head>
-
-<body>
+<script>
+function myFunction() {
+    alert("about to leave")
+}
+</script>
+<body onbeforeunload="myFunction()">
 	<!-- <div id="loader-wrapper">
 		<div id="loader"></div>
 	</div> -->
@@ -177,43 +182,47 @@
 
             </ul>
             <ul class="navbar-nav">
+				<form action="/api/search" method="POST" style="display: flex">
 				<div class="search-container">
 				<li class="nav-item">
-					<input class="form-control" type="text" placeholder="Title..." id="title">
+					<input class="form-control" name="title" type="text" placeholder="Title..." id="title">
 				</li>
 				<li class="nav-item">
-					<input class="form-control" type="text" placeholder="Variety..." id="variety">
+					<input class="form-control" name="variety" type="text" placeholder="Variety..." id="variety">
 				</li>
 				<li class="nav-item">
-					<input class="form-control" type="text" placeholder="Designation..." id="designation">
+					<input class="form-control" name="designation" type="text" placeholder="Designation..." id="designation">
 				</li>
 				<li class="nav-item">
-					<input class="form-control" type="text" placeholder="Max wine price..." id="maxprice">
+					<input class="form-control" name="maxprice" type="text" placeholder="Max wine price..." id="maxprice">
 				</li>
 				<li class="nav-item">
-					<input class="form-control" type="text" placeholder="Area..." id="area">
+					<input class="form-control" name="area" type="text" placeholder="Area..." id="area">
 				</li>
 				<li class="nav-item">
-					<input class="form-control" type="text" placeholder="Winery..." id="winery">
+					<input class="form-control" name="winery" type="text" placeholder="Winery..." id="winery">
 				</li>
 				<li class="nav-item">
-					<input class="form-control" type="text" placeholder="Keyword..." id="keyword">
+					<input class="form-control" name="keyword" type="text" placeholder="Keyword..." id="keyword">
 				</li>
 			</div>
-<div class="dropdown show">
-  <button class="btn-secondary nav" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><a class="nav-link dropdown-toggle" onClick="prepUIforSearch()">Filter by wine:</a></button>
 
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-	<span class="dropdown-item" onClick="show('title')" >Title</span>
-	<span class="dropdown-item" onClick="show('variety')" href="#">Variety</span>
-	<span class="dropdown-item" onClick="show('designation')" href="#">Designation</span>
-	<span class="dropdown-item" onClick="show('maxprice')" href="#">Max Price</span>
-	<span class="dropdown-item" onClick="show('area')" href="#">Area</span>
-	<span class="dropdown-item" onClick="show('winery')" href="#">Winery</span>
-	<span class="dropdown-item" onClick="show('keyword')" href="#">Keyword</span>
-  </div>
-</div>
-				<button type="submit" class="btn-secondary nav"><a class="nav-link" onClick="startSearch()">Search!</a></button>
+	<div class="dropdown show">
+		<button class="btn-secondary nav" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><a class="nav-link dropdown-toggle" onClick="prepUIforSearch()">Filter by wine:</a></button>
+
+		<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+			<span class="dropdown-item" onClick="show('title')">Title</span>
+			<span class="dropdown-item" onClick="show('variety')" href="#">Variety</span>
+			<span class="dropdown-item" onClick="show('designation')" href="#">Designation</span>
+			<span class="dropdown-item" onClick="show('maxprice')" href="#">Max Price</span>
+			<span class="dropdown-item" onClick="show('area')" href="#">Area</span>
+			<span class="dropdown-item" onClick="show('winery')" href="#">Winery</span>
+			<span class="dropdown-item" onClick="show('keyword')" href="#">Keyword</span>
+		</div>
+	</div>
+	<button type="submit" class="btn-secondary nav"><a class="nav-link">Search!</a></button>
+</form>
+
 				{% if loggedin %}
                 <li class="nav-item">
                     <button class="btn-secondary nav removable"><a class="nav-link" href="/openProfile">Profile</a></button>
@@ -239,8 +248,13 @@
 		</div>
 		<div id="sidebar1">
 			<div id="map"></div>
-			<!-- <script>var entries = {{entries | safe}}</script> -->
+			<script>
+			var parameters = {{mapparams | safe}}
+			var search = {{searchparams | safe}}
+			</script>
 			<script src="../static/js/map.js"></script>
+			<script src="../static/js/browse.js"></script>
+			<script src="../static/js/search.js"></script>
 			<script  src="../static/js/favorites.js"></script>
 		</div>
 		<div id="cleared1"></div>

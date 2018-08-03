@@ -26,7 +26,10 @@ def home():
         print("not logged in")
         session['logged_in'] = False;
 
-    return render_template('browse.html', loggedin = checkLogin())
+    # mapparams = [mapcenter, marker array (if present), zoom level] basically how to kick off the map.
+    # this flask function is the "homepage view", while the search flask function will use different parameters
+
+    return render_template('browse.html', mapparams = [[38.144595, -122.307990], "", 10], searchparams = [], loggedin = checkLogin())
 
 app.secret_key = os.urandom(12)
 
@@ -334,23 +337,32 @@ def getTasterData(tasterID):
 
     return tasterData
 
-@app.route('/api/search', methods=['GET'])
+@app.route('/api/search', methods=['POST', 'GET'])
 def search():
-    title = request.args.get('title')
-    variety = request.args.get('variety')
-    designation = request.args.get('variety')
-    maxprice = request.args.get('maxprice')
-    area = request.args.get('area')
-    winery = request.args.get('winery')
-    keyword = request.args.get('keyword')
+    title = request.form['title']
+    variety = request.form['variety']
+    designation = request.form['designation']
+    maxprice = request.form['maxprice']
+    if maxprice == '': maxprice = None;
+    area = request.form['area']
+    winery = request.form['winery']
+    keyword = request.form['keyword']
 
-    title = NULL
-    variety = NULL
-    designation = NULL
-    maxprice = NULL
-    area = NULL
-    keyword = NULL
-    
+    # title = request.args.get('title')
+    # variety = request.args.get('variety')
+    # designation = request.args.get('variety')
+    # maxprice = request.args.get('maxprice')
+    # area = request.args.get('area')
+    # winery = request.args.get('winery')
+    # keyword = request.args.get('keyword')
+
+    # title = NULL
+    # variety = NULL
+    # designation = NULL
+    # maxprice = NULL
+    # area = NULL
+    # keyword = NULL
+
     try:
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
@@ -371,7 +383,7 @@ def search():
     finally:
         if db is not None: db.close()
 
-    return json.dumps(data)
+    return render_template("browse.html", mapparams = [[38.144595, -122.307990], json.dumps(data), 10], searchparams = [title, variety, designation, maxprice, area, winery, keyword], loggedin = checkLogin())
 
 @app.route('/api/reviewedWineryMost', methods=['GET'])
 def reviewedWineryMost():

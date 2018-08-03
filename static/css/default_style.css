@@ -31,10 +31,6 @@ body {
     border-radius: 4px !important;
     color: var(--textcolor);
 }
-form {
-    margin: auto;
-    /*width: 40%;*/
-}
 .dropdown-toggle {
     padding-right: 7px !important;
     padding-left: 7px !important;

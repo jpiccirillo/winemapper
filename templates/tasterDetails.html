@@ -117,7 +117,7 @@
 		</ul>
 		<ul class="navbar-nav">
 			<li class="nav-item">
-				<button class="btn-secondary nav"><a href="/"></a>Back to Map</button>
+				<button class="btn-secondary nav"><a href="/">Back to Map</a></button>
 			</li>
 			{% if loggedin %}
 			<li class="nav-item">
@@ -132,7 +132,6 @@
 					<a class="nav-link" href="\login">Log In</a>
 					{% endif %}
 					</button>
-<<<<<<< HEAD
 			</li>
 		</ul>
 	</nav>
@@ -149,7 +148,7 @@
 							<div class="card-body"><strong>Number of Wine Reviews: </strong>{{taster[3]}}</div> -->
 						<div class="card-body">
 							<button type="button" class="btn btn-outline-secondary info" disabled><strong>Number of Wine Reviews: </strong>{{taster[3]}}</button>
-							<button type="button" class="btn btn-outline-secondary info" disabled><strong>Average Rating: </strong><span type="number" step=".01">{{taster[4]}}</span></button>
+							<button type="button" class="btn btn-outline-secondary info" disabled><strong>Average Rating: </strong><span type="number" step=".01"> {{ "%.2f"|format(taster[4])}}</span></button>
 							<button type="button" class="btn btn-outline-secondary info" disabled><strong>Winery Most Reviewed: </strong></button>
 						</div>
 					</div>
@@ -158,47 +157,12 @@
 					<div class="card">
 						<div class="card-header"><strong>Reviews by {{taster[2]}}</strong></div>
 						<div class="card-body" id="reviews">
-=======
-				</li>
-			</ul>
-		</nav>
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-4">
-					<div class="card left">
-						<h6 class="card-header">{{taster[2]}}</h6>
-						<p class="card-body">
-							<strong>Number of Wine Reviews: </strong>{{taster[3]}}<br>
-							<strong>Average Rating: </strong>{{taster[4]}}<br>
-							<strong>Winery most reviewed: </strong>
-							<div id="bottle">
-							<svg width="70px" height="200px">
-								<g>
-									<path class="path" fill="none" stroke="#000000" stroke-width="30" stroke-miterlimit="10" d="M818,1782c0,0,35.569,51.542,196.045,44.627
-									C1174.521,1819.713,1205,1782,1205,1782V737c0,0-2.896-88.072-66-140c-70.354-48.303-63.791-93-63.791-93L1078,195l6-11l1-47l-7-16
-									l-0.209-22.836L952,97.746l-2.164,19.464L941,132v42.836L947,190v322c0,0,3.393,35.554-38,56c-41.393,20.446-84.65,76.434-89,159
-									C815.65,809.566,818,1782,818,1782z"></path>
-								</g>
-							</svg>
-						</div>
-						</p>
-					</div>
-				</div>
-				{% if taster[1] %}
-				<div class="col-md-4">
-				{% else %}
-				<div class="col-md-8">
-				{% endif %}
-					<div class="card middle">
-						<h6 class="card-header">Top 100 Reviews by {{taster[2]}}</h6>
-						<div class="card-body">
->>>>>>> 3fc62ffeb8a1d175b85e2c5de870e4282e76a31d
 							{% for review in reviews %}
 							<div class="card">
 								<div class="card-body">
 									<h7 class="card-title">
 										<a href="/api/wineDetail?id='{{review[2]}}'"><strong>{{review[3]}}</strong></a>
-										<p style="float:right"><strong>Points: {{review[1]}}</strong></p>
+										<p style="float:right"><strong>Points: </strong>{{review[1]}}</p>
 									</h7><br> {% if review[4] %}
 									<h8><strong>Variety:</strong> {{review[4]}}</h8><br> {% endif %}
 									<h8><strong>Winery: </strong>{{review[5]}}</h8><br>
@@ -211,7 +175,6 @@
 						</div>
 					</div>
 				</div>
-<<<<<<< HEAD
 			</div>
 			{% if taster[1] %}
 			<div class="col-md-4">
@@ -223,22 +186,9 @@
 						}
 					</script>
 					<script async src="https://platform.twitter.com/widgets.js" charset="utf-8" onload ="removeWineLoader()"></script>
-=======
-				{% if taster[1] %}
-				<div class="col-md-4">
-					<div class="card right">
-						<a class="twitter-timeline" href="https://twitter.com/{{taster[1]}}?ref_src=twsrc">Tweets by {{taster[1]}}</a>
-						<script type=text/javascript charset="utf-8">
-							function removeWineLoader() {
-								$("#bottle").hide();
-							}
-						</script>
-						<script async src="https://platform.twitter.com/widgets.js" charset="utf-8" onload ="removeWineLoader()"></script>
-					</div>
->>>>>>> 3fc62ffeb8a1d175b85e2c5de870e4282e76a31d
 				</div>
+							</div>
 				{% endif %}
-			</div>
 		</div>
 	</div>
 </div>
