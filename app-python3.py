@@ -169,7 +169,10 @@ def getWineData(wid):
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
 
-        sql = 'SELECT w.*, v.*, a.*, p.* FROM "Wine" w LEFT JOIN "Area" a ON w."areaID" = a."areaID" LEFT JOIN "Area" p ON a."provinceID" = p."areaID" LEFT JOIN "Variety" v ON w."varietyID" = v."varietyID" WHERE w."wineID" = {}'.format(wid)
+        sql = 'SELECT ' + 
+        'w.wineID, w.title, w.price, p.name, p.wikilink,'+ 
+        'a.name, a.wikilink, v.name, v.description, w.designation '+
+        'FROM "Wine" w LEFT JOIN "Area" a ON w."areaID" = a."areaID" LEFT JOIN "Area" p ON a."provinceID" = p."areaID" LEFT JOIN "Variety" v ON w."varietyID" = v."varietyID" WHERE w."wineID" = {}'.format(wid)
         cur.execute(sql)
         data = cur.fetchone()
         print(data)
