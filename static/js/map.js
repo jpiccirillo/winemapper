@@ -132,12 +132,13 @@ function plotMarkers(mode, args) {
     }
 }
 
-function startMap(mapcenter, markers, zoom) {
+function startMap(mapbounds, markers, zoom) {
     // console.log(markers)
     marker = [];
+    center = L.latLngBounds(mapbounds).getCenter();
     map = L.map('map', {
         closePopupOnClick: false
-    }).setView(mapcenter, zoom);
+    }).setView(center, zoom);
     //add ins  (de-stack overlapping points, stateful URL, geocoder)
     oms = new OverlappingMarkerSpiderfier(map),
     hash = new L.Hash(map), //Stateful URL implementation

@@ -17,23 +17,27 @@ password = "winemapper" #"postgres"
 host = "winemapper.ctm2fbq02abz.us-east-2.rds.amazonaws.com" #"localhost"
 port = "5432"
 conn_string = "host={} port={} dbname={} user={} password={}".format(host, port, dbname, user, password)
-lastFaveCount = '';
-lastID = '';
-count = 0;
+lastFaveCount = ''
+lastID = ''
+count = 0
+mapBounds = ''
 
 # session['logged_in'] = False
 app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def home():
+    global mapBounds
     if not session.get('logged_in'):
         print("not logged in")
         session['logged_in'] = False;
 
+    if mapBounds == '':
+        mapBounds = [[37.74031329210266, -122.84912109375001], [38.53957267203907, -121.50329589843751]] #bay area
     # mapparams = [mapcenter, marker array (if present), zoom level] basically how to kick off the map.
     # this flask function is the "homepage view", while the search flask function will use different parameters
 
-    return render_template('browse.html', mapparams = [[38.144595, -122.307990], "", 10], searchparams = [], loggedin = checkLogin())
+    return render_template('browse.html', mapparams = [mapBounds, "", 10], searchparams = [], loggedin = checkLogin())
 
 app.secret_key = os.urandom(12)
 
@@ -422,7 +426,7 @@ def search():
     finally:
         if db is not None: db.close()
 
-    return render_template("browse.html", mapparams = [[38.144595, -122.307990], json.dumps(data), 10], searchparams = json.dumps(insertValues), loggedin = checkLogin())
+    return render_template("browse.html", mapparams = [mapBounds, json.dumps(data), 10], searchparams = json.dumps(insertValues), loggedin = checkLogin())
 
 @app.route('/api/searchLater', methods=['GET'])
 def searchLater():
@@ -489,13 +493,15 @@ def reviewedWineryMost():
 
 @app.route('/api/getWineries', methods=['GET'])
 def wineries():
+    global mapBounds
 
     args = request.args
     keys = args.keys()
     values = args.values()
 
     for i in values: bounds = i.split(",")
-
+    mapBounds = [[bounds[0], bounds[2]], [bounds[1],bounds[3]]]
+    print(mapBounds)
     try:
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
