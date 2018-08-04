@@ -1,43 +1,41 @@
-startMap(parameters[0], parameters[1], parameters[2])
+$(document).ready(function() {
+    $('.cardpane').bind('scroll', function() {
+        if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+            // alert(search)
+            loadTenMore();
+        }
+    })
+    startMap(parameters[0], parameters[1], parameters[2])
+});
 
 function prepUIforSearch() {
     $(".btn-secondary.nav.removable").hide(400)
     $(".nav-item.active.removable").hide(400)
 }
 
-function startSearch() {
-    // $(".nav-item .form-control").hide(200).val("")
-    ids = ['title', 'variety', 'designation', 'maxprice', 'area', 'winery', 'keyword']
-    url = "";
-    $.each(ids, function(index, value) {
-        console.log(value)
-        input = $("#" + value).val()
-        if (!input && value=='maxprice') {input=1000}
-        if (!input) { input = ''}
-        url = url + value + "=" + input + "&&"
-    });
-    console.log(url.slice(0, -2))
+function loadTenMore() {
+    console.log("about to re-search on: " + search)
+
+    var searchquery = ""
+    $.each(search, function(i, val) {
+        console.log(i, val)
+        if (i==7) {return false}
+        searchquery += form[i] + "=" + val
+        if (i!=6) {searchquery+='&&'}
+    })
+    console.log(searchquery)
     $.ajax({
         type: 'GET',
-        url: "/api/search?" + url,
+        url: "/api/searchLater?" + searchquery,
         success: function(data) { // Response about a single UID2 status
-            // marker = [];
-            console.log(data)
-            $( "html" ).load( data );
             data = JSON.parse(data)
-            data = data.sort(function(a, b) {
-                return a[10] - b[10]
+            console.log(data)
+            $.each(data, function(i, entry) {
+                plotCards(entry[0], entry[1])
+                plotMarkers('search', entry)
             })
-            console.log(data[data.length])
-            lat = [data[0][10], data[data.length-1][10]]
-            data = data.sort(function(a, b) {
-                return a[11] - b[11]
-            })
-            lon = [data[0][11], data[-1][11]]
-
-            // for (var i = 0; i < data.length; i++) {
-            //     plotMarkers(data[i])
-            // }
+            group = new L.featureGroup(marker);
+            map.fitBounds(group.getBounds().pad(0.5));
         },
         error: function(data) {
             console.log("Error originaing from ajax call\n")

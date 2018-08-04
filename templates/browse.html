@@ -182,7 +182,7 @@ function myFunction() {
 
             </ul>
             <ul class="navbar-nav">
-				<form action="/api/search" method="POST" style="display: flex">
+				<form action="/api/searchInitial" method="GET" style="display: flex">
 				<div class="search-container">
 				<li class="nav-item">
 					<input class="form-control" name="title" type="text" placeholder="Title..." id="title">
@@ -205,6 +205,7 @@ function myFunction() {
 				<li class="nav-item">
 					<input class="form-control" name="keyword" type="text" placeholder="Keyword..." id="keyword">
 				</li>
+
 			</div>
 
 	<div class="dropdown show">
@@ -251,6 +252,12 @@ function myFunction() {
 			<script>
 			var parameters = {{mapparams | safe}}
 			var search = {{searchparams | safe}}
+
+			if (search.length==0) { mode = 'homepage' }
+			else {mode = 'search'}
+
+			console.log("Mode: " + mode)
+
 			</script>
 			<script src="../static/js/map.js"></script>
 			<script src="../static/js/browse.js"></script>

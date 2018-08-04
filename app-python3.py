@@ -17,6 +17,10 @@ password = "winemapper" #"postgres"
 host = "winemapper.ctm2fbq02abz.us-east-2.rds.amazonaws.com" #"localhost"
 port = "5432"
 conn_string = "host={} port={} dbname={} user={} password={}".format(host, port, dbname, user, password)
+lastFaveCount = '';
+lastID = '';
+count = 0;
+
 # session['logged_in'] = False
 app = Flask(__name__)
 
@@ -172,10 +176,7 @@ def getWineData(wid):
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
 
-        sql = 'SELECT ' + 
-        'w.wineID, w.title, w.price, p.name, p.wikilink,'+ 
-        'a.name, a.wikilink, v.name, v.description, w.designation '+
-        'FROM "Wine" w LEFT JOIN "Area" a ON w."areaID" = a."areaID" LEFT JOIN "Area" p ON a."provinceID" = p."areaID" LEFT JOIN "Variety" v ON w."varietyID" = v."varietyID" WHERE w."wineID" = {}'.format(wid)
+        sql = 'SELECT w."wineID", w.title, w.price, p.name, p."wikiLink", a.name, a."wikiLink", v."vName", v.description, w.designation FROM "Wine" w LEFT JOIN "Area" a ON w."areaID" = a."areaID" LEFT JOIN "Area" p ON a."provinceID" = p."areaID" LEFT JOIN "Variety" v ON w."varietyID" = v."varietyID" WHERE w."wineID" = {}'.format(wid)
         cur.execute(sql)
         data = cur.fetchone()
         print(data)
@@ -362,45 +363,43 @@ def getTasterData(tasterID):
 
     return tasterData
 
-@app.route('/api/search', methods=['POST', 'GET'])
+@app.route('/api/searchInitial', methods=['GET'])
 def search():
-    title = request.form['title']
-    variety = request.form['variety']
-    designation = request.form['designation']
-    maxprice = request.form['maxprice']
-    if maxprice == '': maxprice = None;
-    area = request.form['area']
-    winery = request.form['winery']
-    keyword = request.form['keyword']
+    global lastID
+    global lastFaveCount
+    # global count
+    # count += 1
 
-    # title = request.args.get('title')
-    # variety = request.args.get('variety')
-    # designation = request.args.get('variety')
-    # maxprice = request.args.get('maxprice')
-    # area = request.args.get('area')
-    # winery = request.args.get('winery')
-    # keyword = request.args.get('keyword')
+    # if count==1:
+    #     lastID = None
+    #     lastFaveCount = None
 
-    # title = NULL
-    # variety = NULL
-    # designation = NULL
-    # maxprice = NULL
-    # area = NULL
-    # keyword = NULL
+    form = ['title', 'variety', 'designation', 'maxprice', 'area', 'winery', 'keyword']
+    insertValues = [None if request.args[entry]=='' else request.args[entry] for entry in form]
+    print(insertValues)
+
+    # twoargs = [lastID, lastFaveCount]
+    # for arg in twoargs:
+    #     if arg != None: arg = int(arg)
+    #     insertValues.append(arg)
 
     try:
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
-
         data = [];
         # Returns a list of reviewers who have reviewed the winery the most as [tasterID, name, count]
         sql = 'SELECT * from public.findwines(%s, %s, %s, %s, %s, %s, %s, NULL, NULL)'
-        insertValues = (title, variety, designation, maxprice, area, winery, keyword)
-        print(sql)
         cur.execute(sql, insertValues)
         rows = cur.fetchall()
         data = [row for row in rows]
-        print(data)
+        print("Last Row: " + str(data[-1]))
+
+        lastID = data[-1][0]
+        lastFaveCount = None if not data[-1][-2] else data[-1][-2]
+
+        print("lastID: " + str(lastID))
+        print("favCount: " + str(lastFaveCount))
+        # print("count: " + str(count))
 
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
@@ -408,7 +407,47 @@ def search():
     finally:
         if db is not None: db.close()
 
-    return render_template("browse.html", mapparams = [[38.144595, -122.307990], json.dumps(data), 10], searchparams = [title, variety, designation, maxprice, area, winery, keyword], loggedin = checkLogin())
+    return render_template("browse.html", mapparams = [[38.144595, -122.307990], json.dumps(data), 10], searchparams = json.dumps(insertValues), loggedin = checkLogin())
+
+@app.route('/api/searchLater', methods=['GET'])
+def searchLater():
+    global lastID
+    global lastFaveCount
+
+    form = ['title', 'variety', 'designation', 'maxprice', 'area', 'winery', 'keyword']
+    insertValues = [None if request.args[entry]=='null' else request.args[entry] for entry in form]
+    print(insertValues)
+
+    twoargs = [lastID, lastFaveCount]
+    for arg in twoargs:
+    #     if arg != None: arg = int(arg)
+        insertValues.append(arg)
+
+    try:
+        db = psycopg2.connect(conn_string)
+        cur = db.cursor()
+        data = [];
+        # Returns a list of reviewers who have reviewed the winery the most as [tasterID, name, count]
+        sql = 'SELECT * from public.findwines(%s, %s, %s, %s, %s, %s, %s, %s, %s)'
+        cur.execute(sql, insertValues)
+        rows = cur.fetchall()
+        data = [row for row in rows]
+        print("Last Row: " + str(data[-1]))
+
+        lastID = data[-1][0]
+        lastFaveCount = None if not data[-1][-2] else data[-1][-2]
+
+        print("lastID: " + str(lastID))
+        print("favCount: " + str(lastFaveCount))
+        # print("count: " + str(count))
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+
+    finally:
+        if db is not None: db.close()
+
+    return json.dumps(data)
 
 @app.route('/api/reviewedWineryMost', methods=['GET'])
 def reviewedWineryMost():

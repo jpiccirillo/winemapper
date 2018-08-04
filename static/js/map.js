@@ -3,21 +3,20 @@ function show(id) {
     $(".nav-item .form-control#" + id).show(400)
 }
 
-function plotHeader(winery) {
+function plotHeader(text, header) {
     console.log(winery)
     $(".wineheader").show().empty().append(
         '<div class="card">'+
         '<div class="card-body">'+
-        '<h6 class="card-title" style="margin-bottom: 0px;">Wines from ' + winery + ':</h6>' +
+        '<h6 class="card-title" style="margin-bottom: 0px;"> ' + text + '</h6>' +
         '</div>'
     )
-    // $(".wineheader")
 }
 
-function plotCards(wine) {
-    console.log(wine)
-    var text = wine[1]
-    var link = '/api/wineDetail?id='+wine[0];
+function plotCards(id, text) {
+    // console.log(wine)
+    // var text = wine[1]
+    var link = '/api/wineDetail?id='+id;
     var card = '<div class="card">'+
     // "<img class=\"card-img-top\" alt=\"Card image cap\">" +
     '<div class="card-body">'+
@@ -29,15 +28,15 @@ function plotCards(wine) {
     $(".activearea").append(card);
 }
 
-function eraseMarkers() {
-    // console.log(map)
-    var len = marker.length
-    for (var i = 0; i < len; i++) {
-        if (marker[i]) { map.removeLayer(marker[i]); };
-    }
-}
+// function eraseMarkers() {
+//     // console.log(map)
+//     var len = marker.length
+//     for (var i = 0; i < len; i++) {
+//         if (marker[i]) { map.removeLayer(marker[i]); };
+//     }
+// }
 
-function rightPanel(id, name) {
+function homePanel(id, name) {
     console.log(id)
     $.ajax({
         type: 'GET',
@@ -47,16 +46,33 @@ function rightPanel(id, name) {
             data = JSON.parse(data)
             console.log(data)
             $(".filler").hide()
-            plotHeader(name)
+            plotHeader("Wines from " + winery + ":")
             $(".activearea").empty()
             for (var i = 0; i < data.length; i++) {
-                plotCards(data[i])
+                plotCards(data[i][0], data[i][1])
             }
         },
         error: function(data) {
             console.log("Error originaing from ajax call\n")
         }
     });
+}
+function searchPanel(data) {
+    $(".filler").hide()
+    console.log(search)
+    form = ['title', 'variety', 'designation', 'maxprice', 'area', 'winery', 'keyword']
+    var searchquery = "You searched on: <br>"
+    $.each(search, function(i, val) {
+        // console.log(i)
+        if (i==7) {return false}
+        if (val) { searchquery += form[i].toUpperCase() + ": <span style='font-weight: 400'>" + val + "</span><br>" }
+    })
+    console.log(data)
+    plotHeader(searchquery)
+    for (var i = 0; i < data.length; i++) {
+        plotCards(data[i][0], data[i][1])
+    }
+
 }
 
 
@@ -70,7 +86,7 @@ function plotMarkers(mode, args) {
     }
     var style = 'padding: 0px; margin-left: 0px; margin-top: 5px; border-radius: 4px;'
     var circlestyle = {
-        fillOpacity: .5,
+        fillOpacity: 1,
         weight: 1,
         radius: 8
     }
@@ -85,7 +101,7 @@ function plotMarkers(mode, args) {
         var submarker = L.circleMarker([args[2], args[3]], circlestyle).bindPopup(customPopup, customOptions).addTo(map)
 
         submarker.on('click', function(e) {
-            rightPanel(args[0], args[1]);
+            homePanel(args[0], args[1]);
         }).on('popupclose', function(e) {
             $(".activearea").empty()
             $(".wineheader").hide()
@@ -93,21 +109,23 @@ function plotMarkers(mode, args) {
         });
         marker.push(submarker)
 
-    } else {
+    }
+    else {
         circlestyle.color = 'darkblue'
         circlestyle.fillColor = 'lightblue'
 
-        var link = '/api/wineryDetail?id=' + args[0]
-        var customPopup = '<div><strong>' + args[1] + '</strong><br>' + args[4] + '<br><a href="' + link + '" class="btn" style="' + style + '">Details on this Winery</a></div>';
+        var winelink = '/api/wineDetail?id=' + args[0]
+        var winerylink = '/api/wineryDetail?id=' + args[9]
+        var customPopup = '<div>' + args[1] + '<br><strong>From: </strong><a href="' + winerylink + '">' + args[10] + '</a><br><a href="' + winelink + '" class="btn" style="' + style + '">More details on this wine</a></div>';
 
-        var submarker = L.circleMarker([args[10], args[11]], circlestyle).bindPopup(customPopup, customOptions).addTo(map)
-        submarker.on('click', function(e) {
-            rightPanel(args[0], args[1]);
-        }).on('popupclose', function(e) {
-            $(".activearea").empty()
-            $(".wineheader").hide()
-            $(".filler").show()
-        });
+        var submarker = L.circleMarker([args[11], args[12]], circlestyle).bindPopup(customPopup, customOptions).addTo(map)
+        // submarker.on('click', function(e) {
+
+        // }).on('popupclose', function(e) {
+        //     $(".activearea").empty()
+        //     $(".wineheader").hide()
+        //     $(".filler").show()
+        // });
         marker.push(submarker)
 
         console.log(mode, args)
@@ -139,18 +157,18 @@ function startMap(mapcenter, markers, zoom) {
         grabData(bounds);
 
     } else { //we're in search mode (markers provided)
-        data = JSON.parse(markers)
-        console.log(data)
-        for (var i = 0; i < data.length; i++) {
-            plotMarkers('search', data[i])
-        }
-        // console.log(marker)
-        var group = new L.featureGroup(marker);
-        map.fitBounds(group.getBounds().pad(0.5));
+        coordinateSearch(JSON.parse(markers))
     }
 }
 
-// marker = [];
-// var submarker = {};
-
-// plotData()
+function coordinateSearch(data) {
+    console.log(data)
+    $.each(data, function(i, entry) {
+        console.log(i, entry)
+        plotMarkers(mode, entry)
+    })
+    // console.log(marker)
+    searchPanel(data);
+    group = new L.featureGroup(marker);
+    map.fitBounds(group.getBounds().pad(0.5));
+}
