@@ -23,9 +23,9 @@ function getMostReviews() {
                 var link = '/api/tasterDetail?id=' + data[0]
                 var text = data[2]
                 if (data[2] > 1) {
-                    text = text + ' reviews here'
+                    text = text + ' times'
                 } else {
-                    text = text + ' review here'
+                    text = text + ' time'
                 }
                 // console.log(text)
                 $("#reviewer").append('<a href="' + link + '" style="font-weight: 900;">' + data[1] + '</a> (' + text + ')')
@@ -99,7 +99,7 @@ function plotSoilData() {
 
     $.each(soil, function(i, entry) {
         console.log(entry)
-        data.push(["Seq #: " + String(entry[1]), entry[3]])
+        data.push([String(entry[1]), entry[3]])
     })
     console.log(data)
     var chart = c3.generate({
@@ -110,7 +110,7 @@ function plotSoilData() {
         data: {
             columns: data,
             type: 'donut',
-            onclick: function (d, i) { console.log("onclick", d, i); loadTable(d.index) },
+            onclick: function (d, i) { console.log("onclick", d, i); loadTable(parseInt(d.id)) },
         },
         donut: {
             label: {
@@ -126,6 +126,12 @@ function plotSoilData() {
             hide: ($(document).innerWidth()>1100 || $(document).innerWidth()<575)?false:true,
             position: 'right'
         },
+        tooltip: {
+            format: {
+                name: function(value) {
+                    return "Seq #" + value}
+            }
+        },
         padding: {
           left: 3,
           right: -20
@@ -136,7 +142,7 @@ function plotSoilData() {
     label.html(''); // remove existant text
     label.insert('tspan').text('Sequence').attr('dy', -10).attr('x', 0);
     label.insert('tspan').text('Proportions').attr('dy', 20).attr('x', 0);
-    loadTable(0)
+    loadTable(1)
 }
 
 function loadTable(index) {
@@ -160,14 +166,14 @@ function loadTable(index) {
 // 31 CaCo<sub>3</sub>
 // 32 CaSO<sub>4</sub>
     console.log(s)
-    var s = soil[index]
+    var s = soil[index-1]
     var val = '';
     var tsum = s[5] + s[6] + s[7] + s[8]
     var ssum = s[20] + s[21] + s[22] + s[23]
     var top = [5, 6, 7, 8, 11, 12, 13, 16, 17]
     var sub = [20, 21, 22, 23, 26, 27, 28, 31, 32]
     $("#topsoilrow, #subsoilrow").empty()
-    $("#seq").text("Soil Sequence: " + (index+1))
+    $("#seq").text("Soil Sequence: " + index)
     $.each(top, function(i) {
         if (i>-1 && i<4) { val = String((s[top[i]]/tsum*100).toFixed(0)) + "%"}
         else { val = s[top[i]] }
