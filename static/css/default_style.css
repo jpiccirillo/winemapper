@@ -67,7 +67,7 @@ body {
     /*border-color: #8a95a1*/
 }
 
-.btn a, .btn-secondary a, .btn-warning a, .btn-danger a {
+.btn.nav a, .btn-secondary.nav a, .btn-warning a, .btn-danger a {
     color: var(--navtextcolor) !important;
     text-decoration: none;
 }

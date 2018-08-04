@@ -33,6 +33,9 @@
 	.card-title {
 		font-size:17px;
 	}
+	.card-header {
+		padding:6px 10px 6px 10px;
+	}
 	#wineryWines .card-body .card:first-child {
 		margin-top:0px;
 	}
@@ -44,6 +47,10 @@
     }
 	#wineryWines .card-body  {
 		padding: 7px;
+	}
+	.row {
+		margin-left:-7px;
+		margin-right: -7px;
 	}
 	#chart {
 		/*min-height: 500px;*/
@@ -84,14 +91,38 @@
 		font-size: 12px;
 	}
 	#climate .card-body {
-		padding-left:0px;
-		padding-right:10px;
+		padding: 7px 7px 5px 0px;
 	}
 	#stn-info {
 		float: right;
 		font-size: 15px;
 		vertical-align: middle;
 	}
+	.btn.btn-outline-secondary.info {
+		padding-top:4px ! important;
+		padding-bottom:4px ! important;
+		padding-left:10px;
+		padding-right:10px;
+	}
+	.btn.btn-outline-secondary.info {
+		border-radius: 4px;
+		color: var(--textcolor);
+		border-color: rgba(0, 0, 0, 0.125);
+	}
+
+	.btn:disabled {
+		opacity: 1
+	}
+	#soiltable .table {
+		margin-top: 10px;
+		font-size: 13px;
+	}
+	#soiltable td, #soiltable th {
+		padding: 0px !important;
+	}
+	/*.c3-chart-arc text {
+		fill: var(--textcolor);
+	}*/
     </style>
 </head>
 
@@ -122,136 +153,188 @@
 			</li>
 		</ul>
 	</nav>
-	<div class="container-fluid">
-        <div class="row">
+<div class="container-fluid">
+	<!-- <div class="col-md-12"> -->
+		<div class="row">
 			<div class="col-md-8">
 				<div class="row">
-				<div class="col-md-6">
-					<div class="card middle" id="wineryOverview">
-					<h6 class="card-header">Overview of {{winery[1]}}</h6>
-					<div class="card-body">
-						<h7 class="card-title"></h7>
-						<!-- <p class="card-text"> -->
-							<strong>Address: </strong>{{winery[4]}}<br>
-							<strong>Coordinates: </strong>{{winery[2]}}, {{winery[3]}}<span id="wineryLatLon"></span><br>
-							<strong>Most Reviews By: </strong><span id="reviewer"></span><br>
-								<!-- <ul id="wineryMostReviews"></ul> -->
-							<div class="card" style="margin-top: 0px; border-width:0px">
+					<div class="card middle" id="wineryOverview" style="width:100%">
+						<h6 class="card-header">Overview of {{winery[1]}}</h6>
+						<div class="card-body" style="padding:7px;">
+							<!-- <h7 class="card-title"></h7> -->
+							<!-- <p class="card-text"> -->
+							<!-- <div class="row"> -->
+							<!-- <div class="col-md-6"> -->
+								<button type="button" class="btn btn-outline-secondary info" disabled><strong>Address: </strong>{{winery[4]}}<br></button>
+								<button type="button" class="btn btn-outline-secondary info" disabled><strong>Coordinates: </strong>{{winery[2]}}, {{winery[3]}}<br></button>
+								<button type="button" class="btn btn-outline-secondary info" disabled><strong>Most Reviews By: </strong><span id="reviewer"></span><br></button>
+							<!-- <span id="wineryLatLon"></span><br> -->
+						<!-- </div> -->
+						<!-- <div class="col-md-6"> -->
+							<!-- <strong>Most Reviews By: </strong><span id="reviewer"></span><br> -->
+							<!-- <ul id="wineryMostReviews"></ul> -->
+							<!-- <div class="card" style="margin-top: 0px; border-width:0px">
 
 								<div class="card-body" style="padding: 5px">
+									<div class="row">
+										<div class="col-md-6">
 									<div class="card-text"></div>
+								</div>
+								<div class="col-md-6">
 									<div class="card-text" id="numreviews" style="font-style: italic;"></div>
 								</div>
-							</div>
+								</div>
+								</div>
+							</div> -->
+						<!-- </div> -->
 							<!-- </p> -->
-						<!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-					</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="card middle" id="winerySoil">
-					<h6 class="card-header">Soil Characteristics at {{winery[1]}}</h6>
-					<div class="card-body">
-						<!-- <h7 class="card-title">This page will show data for WineryID: {{id}}.</h7> -->
-						<div class="card-text">With supporting text below as a natural lead-in to additional content.With supporting text b.</div>
-						<!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-					</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<div class="card" id="climate">
-					<h6 class="card-header">Historical Climate Data:<span id="stn-info"></span></h6>
-					<div class="card-body">
-						<div id="chart"></div>
-						<div class="card-text" style="font-size: 12px; font-style: italic; padding-left:20px; float: right">Data from NCDC / NOAA <a href="https://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv&georegionabbv" target = _blank>Global Summary of the Day (GSOD)</a>, bucketed up to decade level
-					</div>
-						<!-- <div id="bottle">
-						<svg width="70px" height="200px">
-							<g>
-								<path class="path" fill="none" stroke="#000000" stroke-width="30" stroke-miterlimit="10" d="M818,1782c0,0,35.569,51.542,196.045,44.627
-								C1174.521,1819.713,1205,1782,1205,1782V737c0,0-2.896-88.072-66-140c-70.354-48.303-63.791-93-63.791-93L1078,195l6-11l1-47l-7-16
-								l-0.209-22.836L952,97.746l-2.164,19.464L941,132v42.836L947,190v322c0,0,3.393,35.554-38,56c-41.393,20.446-84.65,76.434-89,159
-								C815.65,809.566,818,1782,818,1782z"></path>
-							</g>
-						</svg>
-					</div> -->
-					</div>
-					</div>
-				</div>
-			</div>
-			</div>
-			<div class="col-md-4">
-				<!-- <div class="row"> -->
-					<!-- <div class="col-md-12"> -->
-				<div class="card" id="wineryWines">
-				<h6 class="card-header">Wines from {{winery[1]}}</h6>
-				<div class="card-body">
-					<!-- <h7 class="card-title">This page will show data for WineryID: {{id}}.</h7> -->
-					 {% for w in wines %}
-					<div class="card">
-						<!-- "<img class=\"card-img-top\" alt=\"Card image cap\">" + -->
-						<div class="card-body" style="padding: 5px">
-							<h7 class="card-title">{{w[1]}}</h7>
-							<p class="card-text" style="font-family: Dosis!important">
-								<strong>Average Price: </strong>
-								{% if w[2] %}
-									${{w[2]}}
-								{% else %} 	Price not listed.
-								{% endif %}
-								<br>
-
-								{% if w[16] %}
-									<strong>Province: </strong>
-									{% if w[17] %}
-										<a href={{w[17]}} target = _blank>{{w[16]}}</a>
-									{% else %} {{w[16]}}
-									{% endif %}
-									<br>
-								{% endif %}
-
-								{% if w[12] %}
-									<strong>Region: </strong>
-									{% if w[13] %}
-										<a href={{w[13]}} target = _blank>{{w[12]}}</a>
-									{% else %} {{w[12]}}
-									{% endif %}
-									<br>
-								{% endif %}
-
-								<strong>Variety: </strong>
-								{% if w[9] %}
-									{{w[9]}}
-								{% else %} No information.
-								{% endif %}
-								<br>
-								{% if w[10] %}
-									<strong>Variety Description: </strong>
-									{{w[10]}}
-									<br>
-								{% endif %}
-								{% if w[4] %}
-									<strong>Designation: </strong>
-									{{w[4]}}
-									<br>
-								{% endif %}
-
-								<!-- <span id="wineryAddress"></span> -->
-
-							</p>
-							<a onClick="checkLogin()" class="btn btn-success">Add to Favorites</a>
-							<a href="/api/wineDetail?id={{w[0]}}" class="btn btn-secondary">Read Reviews</a>
+							<!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+						<!-- </div> -->
 						</div>
 					</div>
-					{% endfor %}
 				</div>
+				<div class="row">
+					<div class="card" id="climate" style="width:100%">
+						<h6 class="card-header">Historical Climate Data and Soil Chemistry:<span id="stn-info"></span></h6>
+						<div class="card-body">
+							<div id="chart" style="max-height: 200px"></div>
+							<div class="card-text" style="font-size: 12px; font-style: italic; padding-left:20px; padding-right: 5px; float: right">Data from NCDC / NOAA <a href="https://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv&georegionabbv" target=_ blank>Global Summary of the Day (GSOD)</a>, bucketed up to decade level
+							</div>
+						</div>
+					<!-- </div>
+					<div class="card middle" id="winerySoil" style="width:100%">
+						<h6 class="card-header">Soil Characteristics at {{winery[1]}}</h6> -->
+						<hr style="margin-top: 8px; margin-bottom: 8px;"/>
+						<div class="col-sm-12">
+						<div class="card-title" style="margin-bottom:0px"><strong>Soil characteristics:</strong><span style="font-style: oblique; font-weight: 300; font-size:13px; color: grey"> (select Seq # from chart below to load data in table)</span></div></div>
+						<div class="card-body" style="padding:0px">
+							<div class="row">
+								<div class="col-sm-4">
+									<div id="donut"></div>
+								</div>
+								<!-- <h7 class="card-title">This page will show data for WineryID: {{id}}.</h7> -->
+								<div class="col-sm-8" style="padding-left:0px;">
+									<div class="card-text" id="soiltable">
+<!-- <table class="table">
+	<thead>
+		<tr>
+
+		</tr>
+	</thead>
+</table> -->
+<table class="table">
+	<thead>
+		<tr>
+			<th colspan="9" style="text-align: center;background-color: lightgrey"><span id="seq">Seq 1</span></th>
+		</tr>
+		<tr>
+			<th colspan="9" style="text-align: center"><strong>Topsoil</strong></th>
+		</tr>
+	</thead>
+	<thead>
+		<tr>
+			<th scope="col">Gravel</th>
+			<th scope="col">Sand</th>
+			<th scope="col">Silt</th>
+			<th scope="col">Clay</th>
+			<th scope="col">pH</th>
+			<th scope="col">CEC Clay</th>
+			<th scope="col">CEC Soil</th>
+			<th scope="col">CaCo<sub>3</sub></th>
+			<th scope="col">CaSO<sub>4</sub></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr id="topsoilrow">
+		</tr>
+
+	</tbody>
+</table>
+<table class="table">
+	<thead>
+		<tr>
+			<th colspan="9" style="text-align: center"><strong>Subsoil</strong></th>
+		</tr>
+	</thead>
+	<thead>
+		<tr>
+			<th scope="col">Gravel</th>
+			<th scope="col">Sand</th>
+			<th scope="col">Silt</th>
+			<th scope="col">Clay</th>
+			<th scope="col">pH</th>
+			<th scope="col">CEC Clay</th>
+			<th scope="col">CEC Soil</th>
+			<th scope="col">CaCo<sub>3</sub></th>
+			<th scope="col">CaSO<sub>4</sub></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr id="subsoilrow">
+		</tr>
+
+	</tbody>
+</table>
+
+									</div>
+								</div>
+								<!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- <div class="row">
+
+				</div> -->
+				</div>
+				<div class="col-md-4">
+					<div class="row">
+					<div class="card" id="wineryWines" style="width:100%">
+						<h6 class="card-header">Wines from {{winery[1]}}</h6>
+						<div class="card-body">
+							<!-- <h7 class="card-title">This page will show data for WineryID: {{id}}.</h7> -->
+							{% for w in wines %}
+							<div class="card">
+								<!-- "<img class=\"card-img-top\" alt=\"Card image cap\">" + -->
+								<div class="card-body" style="padding: 5px">
+									<h7 class="card-title">{{w[1]}}</h7>
+									<p class="card-text" style="font-family: Dosis!important">
+										<strong>Average Price: </strong> {% if w[2] %} ${{w[2]}} {% else %} Price not listed. {% endif %}
+										<br> {% if w[16] %}
+										<strong>Province: </strong> {% if w[17] %}
+										<a href={{w[17]}} target=_ blank>{{w[16]}}</a> {% else %} {{w[16]}} {% endif %}
+										<br> {% endif %} {% if w[12] %}
+										<strong>Region: </strong> {% if w[13] %}
+										<a href={{w[13]}} target=_ blank>{{w[12]}}</a> {% else %} {{w[12]}} {% endif %}
+										<br> {% endif %}
+
+										<strong>Variety: </strong> {% if w[9] %} {{w[9]}} {% else %} No information. {% endif %}
+										<br> {% if w[10] %}
+										<strong>Variety Description: </strong> {{w[10]}}
+										<br> {% endif %} {% if w[4] %}
+										<strong>Designation: </strong> {{w[4]}}
+										<br> {% endif %}
+
+										<!-- <span id="wineryAddress"></span> -->
+
+									</p>
+									<a onClick="checkLogin()" class="btn btn-success">Add to Favorites</a>
+									<a href="/api/wineDetail?id={{w[0]}}" class="btn btn-secondary">Read Reviews</a>
+								</div>
+							</div>
+							{% endfor %}
+						</div>
+					</div>
 				</div>
 			</div>
-		</div>
-    </div>
+			</div>
+		<!-- </div> -->
+	<!-- </div> -->
+</div>
     <script>
 	var wineryid = {{wid}}
+	var soil = {{soil | safe}}
+	console.log(soil)
     </script>
 	<script  src="../static/js/wineryDetail.js"></script>
 	<script  src="../static/js/favorites.js"></script>

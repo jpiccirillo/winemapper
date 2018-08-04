@@ -132,8 +132,23 @@ def wineryDetail():
     wineryid = str(request.args.get('id'))
 
     print(wineryid)
-    return render_template("wineryDetail.html", wid = wineryid, winery = getBasicWineryData(wineryid), wines = winesAtWinery(wineryid), loggedin = checkLogin())
+    return render_template("wineryDetail.html", wid = wineryid, winery = getBasicWineryData(wineryid), wines = winesAtWinery(wineryid), soil = getSoil(wineryid), loggedin = checkLogin())
 
+def getSoil(wid):
+    try:
+        db = psycopg2.connect(conn_string)
+        cur = db.cursor()
+        sql = 'SELECT * FROM public."SoilData" sd join public."Soil" s on sd.soilID = s."soilID" join public."Wineries" w on (w."soilID" = sd.soilID and w."wineryID" = {})'.format(wid)
+        cur.execute(sql)
+        rows = cur.fetchall()
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+
+    finally:
+        if db is not None: db.close()
+
+    return json.dumps(rows)
 
 def winesAtWinery(wid):
     try:
