@@ -13,117 +13,135 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.css" rel="stylesheet" />
 
 	<link href="https://fonts.googleapis.com/css?family=Dosis:400,700,900" rel="stylesheet">
-    <style>
-    *{
-        text-align: left;
-		font-family: Dosis !important;
-		font-weight: 300;
-    }
-    form {
-        width: 100%;
-    }
-	strong {
-		font-weight: 700;
-	}
-    .card {
-        margin-top: 15px;
-        height: calc(100% - 15px);
-        max-height: calc(100vh - 30px - 24px - 15px)
-    }
-	.card-title {
-		font-size:17px;
-	}
-	.card-header {
-		padding:6px 10px 6px 10px;
-	}
-	#wineryWines .card-body .card:first-child {
-		margin-top:0px;
-	}
-    .card.middle {
-        max-height: calc(66vh - 30px - 24px - 15px)
-    }
-    .card-body {
-        overflow: auto;
-    }
-	#wineryWines .card-body  {
-		padding: 7px;
-	}
-	.row {
-		margin-left:-7px;
-		margin-right: -7px;
-	}
-	#chart {
-		/*min-height: 500px;*/
-	}
-	a.btn.btn-secondary, a.btn.btn-success {
-		border-radius: 2px;
-		padding: 2px;
-		width: 100%;
-		text-decoration: none;
-	}
-	#wineryWines a.btn.btn-secondary, #wineryWines a.btn.btn-success:last-child {
-		margin-top:5px;
-	}
-	.path {
-		stroke-dasharray: 4500;
-		stroke-dashoffset: 4500;
-		animation: dash 2s linear alternate infinite;
-	}
+	<style>
+		* {
+			text-align: left;
+			font-family: Dosis !important;
+			font-weight: 300;
+		}
 
-	@keyframes dash {
-		from { stroke-dashoffset: 5000; }
-		to { stroke-dashoffset: 0; }
-	}
+		form {
+			width: 100%;
+		}
 
-	#bottle g { transform: scale(.10) translate(-750px, 50px); }
-	#bottle {
-		width: 100%;
-		height: 100%;
-	}
-	#bottle svg{
-		display: block;
-		margin: auto;
-	}
-	.c3 svg g g.c3-axis.c3-axis-y,.c3 svg g g.c3-axis.c3-axis-x {
-		font-size: 11px;
-	}
-	.c3-axis-y-label {
-		font-size: 12px;
-	}
-	#climate .card-body {
-		padding: 7px 7px 5px 0px;
-	}
-	#stn-info {
-		float: right;
-		font-size: 15px;
-		vertical-align: middle;
-	}
-	.btn.btn-outline-secondary.info {
-		padding-top:4px ! important;
-		padding-bottom:4px ! important;
-		padding-left:10px;
-		padding-right:10px;
-	}
-	.btn.btn-outline-secondary.info {
-		border-radius: 4px;
-		color: var(--textcolor);
-		border-color: rgba(0, 0, 0, 0.125);
-	}
+		strong {
+			font-weight: 700;
+		}
 
-	.btn:disabled {
-		opacity: 1
-	}
-	#soiltable .table {
-		margin-top: 10px;
-		font-size: 13px;
-	}
-	#soiltable td, #soiltable th {
-		padding: 0px !important;
-	}
-	/*.c3-chart-arc text {
+		.card {
+			margin-top: 15px;
+			height: calc(100% - 15px);
+			max-height: calc(100vh - 30px - 24px - 15px)
+		}
+
+		.card-title {
+			font-size: 17px;
+		}
+
+		.card-header {
+			padding: 6px 10px 6px 10px;
+		}
+
+		#wineryWines .card-body .card:first-child {
+			margin-top: 0px;
+		}
+
+		.card.middle {
+			max-height: calc(66vh - 30px - 24px - 15px)
+		}
+
+		.card-body {
+			overflow: auto;
+		}
+
+		#wineryWines .card-body {
+			padding: 7px;
+		}
+
+		.row {
+			margin-left: -7px;
+			margin-right: -7px;
+		}
+
+		#chart {
+			/*min-height: 500px;*/
+		}
+
+		a.btn.btn-secondary,
+		a.btn.btn-success {
+			border-radius: 2px;
+			padding: 2px;
+			width: 100%;
+			text-decoration: none;
+		}
+
+		#wineryWines a.btn.btn-secondary,
+		#wineryWines a.btn.btn-success:last-child {
+			margin-top: 5px;
+		}
+
+		.path {
+			stroke-dasharray: 4500;
+			stroke-dashoffset: 4500;
+			animation: dash 2s linear alternate infinite;
+		}
+
+		@keyframes dash {
+			from {
+				stroke-dashoffset: 5000;
+			}
+			to {
+				stroke-dashoffset: 0;
+			}
+		}
+
+		#bottle g {
+			transform: scale(.10) translate(-750px, 50px);
+		}
+
+		#bottle {
+			width: 100%;
+			height: 100%;
+		}
+
+		#bottle svg {
+			display: block;
+			margin: auto;
+		}
+
+		.c3 svg g g.c3-axis.c3-axis-y,
+		.c3 svg g g.c3-axis.c3-axis-x {
+			font-size: 11px;
+		}
+
+		.c3-axis-y-label {
+			font-size: 12px;
+		}
+
+		#climate .card-body {
+			padding: 7px 7px 5px 0px;
+		}
+
+		#stn-info {
+			float: right;
+			font-size: 15px;
+			vertical-align: middle;
+		}
+
+		#soiltable .table {
+			margin-top: 10px;
+			font-size: 13px;
+		}
+
+		#soiltable td,
+		#soiltable th {
+			padding: 0px !important;
+		}
+
+		/*.c3-chart-arc text {
 		fill: var(--textcolor);
 	}*/
-    </style>
+	</style>
 </head>
 
 <body>
@@ -134,17 +152,17 @@
 			</li>
 		</ul>
 		<ul class="navbar-nav">
-            <li class="nav-item">
-                <button class="btn-secondary nav"><a href="/">Back to Map</a></button>
-            </li>
-			{% if loggedin %}
+			<li class="nav-item">
+				<button class="btn-secondary nav"><a href="/">Back to Map</a></button>
+			</li>
+			{% if uid > 0 %}
 			<li class="nav-item">
 				<button class="btn-secondary nav"><a class="nav-link" href="/openProfile">Profile</a></button>
 			</li>
 			{% endif %}
 			<li class="nav-item">
 				<button class="btn-secondary nav">
-				{% if loggedin %}
+				{% if uid > 0 %}
 				<a class="nav-link" href="\logout">Log Out</a>
 				{% else %}
 				<a class="nav-link" href="\login">Log In</a>
@@ -153,43 +171,17 @@
 			</li>
 		</ul>
 	</nav>
-<div class="container-fluid">
-	<!-- <div class="col-md-12"> -->
+	<div class="container-fluid">
+		<!-- <div class="col-md-12"> -->
 		<div class="row">
 			<div class="col-md-8">
 				<div class="row">
 					<div class="card middle" id="wineryOverview" style="width:100%">
 						<h6 class="card-header">Overview of {{winery[1]}}</h6>
 						<div class="card-body" style="padding:7px;">
-							<!-- <h7 class="card-title"></h7> -->
-							<!-- <p class="card-text"> -->
-							<!-- <div class="row"> -->
-							<!-- <div class="col-md-6"> -->
-								<button type="button" class="btn btn-outline-secondary info" disabled><strong>Address: </strong>{{winery[4]}}<br></button>
-								<button type="button" class="btn btn-outline-secondary info" disabled><strong>Coordinates: </strong>{{winery[2]}}, {{winery[3]}}<br></button>
-								<button type="button" class="btn btn-outline-secondary info" disabled><strong>Most Reviews By: </strong><span id="reviewer"></span><br></button>
-							<!-- <span id="wineryLatLon"></span><br> -->
-						<!-- </div> -->
-						<!-- <div class="col-md-6"> -->
-							<!-- <strong>Most Reviews By: </strong><span id="reviewer"></span><br> -->
-							<!-- <ul id="wineryMostReviews"></ul> -->
-							<!-- <div class="card" style="margin-top: 0px; border-width:0px">
-
-								<div class="card-body" style="padding: 5px">
-									<div class="row">
-										<div class="col-md-6">
-									<div class="card-text"></div>
-								</div>
-								<div class="col-md-6">
-									<div class="card-text" id="numreviews" style="font-style: italic;"></div>
-								</div>
-								</div>
-								</div>
-							</div> -->
-						<!-- </div> -->
-							<!-- </p> -->
-							<!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-						<!-- </div> -->
+							<button type="button" class="btn btn-outline-secondary info" disabled><strong>Address: </strong>{{winery[4]}}<br></button>
+							<button type="button" class="btn btn-outline-secondary info" disabled><strong>Coordinates: </strong>{{winery[2]}}, {{winery[3]}}<br></button>
+							<button type="button" class="btn btn-outline-secondary info" disabled><strong>Most Reviews By: </strong><span id="reviewer"></span><br></button>
 						</div>
 					</div>
 				</div>
@@ -201,124 +193,138 @@
 							<div class="card-text" style="font-size: 12px; font-style: italic; padding-left:20px; padding-right: 5px; float: right">Data from NCDC / NOAA <a href="https://www7.ncdc.noaa.gov/CDO/cdoselect.cmd?datasetabbv=GSOD&countryabbv&georegionabbv" target=_ blank>Global Summary of the Day (GSOD)</a>, bucketed up to decade level
 							</div>
 						</div>
-					<!-- </div>
-					<div class="card middle" id="winerySoil" style="width:100%">
-						<h6 class="card-header">Soil Characteristics at {{winery[1]}}</h6> -->
-						<hr style="margin-top: 8px; margin-bottom: 8px;"/>
+						<hr style="margin-top: 8px; margin-bottom: 8px;" />
 						<div class="col-sm-12">
-						<div class="card-title" style="margin-bottom:0px"><strong>Soil characteristics:</strong><span style="font-style: oblique; font-weight: 300; font-size:13px; color: grey"> (select Seq # from chart below to load data in table)</span></div></div>
+							<div class="card-title" style="margin-bottom:0px"><strong>Soil Type: </strong><span id="soilname"></span><span style="font-style: oblique; font-weight: 300; font-size:13px; color: grey"> (select sequence from ring below to load data in table)</span></div>
+						</div>
 						<div class="card-body" style="padding:0px">
 							<div class="row">
 								<div class="col-sm-4">
 									<div id="donut"></div>
 								</div>
-								<!-- <h7 class="card-title">This page will show data for WineryID: {{id}}.</h7> -->
 								<div class="col-sm-8" style="padding-left:0px;">
 									<div class="card-text" id="soiltable">
-<!-- <table class="table">
-	<thead>
-		<tr>
+										<table class="table">
+											<thead>
+												<tr>
+													<th colspan="9" style="text-align: center;background-color: lightgrey"><span id="seq">Seq 1</span></th>
+												</tr>
+												<tr>
+													<th colspan="9" style="text-align: center"><strong>Topsoil</strong></th>
+												</tr>
+											</thead>
+											<thead>
+												<tr>
+													<th scope="col">Gravel</th>
+													<th scope="col">Sand</th>
+													<th scope="col">Silt</th>
+													<th scope="col">Clay</th>
+													<th scope="col">pH</th>
+													<th scope="col">CEC Clay</th>
+													<th scope="col">CEC Soil</th>
+													<th scope="col">CaCo<sub>3</sub></th>
+													<th scope="col">CaSO<sub>4</sub></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr id="topsoilrow">
+												</tr>
 
-		</tr>
-	</thead>
-</table> -->
-<table class="table">
-	<thead>
-		<tr>
-			<th colspan="9" style="text-align: center;background-color: lightgrey"><span id="seq">Seq 1</span></th>
-		</tr>
-		<tr>
-			<th colspan="9" style="text-align: center"><strong>Topsoil</strong></th>
-		</tr>
-	</thead>
-	<thead>
-		<tr>
-			<th scope="col">Gravel</th>
-			<th scope="col">Sand</th>
-			<th scope="col">Silt</th>
-			<th scope="col">Clay</th>
-			<th scope="col">pH</th>
-			<th scope="col">CEC Clay</th>
-			<th scope="col">CEC Soil</th>
-			<th scope="col">CaCo<sub>3</sub></th>
-			<th scope="col">CaSO<sub>4</sub></th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr id="topsoilrow">
-		</tr>
+											</tbody>
+										</table>
+										<table class="table">
+											<thead>
+												<tr>
+													<th colspan="9" style="text-align: center"><strong>Subsoil</strong></th>
+												</tr>
+											</thead>
+											<thead>
+												<tr>
+													<th scope="col">Gravel</th>
+													<th scope="col">Sand</th>
+													<th scope="col">Silt</th>
+													<th scope="col">Clay</th>
+													<th scope="col">pH</th>
+													<th scope="col">CEC Clay</th>
+													<th scope="col">CEC Soil</th>
+													<th scope="col">CaCo<sub>3</sub></th>
+													<th scope="col">CaSO<sub>4</sub></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr id="subsoilrow">
+												</tr>
 
-	</tbody>
-</table>
-<table class="table">
-	<thead>
-		<tr>
-			<th colspan="9" style="text-align: center"><strong>Subsoil</strong></th>
-		</tr>
-	</thead>
-	<thead>
-		<tr>
-			<th scope="col">Gravel</th>
-			<th scope="col">Sand</th>
-			<th scope="col">Silt</th>
-			<th scope="col">Clay</th>
-			<th scope="col">pH</th>
-			<th scope="col">CEC Clay</th>
-			<th scope="col">CEC Soil</th>
-			<th scope="col">CaCo<sub>3</sub></th>
-			<th scope="col">CaSO<sub>4</sub></th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr id="subsoilrow">
-		</tr>
-
-	</tbody>
-</table>
+											</tbody>
+										</table>
 
 									</div>
 								</div>
-								<!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
 							</div>
 						</div>
 					</div>
 				</div>
-				<!-- <div class="row">
 
-				</div> -->
-				</div>
-				<div class="col-md-4">
-					<div class="row">
+			</div>
+			<div class="col-md-4">
+				<div class="row">
 					<div class="card" id="wineryWines" style="width:100%">
 						<h6 class="card-header">Wines from {{winery[1]}}</h6>
 						<div class="card-body">
-							<!-- <h7 class="card-title">This page will show data for WineryID: {{id}}.</h7> -->
 							{% for w in wines %}
 							<div class="card">
-								<!-- "<img class=\"card-img-top\" alt=\"Card image cap\">" + -->
 								<div class="card-body" style="padding: 5px">
 									<h7 class="card-title">{{w[1]}}</h7>
 									<p class="card-text" style="font-family: Dosis!important">
-										<strong>Average Price: </strong> {% if w[2] %} ${{w[2]}} {% else %} Price not listed. {% endif %}
-										<br> {% if w[16] %}
-										<strong>Province: </strong> {% if w[17] %}
-										<a href={{w[17]}} target=_ blank>{{w[16]}}</a> {% else %} {{w[16]}} {% endif %}
-										<br> {% endif %} {% if w[12] %}
-										<strong>Region: </strong> {% if w[13] %}
-										<a href={{w[13]}} target=_ blank>{{w[12]}}</a> {% else %} {{w[12]}} {% endif %}
-										<br> {% endif %}
+										<strong>Average Price: </strong>
+										{% if w[2] %}
+											${{w[2]}}
+										{% else %}
+											Price not listed.
+										{% endif %}
+										<br>
 
-										<strong>Variety: </strong> {% if w[9] %} {{w[9]}} {% else %} No information. {% endif %}
-										<br> {% if w[10] %}
-										<strong>Variety Description: </strong> {{w[10]}}
-										<br> {% endif %} {% if w[4] %}
-										<strong>Designation: </strong> {{w[4]}}
-										<br> {% endif %}
+										{% if w[18] %}
+										<strong>Province: </strong>
+											{% if w[19] %}
+												<a href={{w[19]}} target=_blank>{{w[18]}}</a>
+											{% else %}
+												{{w[18]}}
+											{% endif %}
+										<br>
+										{% endif %}
 
-										<!-- <span id="wineryAddress"></span> -->
+										{% if w[14] %}
+										<strong>Region: </strong>
+											{% if w[15] %}
+												<a href={{w[15]}} target=_blank>{{w[14]}}</a>
+											{% else %}
+												{{w[14]}}
+											{% endif %}
+										<br>
+										{% endif %}
+
+										<strong>Variety: </strong>
+										{% if w[11] %}
+											{{w[11]}}
+										{% else %}
+											No information.
+										{% endif %}
+										<br>
+
+										{% if w[12] %}
+											<strong>Variety Description: </strong>
+											{{w[12]}}
+											<br>
+										{% endif %}
+
+										{% if w[4] %}
+											<strong>Designation: </strong>
+											{{w[4]}}
+											<br>
+										{% endif %}
 
 									</p>
-									<a onClick="checkLogin()" class="btn btn-success">Add to Favorites</a>
 									<a href="/api/wineDetail?id={{w[0]}}" class="btn btn-secondary">Read Reviews</a>
 								</div>
 							</div>
@@ -327,17 +333,18 @@
 					</div>
 				</div>
 			</div>
-			</div>
-		<!-- </div> -->
-	<!-- </div> -->
-</div>
-    <script>
-	var wineryid = {{wid}}
-	var soil = {{soil | safe}}
-	console.log(soil)
-    </script>
-	<script  src="../static/js/wineryDetail.js"></script>
-	<script  src="../static/js/favorites.js"></script>
+		</div>
+	</div>
+	<script>
+		var wineryid = {{wid}}
+		var soil = {{soil|safe}}
+		var UID = {{uid}}
+		wineinfo = {{wineInfo|safe}}
+		console.log("soil: " + soil)
+		console.log("wines: " + JSON.parse(wineinfo))
+	</script>
+	<script src="../static/js/wineryDetail.js"></script>
+	<script src="../static/js/favorites.js"></script>
 </body>
 
 </html>

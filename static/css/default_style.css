@@ -8,6 +8,16 @@
     --textcolor: #484848;
     --navtextcolor: white;
 }
+* {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    /*padding-right: 0px;*/
+}
+
 @media (min-width: 620px) {
     main {
         column-count: 2;
@@ -71,14 +81,33 @@ body {
     color: var(--navtextcolor) !important;
     text-decoration: none;
 }
-* {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    /*padding-right: 0px;*/
+
+a.btn-secondary, a.btn-success, a.btn-warning {
+    border-radius: 4px;
+    padding: 5px;
+    font-size: 14px;
+    text-decoration-line: none;
+    /*width: calc(50% - 5px);*/
+    width: 100%;
+    /*margin-top: 5px;*/
+}
+
+/*breadcrumb buttons on overview headers of wineryDetail, user Profile and Taster*/
+.btn.btn-outline-secondary.info {
+    padding-top: 4px ! important;
+    padding-bottom: 4px ! important;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top:4px;
+}
+
+.btn.btn-outline-secondary.info {
+    border-radius: 4px;
+    color: var(--textcolor);
+    border-color: rgba(0, 0, 0, 0.125);
+}
+.btn:disabled {
+    opacity: 1
 }
 
 span.dropdown-item:active {
@@ -94,4 +123,7 @@ span.dropdown-item:active {
     margin-bottom: 16px;
     display: flex;
     text-align: center;
+}
+.card-text {
+    color: var(--textcolor) !important;
 }

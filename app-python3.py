@@ -19,45 +19,95 @@ port = "5432"
 conn_string = "host={} port={} dbname={} user={} password={}".format(host, port, dbname, user, password)
 lastFaveCount = ''
 lastID = ''
-count = 0
+lastAvgReview = ''
 mapBounds = ''
+UID = 0
 
 # session['logged_in'] = False
 app = Flask(__name__)
 
+def checkMapBounds():
+    global mapBounds
+    if mapBounds == '':
+        return [[37.74031329210266, -122.84912109375001], [38.53957267203907, -121.50329589843751]] #bay area
+    return mapBounds
+
 @app.route('/', methods=['GET'])
 def home():
+    global UID
     global mapBounds
-    if not session.get('logged_in'):
-        print("not logged in")
-        session['logged_in'] = False;
+    # if not session.get('logged_in'):
+    #     print("not logged in")
+    #     session['logged_in'] = 0;
 
-    if mapBounds == '':
-        mapBounds = [[37.74031329210266, -122.84912109375001], [38.53957267203907, -121.50329589843751]] #bay area
+    mapBounds = checkMapBounds();
     # mapparams = [mapcenter, marker array (if present), zoom level] basically how to kick off the map.
     # this flask function is the "homepage view", while the search flask function will use different parameters
 
-    return render_template('browse.html', mapparams = [mapBounds, "", 10], searchparams = [], loggedin = checkLogin())
+    return render_template('browse.html', uid = UID, mapparams = [mapBounds, "", 10], searchparams = [])
 
 app.secret_key = os.urandom(12)
 
-def checkLogin():
-    if not session.get('logged_in'):
-        session['logged_in'] = False;
-        return False;
-    else:
-        return session['logged_in']
+# def checkLogin():
+    # if not session.get('logged_in'):
+    #     session['logged_in'] = 0;
+    #     return 0;
+    # else:
+    #     return session['logged_in']
 
-@app.route('/api/checkLoginForClient', methods=['GET'])
-def checkLoginForClient():
-    if checkLogin()==False:
-        return "false"
-    else:
-        return "true"
+# @app.route('/api/checkLoginForClient', methods=['GET'])
+# def checkLoginForClient():
+#     global UID
+#     return json.dumps(UID)
+
+@app.route('/api/addFavorite', methods=['GET'])
+def addFavorite():
+    global UID
+    print("UID: " + str(UID))
+    wineID = request.args.get('wid')
+    try:
+        db = psycopg2.connect(conn_string)
+        cur = db.cursor()
+        sql = 'INSERT INTO "Favorites" VALUES({}, {})'.format(UID, wineID)
+        cur.execute(sql)
+        db.commit()
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+        return 'failed'
+
+    finally:
+        if db is not None: db.close()
+
+    return 'added' + wineID
+
+@app.route('/api/removeFavorite', methods=['GET'])
+def removeFavorite():
+    global UID
+    print("UID: " + str(UID))
+    wineID = request.args.get('wid')
+
+    try:
+        db = psycopg2.connect(conn_string)
+        cur = db.cursor()
+        sql = 'DELETE FROM "Favorites" WHERE "userID" = {} AND "wineID" = {}'.format(UID, wineID)
+        cur.execute(sql)
+        db.commit()
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+        return 'failed'
+
+    finally:
+        if db is not None: db.close()
+
+    return 'removed ' + wineID
 
 @app.route('/openProfile', methods=['GET'])
 def openProfile():
-    print(UID)
+    global UID
+
+    print("UID: " + str(UID))
     #queries to get user info and their favorites
     try:
         db = psycopg2.connect(conn_string)
@@ -70,29 +120,37 @@ def openProfile():
         cur.execute(sql)
         rows = cur.fetchall()
         favorites = [row for row in rows]
+        print("favorites: " + str(favorites))
 
-        count = 0
+        count = 0;
         sql = 'SELECT COUNT(f."wineID") FROM "Favorites" f WHERE f."userID" = {} GROUP BY f."userID"'.format(UID)
         cur.execute(sql)
-        count = cur.fetchone()[0]
+        count = list(cur.fetchone())[0]
+        if count is None:
+            count = 0;
+        print(count)
+        print("count: " + str(count))
 
         varieties = []
         sql = "SELECT * FROM favoriteVariety({})".format(UID)
         cur.execute(sql)
         rows = cur.fetchall()
         varieties = [row for row in rows]
+        print("varieties: " + str(varieties))
 
         wineries = []
         sql = "SELECT * FROM favoriteWinery({})".format(UID)
         cur.execute(sql)
         rows = cur.fetchall()
         wineries = [row for row in rows]
+        print("wineries: " + str(wineries))
 
-        userName = ''
         sql = 'SELECT u."name" FROM "User" u WHERE u."userID" = {}'.format(UID)
         cur.execute(sql)
-        userName = cur.fetchone()[0]
+        userName = list(cur.fetchone())[0]
+        print(userName)
         cur.close()
+        print("userName: " + str(userName))
 
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
@@ -100,21 +158,22 @@ def openProfile():
     finally:
         if db is not None: db.close()
 
-    return render_template('user.html', uid = UID, count = count, userName = userName, favorites = favorites, varieties = varieties, wineries = wineries, loggedin = checkLogin())
+    return render_template('user.html', uid = UID, count = count, userName = userName, favorites = favorites, varieties = varieties, wineries = wineries)
 
 
 @app.route('/api/getWines', methods=['GET'])
 def wines():
-    # checkLogin()
+    global UID
     wineryid = str(request.args.get('id'))
-    print(wineryid)
+    print("WineryID: " + str(wineryid))
+    print("UserID: " + str(UID))
 
     try:
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
 
         # Selects all wines from a given winery
-        sql = 'SELECT * FROM "Wine" w JOIN "Wineries" wn ON w."wineryID" = wn."wineryID" WHERE wn."wineryID" = {}'.format(wineryid)
+        sql = 'SELECT * FROM "Wine" w JOIN "Wineries" wn ON w."wineryID" = wn."wineryID"JOIN "Variety" v ON w."varietyID" = v."varietyID" LEFT JOIN ( SELECT "wineID", count(*) c FROM "Favorites" WHERE "userID" = {} GROUP BY "wineID") f ON w."wineID" = f."wineID" WHERE wn."wineryID" = {}'.format(UID, wineryid)
 
         cur.execute(sql)
         rows = cur.fetchall()
@@ -136,13 +195,13 @@ def wineryDetail():
     wineryid = str(request.args.get('id'))
 
     print(wineryid)
-    return render_template("wineryDetail.html", wid = wineryid, winery = getBasicWineryData(wineryid), wines = winesAtWinery(wineryid), soil = getSoil(wineryid), loggedin = checkLogin())
+    return render_template("wineryDetail.html",  uid = UID, wid = wineryid, winery = getBasicWineryData(wineryid), wineInfo = json.dumps(winesAtWinery(wineryid)), wines = winesAtWinery(wineryid), soil = getSoil(wineryid))
 
 def getSoil(wid):
     try:
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
-        sql = 'SELECT * FROM public."SoilData" sd join public."Soil" s on sd.soilID = s."soilID" join public."Wineries" w on (w."soilID" = sd.soilID and w."wineryID" = {})'.format(wid)
+        sql = 'SELECT * FROM public."SoilData" sd join public."Soil" s on sd.soilID = s."soilID" join public."Wineries" w on (w."soilID" = sd.soilID and w."wineryID" = {}) join "SoilType" st on st."SU_SYMBOL" = s."SU_SYMBOL"'.format(wid)
         cur.execute(sql)
         rows = cur.fetchall()
 
@@ -155,12 +214,16 @@ def getSoil(wid):
     return json.dumps(rows)
 
 def winesAtWinery(wid):
+    global UID
+
     try:
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
-        sql = 'SELECT w.*, v.*, a.*, p.* FROM "Wineries" wn JOIN "Wine" w ON w."wineryID" = wn."wineryID" JOIN "Area" a ON w."areaID" = a."areaID" LEFT JOIN "Area" p ON a."provinceID" = p."areaID" JOIN "Variety" v ON w."varietyID" = v."varietyID" WHERE wn."wineryID" = {}'.format(wid)
+        sql = 'SELECT w.*, v.*, a.*, p.* FROM "Wineries" wn  JOIN "Wine" w ON w."wineryID" = wn."wineryID" JOIN "Area" a ON w."areaID" = a."areaID" LEFT JOIN "Area" p ON a."provinceID" = p."areaID" JOIN "Variety" v ON w."varietyID" = v."varietyID" LEFT JOIN (SELECT "wineID", count(*) c FROM "Favorites" WHERE "userID" = {} GROUP BY "wineID") f ON w."wineID" = f."wineID" WHERE wn."wineryID" = {}'.format(UID, wid)
+
         cur.execute(sql)
         rows = cur.fetchall()
+        print(rows)
 
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
@@ -190,12 +253,13 @@ def getBasicWineryData(wid):
 
 
 def getWineData(wid):
+    global UID
     # Returns all winedata for the given wine
     try:
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
 
-        sql = 'SELECT w."wineID", w.title, w.price, p.name, p."wikiLink", a.name, a."wikiLink", v."vName", v.description, w.designation FROM "Wine" w LEFT JOIN "Area" a ON w."areaID" = a."areaID" LEFT JOIN "Area" p ON a."provinceID" = p."areaID" LEFT JOIN "Variety" v ON w."varietyID" = v."varietyID" WHERE w."wineID" = {}'.format(wid)
+        sql = 'SELECT w."wineID", w.title, w.price, p.name, p."wikiLink", a.name, a."wikiLink", v."vName", v.description, w.designation, f.c FROM "Wine" w LEFT JOIN "Area" a ON w."areaID" = a."areaID" LEFT JOIN "Area" p ON a."provinceID" = p."areaID" LEFT JOIN "Variety" v ON w."varietyID" = v."varietyID" LEFT JOIN (SELECT "wineID", count(*) c FROM "Favorites" WHERE "userID" = {} GROUP BY "wineID") f ON w."wineID" = f."wineID" WHERE w."wineID" = {}'.format(UID, wid)
         cur.execute(sql)
         data = cur.fetchone()
         print(data)
@@ -208,6 +272,14 @@ def getWineData(wid):
 
     return data
 
+
+def writeRow(month, oldContents):
+    newRow = oldContents;
+    newRow.append(month)
+    newRow.append("None")
+    newRow.append("None")
+    newRow.append("None")
+    return newRow;
 
 def getClimateData(wid):
     print(wid)
@@ -233,39 +305,32 @@ def getClimateData(wid):
     totalData = [];
     totalTemps = [];
     totalTemps.append(['x', '2018-01-01', '2018-02-01', '2018-03-01', '2018-04-01', '2018-05-01', '2018-06-01', '2018-07-01', '2018-08-01', '2018-09-01', '2018-10-01', '2018-11-01', '2018-12-01'])
-    # x = numpy.array(data).T
 
     c = 1;
     normalized = [];
-    print(data)
-    for row in data:
+    for index, row in enumerate(data):
         write = False;
         if row[8] == c%12:
             write=True;
-
         else:
+            while (row[8] < c%12):
+                normalized.append(writeRow(c%12, data[index-1][:8]))
+                c+=1;
+
+                if c%12==0 and data[index+1][8] !=1:
+                    normalized.append(writeRow(12, data[index-1][:8]))
+                    c+=1;
 
             while (row[8] >= c%12):
-                print(row[8], c%12, c)
                 if (row[8]%12==c%12):
-                    # time.sleep(.5)
                     write=True;
                     break;
 
                 else:
-                    print(row[8], c%12)
-                    # time.sleep(.5)
-                    newRow = row[:8]
-                    newRow.append(c%12)
-                    newRow.append("None")
-                    newRow.append("None")
-                    newRow.append("None")
-                    normalized.append(newRow)
+                    normalized.append(writeRow(c%12, row[:8]))
                     c+=1;
         if write:
-                print(row[8], c%12)
                 normalized.append(row)
-                # time.sleep(.5)
                 c+=1
 
     print(normalized)
@@ -273,6 +338,7 @@ def getClimateData(wid):
     x = [list([row[i] for row in normalized]) for i in range(len(normalized[0]))]
     unique = sorted(set(x[7]))
     print(unique)
+
     for i in range(len(x)):
 
         if (i==2): #append USAF ID
@@ -283,9 +349,10 @@ def getClimateData(wid):
 
         elif (i==9):
             temps = [x[i][j:j + 12] for j in range(0, len(x[i]), 12)]
-
+            print(temps)
             k = 0
             for year in unique:
+                print(year)
                 # if len(temps[k]) == 12:
                 temps[k].insert(0, year)
                 totalTemps.append(temps[k])
@@ -306,7 +373,7 @@ def getReveiwData(wid):
         cur.execute(sql)
         rows = cur.fetchall()
         data = [row for row in rows]
-        print(data)
+        # print(data)
 
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
@@ -319,11 +386,12 @@ def getReveiwData(wid):
 
 @app.route('/api/wineDetail', methods=['GET'])
 def wineDetail():
-    print(session['logged_in'])
+    global UID
+    # print("Loggedin: " + str(session['logged_in']))
     wineID = str(request.args.get('id'))
     wineData = getWineData(wineID)
     reviewData = getReveiwData(wineID)
-    return render_template("wineDetails.html", w = wineData, reviews = reviewData, loggedin = checkLogin())
+    return render_template("wineDetails.html", uid = UID, favorited = json.dumps(list(wineData)[-1]), wineid = wineID, w = wineData, reviews = reviewData)
 
 
 @app.route('/api/getCliamteData', methods=['GET'])
@@ -336,11 +404,12 @@ def climateDataResults():
 
 @app.route('/api/tasterDetail', methods=['GET'])
 def tasterDetail():
+    global UID
     tasterID = str(request.args.get('id'))
     tasterData = getTasterData(tasterID)
     reviewData = getTasterReviewData(tasterID)
 
-    return render_template("tasterDetails.html", taster = tasterData, reviews = reviewData, loggedin = checkLogin())
+    return render_template("tasterDetails.html", uid = UID, taster = tasterData, reviews = reviewData)
 
 def getTasterReviewData(tasterID):
     """
@@ -384,8 +453,13 @@ def getTasterData(tasterID):
 
 @app.route('/api/searchInitial', methods=['GET'])
 def search():
+    global UID
     global lastID
     global lastFaveCount
+    global lastAvgReview
+    global mapbounds
+
+    mapBounds = checkMapBounds();
     # global count
     # count += 1
 
@@ -407,17 +481,19 @@ def search():
         cur = db.cursor()
         data = [];
         # Returns a list of reviewers who have reviewed the winery the most as [tasterID, name, count]
-        sql = 'SELECT * from public.findwines(%s, %s, %s, %s, %s, %s, %s, NULL, NULL)'
+        sql = 'SELECT * from public.findwines(%s, %s, %s, %s, %s, %s, %s, NULL, NULL, NULL)'
         cur.execute(sql, insertValues)
         rows = cur.fetchall()
         data = [row for row in rows]
         print("Last Row: " + str(data[-1]))
 
         lastID = data[-1][0]
-        lastFaveCount = None if not data[-1][-2] else data[-1][-2]
+        lastFaveCount = 0 if not data[-1][-2] else data[-1][-2]
+        lastAvgReview = 0 if not data[-1][4] else data[-1][4]
 
         print("lastID: " + str(lastID))
-        print("favCount: " + str(lastFaveCount))
+        print("lastfavCount: " + str(lastFaveCount))
+        print("lastAvgReview: " + str(lastAvgReview))
         # print("count: " + str(count))
 
     except (Exception, psycopg2.DatabaseError) as error:
@@ -426,19 +502,20 @@ def search():
     finally:
         if db is not None: db.close()
 
-    return render_template("browse.html", mapparams = [mapBounds, json.dumps(data), 10], searchparams = json.dumps(insertValues), loggedin = checkLogin())
+    return render_template("browse.html", uid = UID, mapparams = [mapBounds, json.dumps(data), 10], searchparams = json.dumps(insertValues))
 
 @app.route('/api/searchLater', methods=['GET'])
 def searchLater():
     global lastID
     global lastFaveCount
+    global lastAvgReview
 
     form = ['title', 'variety', 'designation', 'maxprice', 'area', 'winery', 'keyword']
     insertValues = [None if request.args[entry]=='null' else request.args[entry] for entry in form]
     print(insertValues)
 
-    twoargs = [lastID, lastFaveCount]
-    for arg in twoargs:
+    returnargs = [lastFaveCount, lastID, lastAvgReview]
+    for arg in returnargs:
     #     if arg != None: arg = int(arg)
         insertValues.append(arg)
 
@@ -447,7 +524,7 @@ def searchLater():
         cur = db.cursor()
         data = [];
         # Returns a list of reviewers who have reviewed the winery the most as [tasterID, name, count]
-        sql = 'SELECT * from public.findwines(%s, %s, %s, %s, %s, %s, %s, %s, %s)'
+        sql = 'SELECT * from public.findwines(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
         cur.execute(sql, insertValues)
         rows = cur.fetchall()
         data = [row for row in rows]
@@ -455,9 +532,11 @@ def searchLater():
 
         lastID = data[-1][0]
         lastFaveCount = None if not data[-1][-2] else data[-1][-2]
+        lastAvgReview = None if not data[-1][4] else data[-1][4]
 
         print("lastID: " + str(lastID))
-        print("favCount: " + str(lastFaveCount))
+        print("lastFaveCount: " + str(lastFaveCount))
+        print("lastAvgReview: " + str(lastAvgReview))
         # print("count: " + str(count))
 
     except (Exception, psycopg2.DatabaseError) as error:
@@ -549,9 +628,10 @@ def login():
     user = list(cur.fetchone())
 
     if password == user[2]:
-        session['logged_in'] = True
+        session['logged_in'] = 1
         session['username'] = user[0]
         UID = user[0]
+        print("Logged In as: " + str(UID))
         return home()
 
     else:
@@ -584,11 +664,11 @@ def addUserData():
         getUserID = 'SELECT MAX("userID") FROM "User"'
         cur.execute(getUserID)
         max = cur.fetchone()
-        uID = max[0]+1
-        print(uID)
+        UID = max[0]+1
+        print(UID)
 
         sql = 'INSERT INTO "User" ("userID", "uName", "pWord", name, address) VALUES (%s,%s,%s,%s,%s)'
-        insertValues = (uID, username, password, address, firstname)
+        insertValues = (UID, username, password, address, firstname)
 
         cur.execute(sql, insertValues)
         db.commit()
@@ -604,8 +684,9 @@ def addUserData():
 
 @app.route('/logout')
 def logout():
-    session['logged_in'] = False
-    return render_template("logout.html", loggedin = checkLogin())
+    global UID
+    UID = 0
+    return render_template("logout.html")
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)

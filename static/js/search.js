@@ -31,11 +31,13 @@ function loadTenMore() {
             data = JSON.parse(data)
             console.log(data)
             $.each(data, function(i, entry) {
-                plotCards(entry[0], entry[1])
+                text = prepSearchData(data[i])
+                plotCards(data[i][0], 0, 0, text)
                 plotMarkers('search', entry)
             })
+            console.log(marker)
             group = new L.featureGroup(marker);
-            map.fitBounds(group.getBounds().pad(0.5));
+            map.fitBounds(group.getBounds().pad(0.15));
         },
         error: function(data) {
             console.log("Error originaing from ajax call\n")

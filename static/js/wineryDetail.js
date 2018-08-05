@@ -5,6 +5,8 @@ getMostReviews()
 getClimateData()
 plotSoilData()
 
+$("#soilname").text(soil[0][46])
+
 function getMostReviews() {
     $.ajax({
         type: 'GET',
@@ -167,21 +169,28 @@ function loadTable(index) {
 // 32 CaSO<sub>4</sub>
     console.log(s)
     var s = soil[index-1]
-    var val = '';
-    var tsum = s[5] + s[6] + s[7] + s[8]
-    var ssum = s[20] + s[21] + s[22] + s[23]
+    // var val = '';
+    // var tsum = s[5] + s[6] + s[7] + s[8]
+    // var ssum = s[20] + s[21] + s[22] + s[23]
     var top = [5, 6, 7, 8, 11, 12, 13, 16, 17]
     var sub = [20, 21, 22, 23, 26, 27, 28, 31, 32]
     $("#topsoilrow, #subsoilrow").empty()
     $("#seq").text("Soil Sequence: " + index)
+
     $.each(top, function(i) {
-        if (i>-1 && i<4) { val = String((s[top[i]]/tsum*100).toFixed(0)) + "%"}
-        else { val = s[top[i]] }
+        if (s[sub[i]]==null) { val = '' }
+        else if (i<4) { val = s[top[i]].toFixed(0) + " %vol" }
+        else if (i==4) { val = s[top[i]]}
+        else if (i<7) { val = s[top[i]] + " cmol/kg" }
+        else { val = s[top[i]] + " %wt" }
         $("#topsoilrow").append("<td>" + val + "</td>")
     })
     $.each(sub, function(i) {
-        if (i>-1 && i<4) { val = String((s[sub[i]]/ssum*100).toFixed(0)) + "%"}
-        else { val = s[sub[i]] }
+        if (s[sub[i]]==null) { val = '' }
+        else if (i<4) { val = s[sub[i]].toFixed(0) + " %vol"}
+        else if (i==4) { val = s[top[i]] }
+        else if (i<7) { val = s[sub[i]] + " cmol/kg" }
+        else { val = s[sub[i]] + " %wt" }
         $("#subsoilrow").append("<td>" + val + "</td>")
     })
 }

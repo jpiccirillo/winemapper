@@ -45,6 +45,9 @@
 		p {
 			margin-bottom: 0px;
 		}
+		b {
+			font-weight: 900;
+		}
 
 		.card-body p {
 			color: grey;
@@ -98,20 +101,16 @@
 		.card-body {
 			padding: 10px;
 		}
-		a.btn-secondary, a.btn-success {
-			border-radius: 4px;
-			padding: 5px;
-			font-size: 12px;
-			text-decoration-line: none;
-			width: calc(50% - 5px);
-			/*width: 100%;*/
-			margin-top: 5px;
-		}
 		.filler {
 			font-size: 30px;
 			padding: 20px;
 			opacity: .5;
 			text-align: center;
+		}
+		a.btn-secondary, a.btn-success, a.btn-warning {
+		    /*width: calc(50% - 5px);*/
+			font-size: 12px;
+			margin-top: 5px;
 		}
 		/*a.btn.btn-success.tooltip {*/
 			/*padding: 5px;
@@ -119,7 +118,7 @@
 		    padding-left: 0px;
 		    padding-bottom: 0px;*/
 		/*}*/
-		a.btn-success:last-child {
+		a.btn-success:last-child, a.btn-warning:last-child {
 			float: right;
 		}
 		.form-control {
@@ -132,6 +131,16 @@
 		.nav-item .form-control{
 			display: none;
 		}
+		#search.bg-dark {
+		    background-color: beige !important;
+		}
+		#search a.nav-link {
+			color: var(--textcolor) !important
+		}
+		#search a.nav-link:hover {
+			color: white ! important
+		}
+
 		@media (max-width: 700px) {
 			#wrapper1 {
 				margin-left: 0vw;
@@ -151,29 +160,7 @@
 		}
 	</style>
 </head>
-<script>
-function myFunction() {
-    alert("about to leave")
-}
-</script>
-<body onbeforeunload="myFunction()">
-	<!-- <div id="loader-wrapper">
-		<div id="loader"></div>
-	</div> -->
-	<!-- NAME MODAL -->
-	<div class="modal" id="matchModal">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Matching:<h5>
-						<button type="button" class="close" data-dismiss="modal"  onClick="closeModal()" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-					</div>
-					<div class="modal-footer"></div>
-				</div>
-			</div>
-		</div>
+<body>
     <nav class="navbar navbar-expand-lg navbar-light bg-dark">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active removable" style="color: white; margin-right: 10px">
@@ -224,14 +211,14 @@ function myFunction() {
 	<button type="submit" class="btn-secondary nav"><a class="nav-link">Search!</a></button>
 </form>
 
-				{% if loggedin %}
+				{% if uid > 0 %}
                 <li class="nav-item">
                     <button class="btn-secondary nav removable"><a class="nav-link" href="/openProfile">Profile</a></button>
                 </li>
 				{% endif %}
                 <li class="nav-item">
 					<button class="btn-secondary nav removable">
-					{% if loggedin %}
+					{% if uid > 0 %}
 					<a class="nav-link" href="\logout">Log Out</a>
 					{% else %}
 					<a class="nav-link" href="\login">Log In</a>
@@ -248,23 +235,43 @@ function myFunction() {
 			<div class="activearea"></div>
 		</div>
 		<div id="sidebar1">
+			{% if searchparams|length > 0 %}
+			<nav class="navbar navbar-expand-lg navbar-light bg-dark" id="search">
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item active removable" style="margin-right: 10px">
+							Search Mode&emsp;<strong></strong>
+						</li>
+
+					</ul>
+					<ul class="navbar-nav">
+						<li class="nav-item">
+							<button class="btn-secondary nav removable"><a class="nav-link" href="/">Exit Search</a>
+							</button>
+						</li>
+					</ul>
+			</nav>
+			<div id="map" style="height: calc(100% - 24px - 8px - 8px)"></div>
+			{% else %}
 			<div id="map"></div>
+			{% endif %}
+
 			<script>
+
 			var parameters = {{mapparams | safe}}
 			var search = {{searchparams | safe}}
-
+			var UID = {{uid}}
 			if (search.length==0) { mode = 'homepage' }
 			else {mode = 'search'}
 
 			console.log("Mode: " + mode)
+			console.log("USERID: " + UID)
 
 			</script>
+			<script  src="../static/js/favorites.js"></script>
 			<script src="../static/js/map.js"></script>
 			<script src="../static/js/browse.js"></script>
 			<script src="../static/js/search.js"></script>
-			<script  src="../static/js/favorites.js"></script>
 		</div>
-		<div id="cleared1"></div>
 	</div>
 </body>
 </html>

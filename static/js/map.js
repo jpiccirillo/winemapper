@@ -13,28 +13,20 @@ function plotHeader(text, header) {
     )
 }
 
-function plotCards(id, text) {
-    // console.log(wine)
-    // var text = wine[1]
-    var link = '/api/wineDetail?id='+id;
+function plotCards(wineID, userID, favorited, text) {
+
+    var link = '/api/wineDetail?id='+wineID;
     var card = '<div class="card">'+
     // "<img class=\"card-img-top\" alt=\"Card image cap\">" +
     '<div class="card-body">'+
-    // "<h7 class=\"card-title\">Card title</h7>" +
-    '<p class="card-text">' + text + '</p>' +
-    '<a href="'+ link + '"class="btn btn-secondary">Read Reviews</a>' +
-    '<a onClick="checkLogin()" class="btn btn-success">Add to Favorites</a>' +
-    "</div></div>";
+    '<p class="card-text">' + text + '</p>'
+
+    card+='<a href="'+ link + '"class="btn btn-secondary">Read Reviews</a>'
+    if (userID > 0) { card += prepButton(wineID, favorited) }
+    card += "</div></div>"
+    console.log(card)
     $(".activearea").append(card);
 }
-
-// function eraseMarkers() {
-//     // console.log(map)
-//     var len = marker.length
-//     for (var i = 0; i < len; i++) {
-//         if (marker[i]) { map.removeLayer(marker[i]); };
-//     }
-// }
 
 function homePanel(id, name) {
     console.log(id)
@@ -46,10 +38,11 @@ function homePanel(id, name) {
             data = JSON.parse(data)
             console.log(data)
             $(".filler").hide()
-            plotHeader("Wines from " + winery + ":")
+            plotHeader("Wines from " + name + ":")
             $(".activearea").empty()
             for (var i = 0; i < data.length; i++) {
-                plotCards(data[i][0], data[i][1])
+                console.log("id?" + data[i][10])
+                plotCards(data[i][0], UID, data[i][22], data[i][1])
             }
         },
         error: function(data) {
@@ -70,11 +63,19 @@ function searchPanel(data) {
     console.log(data)
     plotHeader(searchquery)
     for (var i = 0; i < data.length; i++) {
-        plotCards(data[i][0], data[i][1])
+        console.log(data[i])
+        text = prepSearchData(data[i])
+        plotCards(data[i][0], 0, 0, text)
     }
-
 }
 
+function prepSearchData(data) {
+    text = data[1] + '<br>'
+    if (data[14]) { text+='<strong>Description: </strong>'+data[14] + '<br>'}
+    if (data[4]) { text+='<strong>Avg Points: </strong>' + data[4] +'<br>'}
+    if (data[13]) { text+='<strong>Total Favorites: </strong>' + data[13] + '<br>'}
+    return text;
+}
 
 // parameters:  lat, lon, id, name, address
 function plotMarkers(mode, args) {
@@ -136,6 +137,7 @@ function startMap(mapbounds, markers, zoom) {
     // console.log(markers)
     marker = [];
     center = L.latLngBounds(mapbounds).getCenter();
+
     map = L.map('map', {
         closePopupOnClick: false
     }).setView(center, zoom);

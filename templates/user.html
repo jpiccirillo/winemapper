@@ -15,9 +15,6 @@
 			font-family: Dosis;
 			font-weight: 300;
 		}
-		form {
-			width: 100%;
-		}
 		strong {
 			font-weight: 700;
 		}
@@ -25,44 +22,21 @@
 			margin-top: 15px;
 			max-height: calc(100vh - 30px - 24px - 15px)
 		}
-		#wines .card-body .card:first-child {
-			margin-top:0px;
+		#favoritewines {
+			min-height: calc(100% - 94px - 15px - 15px);
 		}
-		.card.middle {
-			max-height: calc(66vh - 30px - 24px - 15px)
+
+		#favoritewines .card-body  {
+			padding: 7px;
 		}
 		.card-body {
 			overflow: auto;
-		}
-		#favePanel .card-body  {
-			padding: 7px;
 		}
 		a.btn.btn-secondary {
 			border-radius: 2px;
 			padding: 2px;
 			width: 100%;
 			text-decoration: none;
-		}
-		.path {
-			stroke-dasharray: 4500;
-			stroke-dashoffset: 4500;
-			animation: dash 2s linear alternate infinite;
-		}
-
-		@keyframes dash {
-			from { stroke-dashoffset: 5000; }
-			to { stroke-dashoffset: 0; }
-		}
-
-		g { transform: scale(.075) translate(-750px, -50px); }
-		#bottle {
-			width: 100%;
-			height: 100%;
-		}
-		svg{
-			display: block;
-			margin: auto;
-			margin-top: 10%;
 		}
 		</style>
 	</head>
@@ -78,14 +52,9 @@
 				<li class="nav-item">
 					<button class="btn-secondary nav"><a href="/">Back to Map</a></button>
 				</li>
-				{% if loggedin %}
-				<li class="nav-item">
-					<button class="btn-secondary nav"><a class="nav-link" href="">Profile</a></button>
-				</li>
-				{% endif %}
 				<li class="nav-item">
 					<button class="btn-secondary nav">
-					{% if loggedin %}
+					{% if uid > 0 %}
 					<a class="nav-link" href="\logout">Log Out</a>
 					{% else %}
 					<a class="nav-link" href="\login">Log In</a>
@@ -96,36 +65,38 @@
 		</nav>
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-12">
 					<div class="card left">
-						<h6 class="card-header">Overview for {{userName}}</h6>
-						<div class="card-body">
-							<div class="card-text">
-								<strong>Number of favorite wines: </strong>{{count}}<br><br>
-								{% if wineries %}
-								<strong>Most Favorited Wineries: </strong>
+						<h6 class="card-header">Here's your overview, {{userName}}</h6>
+						<div class="card-body" style="padding:7px;">
+							<button type="button" class="btn btn-outline-secondary info" disabled><strong>Number of favorite wines: </strong>{{count}}<br></button>
+							{% if wineries %}
+							<button type="button" class="btn btn-outline-secondary info" disabled><strong>Most Favorited Wineries: </strong>
 								{% for winery in wineries %}
-									<ul><a href="/api/wineryDetail?id='{{winery[0]}}'">{{winery[1]}}</a></ul>
-								{% endfor %}
-								{% endif %}
-								{% if varieties %}
-								<strong>Most Favorited Varieties: </strong>
-								{% for variety in varieties %}
-									<ul>{{variety[0]}}</ul>
-								{% endfor %}
-								{% endif %}
-							</div>
+								<span><a href="/api/wineryDetail?id={{winery[0]}}">{{winery[1]}}</a></span><br>
+							{% endfor %}
+						</button>
+							{% endif %}
+							{% if varieties %}
+							<button type="button" class="btn btn-outline-secondary info" disabled><strong>Most Favorited Varieties: </strong>
+							{% for variety in varieties %}
+								<span>{{variety[0]}}</span><br>
+							{% endfor %}</button>
+							{% endif %}
 						</div>
 					</div>
 				</div>
-				<div class="col-md-6">
-					<div class="card middle">
+			</div>
+			{% if count > 0 %}
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card middle" id="favoritewines">
 						<h6 class="card-header">Favorited Wines </h6>
 						<div class="card-body">
 							{% for favorite in favorites %}
-							<div class="card">
+							<div class="card" style="max-width:30%; display: inline-block;">
 								<div class="card-body">
-									<h7 class="card-title"><strong>{{favorite[1]}}</strong></h7><br>
+									<div style="min-height:3rem"><h7 class="card-title"><strong>{{favorite[1]}}</strong></h7></div>
 									<div class="card-text">
 										{% if favorite[2] %}
 										<h8><strong>Variety: </strong>{{favorite[2]}}</h8><br>
@@ -141,6 +112,7 @@
 					</div>
 				</div>
 			</div>
+			{% endif %}
 		</div>
 	</body>
 </html>
