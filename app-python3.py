@@ -122,12 +122,16 @@ def openProfile():
         favorites = [row for row in rows]
         print("favorites: " + str(favorites))
 
+        print(UID)
         sql = 'SELECT COUNT(f."wineID") FROM "Favorites" f WHERE f."userID" = {} GROUP BY f."userID"'.format(UID)
-        count = cur.execute(sql)
+        cur.execute(sql)
+        count = cur.fetchone()
+        print(count)
         if count is not None:
-            count = list(cur.fetchone())[0]
+            count = list(count)[0]
+            print("non-none count", count)
         else: count = 0
-        
+
         print("count: " + str(count))
 
         varieties = []
@@ -511,13 +515,13 @@ def searchLater():
 
     form = ['title', 'variety', 'designation', 'maxprice', 'area', 'winery', 'keyword']
     insertValues = [None if request.args[entry]=='null' else request.args[entry] for entry in form]
-    print(insertValues)
 
     returnargs = [lastFaveCount, lastID, lastAvgReview]
     for arg in returnargs:
     #     if arg != None: arg = int(arg)
         insertValues.append(arg)
 
+    print(insertValues)
     try:
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
@@ -530,8 +534,8 @@ def searchLater():
         print("Last Row: " + str(data[-1]))
 
         lastID = data[-1][0]
-        lastFaveCount = None if not data[-1][-2] else data[-1][-2]
-        lastAvgReview = None if not data[-1][4] else data[-1][4]
+        lastFaveCount = 0 if not data[-1][-2] else data[-1][-2]
+        lastAvgReview = 0 if not data[-1][4] else data[-1][4]
 
         print("lastID: " + str(lastID))
         print("lastFaveCount: " + str(lastFaveCount))

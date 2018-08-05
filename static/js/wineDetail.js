@@ -17,11 +17,19 @@
 //
 // $(".activearea").append(card);
 
-$(document).ready(function() {
-    if (UID == 0) return;
+// $(document).ready(function() {
+//     if (UID == 0) return;
+//     console.log("favorited: " + favorited)
+//     console.log(wid)
+//     card = prepButton(wid, favorited)
+//     $("#toptitle h6.card-header").append(card);
+//     $("#card_" + wid).css("float", "right")
+// })
+
+if (UID != 0) {
     console.log("favorited: " + favorited)
     console.log(wid)
     card = prepButton(wid, favorited)
     $("#toptitle h6.card-header").append(card);
     $("#card_" + wid).css("float", "right")
-})
+}

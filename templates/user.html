@@ -73,7 +73,7 @@
 							{% if wineries %}
 							<button type="button" class="btn btn-outline-secondary info" disabled><strong>Most Favorited Wineries: </strong>
 								{% for winery in wineries %}
-								<span><a href="/api/wineryDetail?id={{winery[0]}}">{{winery[1]}}</a></span><br>
+								<span><a href="/api/wineryDetail?id={{winery[0]}}">{{winery[1]}}</a></span>
 							{% endfor %}
 						</button>
 							{% endif %}

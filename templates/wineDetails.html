@@ -21,6 +21,9 @@
 	strong {
 		font-weight: 700;
 	}
+	a.btn-secondary, a.btn-success, a.btn-warning {
+		width: initial;
+	}
     .card {
         margin-top: 15px;
         max-height: calc(100vh - 30px - 24px - 15px)
@@ -200,12 +203,12 @@
 	<!-- </div> -->
 	<script>
 	var UID = {{uid}}
-	var wid = {{wineid}}
+	var wid = {{wineid|safe}}
 	var favorited = {{favorited}}
 	// console.log(loggedin)
 	</script>
-    <script src="../static/js/wineDetail.js"></script>
 	<script  src="../static/js/favorites.js"></script>
+    <script src="../static/js/wineDetail.js"></script>
 
 </body>
 
