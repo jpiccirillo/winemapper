@@ -45,7 +45,6 @@
 			padding: 10px;
 			max-height:100vh;
 		}
-
 		#reviewPanel .card-body {
 			padding: 7px;
 		}
@@ -140,7 +139,11 @@
 
 <div class="col-md-12">
 		<div class="row">
+			{% if taster[1] %}
 			<div class="col-md-8">
+			{% else %}
+			<div class="col-md-12">
+			{% endif%}
 				<div class="row">
 					<div class="card" style="width:100%">
 						<div class="card-header"><strong>{{taster[2]}}</strong></div>
@@ -148,8 +151,7 @@
 							<div class="card-body"><strong>Number of Wine Reviews: </strong>{{taster[3]}}</div> -->
 						<div class="card-body">
 							<button type="button" class="btn btn-outline-secondary info" disabled><strong>Number of Wine Reviews: </strong>{{taster[3]}}</button>
-							<button type="button" class="btn btn-outline-secondary info" disabled><strong>Average Rating: </strong><span type="number" step=".01"> {{ "%.2f"|format(taster[4])}}</span></button>
-							<button type="button" class="btn btn-outline-secondary info" disabled><strong>Winery Most Reviewed: </strong></button>
+							<button type="button" class="btn btn-outline-secondary info" disabled><strong>Average Rating: </strong><span type="number" step=".01"> {{ "%.2f"|format(taster[4])}} points</span></button>
 						</div>
 					</div>
 				</div>
@@ -187,7 +189,7 @@
 					</script>
 					<script async src="https://platform.twitter.com/widgets.js" charset="utf-8" onload ="removeWineLoader()"></script>
 				</div>
-							</div>
+			</div>
 				{% endif %}
 		</div>
 	</div>

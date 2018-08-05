@@ -9,19 +9,14 @@
 	<!-- https://fonts.google.com/specimen/Dosis -->
 	<link href="https://fonts.googleapis.com/css?family=Dosis:400,700,900" rel="stylesheet">
 	<style type="text/css">
-		/*.topcorner {
-			position: absolute;
-			top: 0;
-			right: 0;
+		a {
+			text-decoration-line: none;
+			color: white;
 		}
-		body {
-			text-align:center;
-			margin:5%;
-			}
-		.adduser-div {
-			margin: 0 auto;
-			width: 50%;
-		}*/
+		.wrapper {
+			display: block;
+			max-width:40%;
+		}
 		.btn-secondary {
 			width: 100%;
 			border-radius: 4px;
@@ -65,13 +60,13 @@
 			</div>
 			<div class="form-group">
 				<label for="inputCity">Name</label>
-				<input type="text" name="firstname" class="form-control" placeholder="" id="inputDefault">
+				<input type="text" name="firstname" class="form-control" placeholder="Full name here..." id="inputDefault">
 			</div>
 
 			<!-- Address Grid, first line is full address for now, other fields will be used later -->
 			<div class="form-group">
 				<label for="inputAddress">Address</label>
-				<input type="text" name="inputAddress" class="form-control" id="inputAddress" placeholder="1234 Main St"/>
+				<input type="text" name="inputAddress" class="form-control" id="inputAddress" placeholder="1234 Main St, Anytown USA..."/>
 			</div>
 
 			<input type="submit" value="Start Exploring" class="btn btn-secondary"/><br>

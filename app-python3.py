@@ -122,13 +122,12 @@ def openProfile():
         favorites = [row for row in rows]
         print("favorites: " + str(favorites))
 
-        count = 0;
         sql = 'SELECT COUNT(f."wineID") FROM "Favorites" f WHERE f."userID" = {} GROUP BY f."userID"'.format(UID)
-        cur.execute(sql)
-        count = list(cur.fetchone())[0]
-        if count is None:
-            count = 0;
-        print(count)
+        count = cur.execute(sql)
+        if count is not None:
+            count = list(cur.fetchone())[0]
+        else: count = 0
+        
         print("count: " + str(count))
 
         varieties = []

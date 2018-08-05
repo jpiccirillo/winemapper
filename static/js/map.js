@@ -173,5 +173,5 @@ function coordinateSearch(data) {
     // console.log(marker)
     searchPanel(data);
     group = new L.featureGroup(marker);
-    map.fitBounds(group.getBounds().pad(0.5));
+    map.fitBounds(group.getBounds());
 }
