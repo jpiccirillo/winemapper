@@ -21,8 +21,14 @@ function plotCards(wineID, userID, favorited, text) {
     '<div class="card-body">'+
     '<p class="card-text">' + text + '</p>'
 
-    card+='<a href="'+ link + '"class="btn btn-secondary">Read Reviews</a>'
-    if (userID > 0) { card += prepButton(wineID, favorited) }
+    card+='<a href="'+ link + '"class="btn btn-secondary"'
+    if (userID > 0) {
+        card+=" style='width:50%'>Read Reviews</a>"
+    } else { card+='>Read Reviews</a>'
+    }
+    if (userID > 0) {
+        card += prepButton(wineID, favorited)
+    }
     card += "</div></div>"
     console.log(card)
     $(".activearea").append(card);

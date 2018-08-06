@@ -35,7 +35,7 @@ function deFavorite(wid) {
 }
 
 function prepButton(wid, favorited) {
-    button = '<a '
+    button = '<a style="width:45%" '
     if (favorited) {
         button += 'onClick="deFavorite(' + wid + ')" class="btn btn-warning" id="card_' + wid + '">Defavorite'
     } else {
