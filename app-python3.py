@@ -671,7 +671,7 @@ def addUserData():
         print(UID)
 
         sql = 'INSERT INTO "User" ("userID", "uName", "pWord", name, address) VALUES (%s,%s,%s,%s,%s)'
-        insertValues = (UID, username, password, address, firstname)
+        insertValues = (UID, username, password, firstname, address)
 
         cur.execute(sql, insertValues)
         db.commit()
