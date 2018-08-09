@@ -1,39 +1,27 @@
 console.log("WineryID: " + wineryid)
-// var showLegendCondition =
-
 getMostReviews()
 getClimateData()
 plotSoilData()
-
 $("#soilname").text(soil[0][46])
 
 function getMostReviews() {
     $.ajax({
         type: 'GET',
         url: "/api/reviewedWineryMost?id=" + wineryid,
-        success: function(data) { // Response about a single UID2 status
+        success: function(data) {
 
             data = JSON.parse(data)
-            // console.log(data[1])
             if (data.length == 0) {
                 $("#reviewer").append('Anonymous users')
                 $("#numreviews").remove();
                 $("#reviewlink").remove()
             } else {
-            // for (var i = 0; i < data.length; i++) {
-                // console.log(data[i])
                 var link = '/api/tasterDetail?id=' + data[0]
                 var text = data[2]
-                if (data[2] > 1) {
-                    text = text + ' times'
-                } else {
-                    text = text + ' time'
-                }
-                // console.log(text)
+
+                if (data[2] > 1) { text = text + ' times' }
+                else { text = text + ' time' }
                 $("#reviewer").append('<a href="' + link + '" style="font-weight: 900;">' + data[1] + '</a> (' + text + ')')
-                // $("#numreviews").text(text);
-                // var button = '<a href="' + link + '" class="btn btn-secondary">Profile</a>'
-                // $("#wineryOverview .card-body .col-md-6 .card-body .col-md-6").append(button)
             }
         },
         error: function(data) {
@@ -42,6 +30,8 @@ function getMostReviews() {
     });
 }
 
+//Get and plot climate data on Winery Detail View, uses c3.js
+//which is a wrapper of the d3 plotting library
 function getClimateData() {
     var monthNameFormat = d3.time.format("%B");
     $.ajax({
@@ -96,6 +86,8 @@ function getClimateData() {
     });
 }
 
+//Plot soil data on Winery Detail View, also uses c3.js
+//(wrapper of the d3 plotting library)
 function plotSoilData() {
     data = []
 
@@ -120,6 +112,7 @@ function plotSoilData() {
             },
             expand: false
         },
+        //hide or show soil legend based on size of inner.width of screen
         onresized: function () {
             if (($(document).innerWidth()>1100 || $(document).innerWidth()<575)) { chart.legend.show();}
             else {chart.legend.hide();}
@@ -147,36 +140,37 @@ function plotSoilData() {
     loadTable(1)
 }
 
+
 function loadTable(index) {
-//     5 %Gravel
-// 6 %Sand
-// 7 %Silt
-// 8 %Clay
-// 11 pH
-// 12 CEC Clay
-// 13 CEC Soil
-// 16 CaCo<sub>3</sub>
-// 17 CaSO<sub>4</sub>
-//
-// 20 %Gravel
-// 21 %Sand
-// 22 %Silt
-// 23 %Clay
-// 26 pH
-// 27 CEC Clay
-// 28 CEC Soil
-// 31 CaCo<sub>3</sub>
-// 32 CaSO<sub>4</sub>
+    // Key for data available from render_template() on Flask side:
+    // 5 %Gravel
+    // 6 %Sand
+    // 7 %Silt
+    // 8 %Clay
+    // 11 pH
+    // 12 CEC Clay
+    // 13 CEC Soil
+    // 16 CaCo<sub>3</sub>
+    // 17 CaSO<sub>4</sub>
+    // 20 %Gravel
+    // 21 %Sand
+    // 22 %Silt
+    // 23 %Clay
+    // 26 pH
+    // 27 CEC Clay
+    // 28 CEC Soil
+    // 31 CaCo<sub>3</sub>
+    // 32 CaSO<sub>4</sub>
+
     console.log(s)
     var s = soil[index-1]
-    // var val = '';
-    // var tsum = s[5] + s[6] + s[7] + s[8]
-    // var ssum = s[20] + s[21] + s[22] + s[23]
     var top = [5, 6, 7, 8, 11, 12, 13, 16, 17]
     var sub = [20, 21, 22, 23, 26, 27, 28, 31, 32]
     $("#topsoilrow, #subsoilrow").empty()
     $("#seq").text("Soil Sequence: " + index)
 
+    // iterate through and replace contents of HTML table based on new soil
+    // sequence data.  Need to catch and apply three different unit types
     $.each(top, function(i) {
         if (s[sub[i]]==null) { val = '' }
         else if (i<4) { val = s[top[i]].toFixed(0) + " %vol" }

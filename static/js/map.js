@@ -13,6 +13,7 @@ function plotHeader(text, header) {
     )
 }
 
+//General function for writing boostrap "cards" to right results panel
 function plotCards(wineID, userID, favorited, text) {
 
     var link = '/api/wineDetail?id='+wineID;
@@ -33,14 +34,13 @@ function plotCards(wineID, userID, favorited, text) {
     console.log(card)
     $(".activearea").append(card);
 }
-
+//Load wine results from ajax call in the right pane
 function homePanel(id, name) {
     console.log(id)
     $.ajax({
         type: 'GET',
         url: "/api/getWines?id=" + id,
-        success: function(data) { // Response about a single UID2 status
-            // marker = [];
+        success: function(data) {
             data = JSON.parse(data)
             console.log(data)
             $(".filler").hide()
@@ -62,7 +62,6 @@ function searchPanel(data) {
     form = ['title', 'variety', 'designation', 'maxprice', 'area', 'winery', 'keyword']
     var searchquery = "You searched on: <br>"
     $.each(search, function(i, val) {
-        // console.log(i)
         if (i==7) {return false}
         if (val) { searchquery += form[i].toUpperCase() + ": <span style='font-weight: 400'>" + val + "</span><br>" }
     })
@@ -74,7 +73,7 @@ function searchPanel(data) {
         plotCards(data[i][0], 0, 0, text)
     }
 }
-
+//Adding in more text to the cards if search is used
 function prepSearchData(data) {
     text = data[1] + '<br>'
     if (data[14]) { text+='<strong>Description: </strong>'+data[14] + '<br>'}
@@ -83,9 +82,7 @@ function prepSearchData(data) {
     return text;
 }
 
-// parameters:  lat, lon, id, name, address
 function plotMarkers(mode, args) {
-    console.log(mode)
     // specify popup options
     var customOptions = {
         'maxWidth': '200',
@@ -97,7 +94,7 @@ function plotMarkers(mode, args) {
         weight: 1,
         radius: 8
     }
-
+    //Map is being loaded in normal homepage mode
     if (mode=='homepage') {
         circlestyle.color = 'darkred'
         circlestyle.fillColor = 'indianred'
@@ -117,6 +114,7 @@ function plotMarkers(mode, args) {
         marker.push(submarker)
 
     }
+    //We're in search mode - different workflow
     else {
         circlestyle.color = 'darkblue'
         circlestyle.fillColor = 'lightblue'
@@ -126,21 +124,12 @@ function plotMarkers(mode, args) {
         var customPopup = '<div>' + args[1] + '<br><strong>From: </strong><a href="' + winerylink + '">' + args[10] + '</a><br><a href="' + winelink + '" class="btn" style="' + style + '">More details on this wine</a></div>';
 
         var submarker = L.circleMarker([args[11], args[12]], circlestyle).bindPopup(customPopup, customOptions).addTo(map)
-        // submarker.on('click', function(e) {
-
-        // }).on('popupclose', function(e) {
-        //     $(".activearea").empty()
-        //     $(".wineheader").hide()
-        //     $(".filler").show()
-        // });
         marker.push(submarker)
-
         console.log(mode, args)
     }
 }
 
 function startMap(mapbounds, markers, zoom) {
-    // console.log(markers)
     marker = [];
     center = L.latLngBounds(mapbounds).getCenter();
 
@@ -148,7 +137,6 @@ function startMap(mapbounds, markers, zoom) {
         closePopupOnClick: false
     }).setView(center, zoom);
     //add ins  (de-stack overlapping points, stateful URL, geocoder)
-    oms = new OverlappingMarkerSpiderfier(map),
     hash = new L.Hash(map), //Stateful URL implementation
     geocoder = L.Control.geocoder({
         position: "topleft",

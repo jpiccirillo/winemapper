@@ -1,19 +1,23 @@
+//If user has scrolled to end of containing div, call to load more results
 $(document).ready(function() {
     $('.cardpane').bind('scroll', function() {
         if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
-            // alert(search)
-            loadTenMore();
+            loadMore();
         }
     })
+    //Kick map off (just 1ce) using data from render_template on Flask side
     startMap(parameters[0], parameters[1], parameters[2])
 });
 
+//Change navbar when user starts a search to make more room for fields
 function prepUIforSearch() {
     $(".btn-secondary.nav.removable").hide(400)
     $(".nav-item.active.removable").hide(400)
 }
 
-function loadTenMore() {
+//Ajax call to get more results from search function and render map /
+//side bar accordingly
+function loadMore() {
     console.log("about to re-search on: " + search)
 
     var searchquery = ""
@@ -27,7 +31,7 @@ function loadTenMore() {
     $.ajax({
         type: 'GET',
         url: "/api/searchLater?" + searchquery,
-        success: function(data) { // Response about a single UID2 status
+        success: function(data) {
             data = JSON.parse(data)
             console.log(data)
             $.each(data, function(i, entry) {

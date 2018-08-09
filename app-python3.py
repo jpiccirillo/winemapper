@@ -2,15 +2,10 @@ from flask import Flask, session, render_template, request
 import os
 import urllib3
 import json
-import datetime
-import time
-import pytz
 import psycopg2
-import re
 import html.parser
-import time
-import random
 
+# Globals for logged in User, database connection strings, and other session variables
 dbname = "winemapper"
 user = "ec2_user" #"postgres"
 password = "winemapper" #"postgres"
@@ -23,43 +18,29 @@ lastAvgReview = ''
 mapBounds = ''
 UID = 0
 
-# session['logged_in'] = False
 app = Flask(__name__)
 
+# Helper function to regrab wineries within certain bounds, defaults to Bay Area
 def checkMapBounds():
     global mapBounds
     if mapBounds == '':
         return [[37.74031329210266, -122.84912109375001], [38.53957267203907, -121.50329589843751]] #bay area
     return mapBounds
 
+# Home app-route
 @app.route('/', methods=['GET'])
 def home():
     global UID
     global mapBounds
-    # if not session.get('logged_in'):
-    #     print("not logged in")
-    #     session['logged_in'] = 0;
 
     mapBounds = checkMapBounds();
-    # mapparams = [mapcenter, marker array (if present), zoom level] basically how to kick off the map.
-    # this flask function is the "homepage view", while the search flask function will use different parameters
-
+    # Mapparams = [mapbounds, marker array (if present), zoom level] basically how to kick off the map.
+    # This flask function is the "homepage view", while the search flask function will use different parameters
     return render_template('browse.html', uid = UID, mapparams = [mapBounds, "", 10], searchparams = [])
 
 app.secret_key = os.urandom(12)
 
-# def checkLogin():
-    # if not session.get('logged_in'):
-    #     session['logged_in'] = 0;
-    #     return 0;
-    # else:
-    #     return session['logged_in']
-
-# @app.route('/api/checkLoginForClient', methods=['GET'])
-# def checkLoginForClient():
-#     global UID
-#     return json.dumps(UID)
-
+# For a given userID / wineID pair, add to Favorites table
 @app.route('/api/addFavorite', methods=['GET'])
 def addFavorite():
     global UID
@@ -79,8 +60,9 @@ def addFavorite():
     finally:
         if db is not None: db.close()
 
-    return 'added' + wineID
+    return 'added ' + wineID + ' as favorite'
 
+# For a given userID / wineID pair, remove from Favorites table
 @app.route('/api/removeFavorite', methods=['GET'])
 def removeFavorite():
     global UID
@@ -101,19 +83,16 @@ def removeFavorite():
     finally:
         if db is not None: db.close()
 
-    return 'removed ' + wineID
+    return 'added ' + wineID + ' from favorites'
 
+# Selects a user's favorite wines, total count of wines favorited, favorite varieties, favorite wineries
 @app.route('/openProfile', methods=['GET'])
 def openProfile():
     global UID
-
     print("UID: " + str(UID))
-    #queries to get user info and their favorites
     try:
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
-
-        # Selects a user's favorite wines
 
         favorites = []
         sql = 'SELECT w."wineID", w."title", v."vName", wn."name", wn."country" FROM "Favorites" f JOIN "Wine" w ON f."wineID" = w."wineID" JOIN "Wineries" wn ON  wn."wineryID" = w."wineryID" JOIN "Variety" v ON v."varietyID" = w."varietyID" WHERE f."userID" = {}'.format(UID)
@@ -126,7 +105,6 @@ def openProfile():
         sql = 'SELECT COUNT(f."wineID") FROM "Favorites" f WHERE f."userID" = {} GROUP BY f."userID"'.format(UID)
         cur.execute(sql)
         count = cur.fetchone()
-        print(count)
         if count is not None:
             count = list(count)[0]
             print("non-none count", count)
@@ -163,7 +141,7 @@ def openProfile():
 
     return render_template('user.html', uid = UID, count = count, userName = userName, favorites = favorites, varieties = varieties, wineries = wineries)
 
-
+# Selects all wines from a given winery
 @app.route('/api/getWines', methods=['GET'])
 def wines():
     global UID
@@ -174,8 +152,6 @@ def wines():
     try:
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
-
-        # Selects all wines from a given winery
         sql = 'SELECT * FROM "Wine" w JOIN "Wineries" wn ON w."wineryID" = wn."wineryID"JOIN "Variety" v ON w."varietyID" = v."varietyID" LEFT JOIN ( SELECT "wineID", count(*) c FROM "Favorites" WHERE "userID" = {} GROUP BY "wineID") f ON w."wineID" = f."wineID" WHERE wn."wineryID" = {}'.format(UID, wineryid)
 
         cur.execute(sql)
@@ -192,7 +168,6 @@ def wines():
         if db is not None: db.close()
         return json.dumps(data)
 
-
 @app.route('/api/wineryDetail', methods=['GET'])
 def wineryDetail():
     wineryid = str(request.args.get('id'))
@@ -200,6 +175,7 @@ def wineryDetail():
     print(wineryid)
     return render_template("wineryDetail.html",  uid = UID, wid = wineryid, winery = getBasicWineryData(wineryid), wineInfo = json.dumps(winesAtWinery(wineryid)), wines = winesAtWinery(wineryid), soil = getSoil(wineryid))
 
+# Simple fetch on soil data for given wineryID
 def getSoil(wid):
     try:
         db = psycopg2.connect(conn_string)
@@ -216,6 +192,7 @@ def getSoil(wid):
 
     return json.dumps(rows)
 
+# Helper function to grab all wine data, given a WINERY id
 def winesAtWinery(wid):
     global UID
 
@@ -251,13 +228,11 @@ def getBasicWineryData(wid):
 
     finally:
         if db is not None: db.close()
-
     return winery
 
-
+# Returns all winedata for the given wine
 def getWineData(wid):
     global UID
-    # Returns all winedata for the given wine
     try:
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
@@ -275,7 +250,7 @@ def getWineData(wid):
 
     return data
 
-
+# Helper function for cleaning climate data
 def writeRow(month, oldContents):
     newRow = oldContents;
     newRow.append(month)
@@ -284,31 +259,31 @@ def writeRow(month, oldContents):
     newRow.append("None")
     return newRow;
 
+# Grabs and cleans climate data from a given wineryID's station
 def getClimateData(wid):
     print(wid)
     try:
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
-
         sql = 'SELECT * FROM (SELECT w.name, w."wineryID", s.* FROM "Station" s, "Wineries" w WHERE w."wineryID" = {} AND w."stationID" = s."STNnum") station INNER JOIN public."STNData" d ON station."STNnum" = d."USAF_ID"'.format(wid)
 
         cur.execute(sql)
         rows = cur.fetchall()
         data = list([list(row) for row in rows])
-        # print(data)
 
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
-
     finally:
         if db is not None: db.close()
 
-    # print(data)
+    # Preparing series of temperature data to be plotted by c3.js
     # ['x', 'Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
     totalData = [];
     totalTemps = [];
     totalTemps.append(['x', '2018-01-01', '2018-02-01', '2018-03-01', '2018-04-01', '2018-05-01', '2018-06-01', '2018-07-01', '2018-08-01', '2018-09-01', '2018-10-01', '2018-11-01', '2018-12-01'])
 
+    # Small algorithm for one last parse of climate data before it's plotted
+    # - If  any 1-12 month sequences are missing for a given year, fill them in with the correct month and "None" data
     c = 1;
     normalized = [];
     for index, row in enumerate(data):
@@ -319,7 +294,6 @@ def getClimateData(wid):
             while (row[8] < c%12):
                 normalized.append(writeRow(c%12, data[index-1][:8]))
                 c+=1;
-
                 if c%12==0 and data[index+1][8] !=1:
                     normalized.append(writeRow(12, data[index-1][:8]))
                     c+=1;
@@ -328,7 +302,6 @@ def getClimateData(wid):
                 if (row[8]%12==c%12):
                     write=True;
                     break;
-
                 else:
                     normalized.append(writeRow(c%12, row[:8]))
                     c+=1;
@@ -364,9 +337,8 @@ def getClimateData(wid):
     totalData.append(totalTemps)
     return json.dumps(totalData)
 
-
+# Returns all reviews for the given wine
 def getReveiwData(wid):
-    # Returns all reviews for the given wine
     try:
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
@@ -376,35 +348,31 @@ def getReveiwData(wid):
         cur.execute(sql)
         rows = cur.fetchall()
         data = [row for row in rows]
-        # print(data)
 
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
 
     finally:
         if db is not None: db.close()
-
     return data
-
 
 @app.route('/api/wineDetail', methods=['GET'])
 def wineDetail():
     global UID
-    # print("Loggedin: " + str(session['logged_in']))
     wineID = str(request.args.get('id'))
     wineData = getWineData(wineID)
     reviewData = getReveiwData(wineID)
     return render_template("wineDetails.html", uid = UID, favorited = json.dumps(list(wineData)[-1]), wineid = wineID, w = wineData, reviews = reviewData)
 
 
+#API route for climate data ajax call, calls and returns result of helper function
 @app.route('/api/getCliamteData', methods=['GET'])
 def climateDataResults():
-
     wineryID = str(request.args.get('id'))
     print(wineryID)
     return getClimateData(wineryID)
 
-
+#API route for Taster data, calls helper functions and returns template
 @app.route('/api/tasterDetail', methods=['GET'])
 def tasterDetail():
     global UID
@@ -414,10 +382,8 @@ def tasterDetail():
 
     return render_template("tasterDetails.html", uid = UID, taster = tasterData, reviews = reviewData)
 
+#Gets taster's reviews from the server
 def getTasterReviewData(tasterID):
-    """
-    Gets taster's review information from the server
-    """
     reviewData = []
     try:
         db = psycopg2.connect(conn_string)
@@ -432,10 +398,8 @@ def getTasterReviewData(tasterID):
         if db is not None: db.close()
     return reviewData
 
+#Gets taster's profile (non-review) information from the DB
 def getTasterData(tasterID):
-    """
-    Gets taster information from the DB
-    """
     tasterData = []
     try:
         db = psycopg2.connect(conn_string)
@@ -463,21 +427,10 @@ def search():
     global mapbounds
 
     mapBounds = checkMapBounds();
-    # global count
-    # count += 1
-
-    # if count==1:
-    #     lastID = None
-    #     lastFaveCount = None
 
     form = ['title', 'variety', 'designation', 'maxprice', 'area', 'winery', 'keyword']
     insertValues = [None if request.args[entry]=='' else request.args[entry] for entry in form]
     print(insertValues)
-
-    # twoargs = [lastID, lastFaveCount]
-    # for arg in twoargs:
-    #     if arg != None: arg = int(arg)
-    #     insertValues.append(arg)
 
     try:
         db = psycopg2.connect(conn_string)
@@ -505,6 +458,8 @@ def search():
     finally:
         if db is not None: db.close()
 
+    # Mapparams = [mapbounds, marker array (if present), zoom level] basically how to kick off the map in search mode.
+    # This flask function is the "search view"
     return render_template("browse.html", uid = UID, mapparams = [mapBounds, json.dumps(data), 10], searchparams = json.dumps(insertValues))
 
 @app.route('/api/searchLater', methods=['GET'])
@@ -517,9 +472,7 @@ def searchLater():
     insertValues = [None if request.args[entry]=='null' else request.args[entry] for entry in form]
 
     returnargs = [lastFaveCount, lastID, lastAvgReview]
-    for arg in returnargs:
-    #     if arg != None: arg = int(arg)
-        insertValues.append(arg)
+    for arg in returnargs: insertValues.append(arg)
 
     print(insertValues)
     try:
@@ -540,7 +493,6 @@ def searchLater():
         print("lastID: " + str(lastID))
         print("lastFaveCount: " + str(lastFaveCount))
         print("lastAvgReview: " + str(lastAvgReview))
-        # print("count: " + str(count))
 
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
@@ -550,6 +502,7 @@ def searchLater():
 
     return json.dumps(data)
 
+# Returns a list of reviewers who have reviewed the winery the most as [tasterID, name, count]
 @app.route('/api/reviewedWineryMost', methods=['GET'])
 def reviewedWineryMost():
     wineryID = str(request.args.get('id'))
@@ -558,7 +511,6 @@ def reviewedWineryMost():
         cur = db.cursor()
 
         data = [];
-        # Returns a list of reviewers who have reviewed the winery the most as [tasterID, name, count]
         sql = 'SELECT * FROM wineryReviewedMostBy({})'.format(wineryID)
         cur.execute(sql)
         rows = cur.fetchone()
@@ -572,7 +524,7 @@ def reviewedWineryMost():
 
     return json.dumps(data)
 
-
+# Get wineries within a given map-bounding box
 @app.route('/api/getWineries', methods=['GET'])
 def wineries():
     global mapBounds
@@ -601,7 +553,6 @@ def wineries():
         rows = cur.fetchall()
         print("Number of rows: ", cur.rowcount)
         data = [row for row in rows]
-
         cur.close()
 
     except (Exception, psycopg2.DatabaseError) as error:
@@ -615,9 +566,16 @@ def wineries():
 def loginpage():
     return render_template("login.html")
 
+@app.route('/logout')
+def logout():
+    global UID
+    UID = 0
+    return render_template("logout.html")
+
 @app.route('/login_action', methods=['POST', 'GET'])
 def login():
     global UID
+    #Grab user entry from form
     username = request.form['username']
     print(username)
     password = request.form['password']
@@ -626,11 +584,12 @@ def login():
     db = psycopg2.connect(conn_string)
     cur = db.cursor()
 
+    #Grab their user account from DB
     query = 'SELECT * FROM "User" WHERE "uName"=\'' + username +'\''
     cur.execute(query)
     user = list(cur.fetchone())
 
-    if password == user[2]:
+    if password == user[2]: #check against password
         session['logged_in'] = 1
         session['username'] = user[0]
         UID = user[0]
@@ -642,24 +601,16 @@ def login():
 
 @app.route('/addUser', methods = ['POST', 'GET'])
 def new_user():
-    # if not session.get('logged_in'):
-    #     return render_template('login.html')
-
     return render_template('newUser.html')
 
 @app.route('/addUserData', methods = ['POST', 'GET'])
 def addUserData():
-    # if not session.get('logged_in'):
-    #     return render_template('login.html')
-    # if not session.get('is_power'):
-    #     return render_template('home.html')
     try:
         db = psycopg2.connect(conn_string)
         cur = db.cursor()
 
         username = request.form['username']
         password = request.form['password']
-        # email = request.form['email']
         address = request.form['inputAddress']
         firstname = request.form['firstname']
 
@@ -685,57 +636,5 @@ def addUserData():
         return render_template("result.html", msg = msg)
         db.close()
 
-@app.route('/logout')
-def logout():
-    global UID
-    UID = 0
-    return render_template("logout.html")
-
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
-
-    # @app.route('/api/wineryWineInfo', methods=['GET'])
-    # def wineryWineInfo():
-    #     wineryid = str(request.args.get('id'))
-    #     # print(wineryid)
-    #
-    #     try:
-    #         db = psycopg2.connect(conn_string)
-    #         # Returns all other info related to that winery surrounding its wines (Wine, Area, Variety info all joined to Winery)
-    #         sql = 'SELECT w.*, v.*, a.* FROM "Wineries" wn JOIN "Wine" w ON w."wineryID" = wn."wineryID" JOIN "Area" a ON w."areaID" = a."areaID" JOIN "Variety" v ON w."varietyID" = v."varietyID" WHERE wn."wineryID" = {}'.format(wineryid)
-    #         cur = db.cursor()
-    #         cur.execute(sql)
-    #         rows = cur.fetchall()
-    #         data = [row for row in rows]
-    #         print("Number of rows: ", cur.rowcount)
-    #
-    #     except (Exception, psycopg2.DatabaseError) as error:
-    #         print(error)
-    #
-    #     finally:
-    #         if db is not None: db.close()
-    #
-    #     return json.dumps(data)
-
-    # @app.route('/api/wineReviews', methods=['GET'])
-    # def wineReviews():
-    #     wineID = str(request.args.get('id'))
-    #
-    #     try:
-    #         db = psycopg2.connect(conn_string)
-    #         cur = db.cursor()
-    #
-    #         # Returns all reviews for the given wine
-    #         sql = 'SELECT r."description", r."points", t."tasterID", t."name" FROM "Review" r LEFT JOIN "Taster" t ON r."tasterID" = t."tasterID" WHERE "wineID" = {} ORDER BY r."points" DESC'.format(wineID)
-    #
-    #         cur.execute(sql)
-    #         rows = cur.fetchall()
-    #         data = [row for row in rows]
-    #         print(data)
-    #     except (Exception, psycopg2.DatabaseError) as error:
-    #         print(error)
-    #
-    #     finally:
-    #         if db is not None: db.close()
-    #
-    #     return json.dumps(data)
